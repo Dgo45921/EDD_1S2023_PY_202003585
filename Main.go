@@ -1,9 +1,9 @@
 package main
 
 import (
-	"Fase1/Menus"
+	"Fase1/Util"
 )
 
 func main() {
-	Menus.ShowPrincipalMenu()
+	Util.ShowPrincipalMenu()
 }
