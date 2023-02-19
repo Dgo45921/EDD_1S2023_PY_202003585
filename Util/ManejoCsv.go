@@ -2,13 +2,15 @@ package Util
 
 import (
 	"Fase1/Estructuras/ColaAlumnos"
+	"Fase1/Estructuras/ListaDobleAlumnos"
 	"Fase1/Objetos"
 	"encoding/csv"
 	"fmt"
 	"os"
 	"strconv"
 )
-var ColaDeAlumnos = ColaAlumnos.InicializarColaAlumnos()
+var ColaDeAlumnos = ColaAlumnos.InicializarColaAlumnos() // acá se llevará el registro de alumnos pendientes
+var ListaDobleAceptados = ListaDobleAlumnos.InicializarListaDobleAlumnos() // acá se llevara el registro de alumnos aceptados
 func LeerCsv(path string) {
 	fd, err := os.Open(path)
 	if err != nil {

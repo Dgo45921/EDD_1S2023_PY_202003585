@@ -34,7 +34,7 @@ func login() {
 	for {
 		username = ""
 		password = ""
-		fmt.Println("\n Si deseas regresar al menú anterior deja los dos campos vacíos")
+		fmt.Println("\nSi deseas regresar al menú anterior deja los dos campos vacíos")
 		fmt.Println("Ingresa tu usuario: ")
 		fmt.Scanln(&username)
 		fmt.Println("Ingresa tu password: ")
@@ -70,6 +70,7 @@ func menuAdministrator() {
 		switch opcion {
 		case "1":
 			fmt.Println("Estudiantes pendientes")
+			showqueue()
 		case "2":
 			fmt.Println("Estudiantes del sistema")
 		case "3":
@@ -93,5 +94,48 @@ func menuAdministrator() {
 		}
 
 	}
+
+}
+
+
+func showqueue(){
+	var opcion string
+	// fmt.Println("***Estudiantes pendientes****")
+	if ColaDeAlumnos.Size == 0{
+		fmt.Println("No hay alumnos en la cola de espera")
+		menuAdministrator()
+	}
+	fmt.Println("Hay: ", ColaDeAlumnos.Size, " alumnos pendientes")
+	fmt.Println("Estudiante actual: ", ColaDeAlumnos.Primero.Alumno.Name, " ", ColaDeAlumnos.Primero.Alumno.Id)
+	fmt.Println("¿Qué desea hacer?")
+	fmt.Println("1.Aceptar \n2.Rechazar\n3.Salir")
+	fmt.Scanln(&opcion)
+	switch opcion {
+	case "1":
+		if ColaDeAlumnos.Size == 0{
+			fmt.Println("No hay alumnos en la cola de espera")
+			return
+		}
+		ListaDobleAceptados.AgregaNodo(ColaDeAlumnos.Primero.Alumno)
+		ColaDeAlumnos.Desencolar()
+		//fmt.Println("estado actual de la cola")
+		//ColaDeAlumnos.Recorrer()
+		fmt.Println("estado actual de la lista doble de alumnos")
+		ListaDobleAceptados.Recorrer()
+		showqueue()
+	case "2":
+		ColaDeAlumnos.Desencolar()
+		//fmt.Println("estado actual de la cola")
+		//ColaDeAlumnos.Recorrer()
+		//fmt.Println("estado actual de la lista doble de alumnos")
+		//ListaDobleAceptados.Recorrer()
+		showqueue()
+	case "3":
+		return
+	default:
+		fmt.Println("Por favor ingresa una opción válida")
+		showqueue()
+	}
+
 
 }

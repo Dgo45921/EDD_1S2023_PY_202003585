@@ -51,6 +51,12 @@ func (L *ListaColaAlumnos) Recorrer() {
 }
 
 func (L *ListaColaAlumnos) Desencolar(){
+	if L.Size == 1{
+		L.Primero = nil
+		L.Ultimo = nil
+		L.Size--
+		return
+	}
 	L.Primero = L.Primero.Siguiente
 	L.Primero.Anterior = nil
 	L.Size--
