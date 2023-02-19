@@ -49,3 +49,9 @@ func (L *ListaColaAlumnos) Recorrer() {
 	}
 
 }
+
+func (L *ListaColaAlumnos) Desencolar(){
+	L.Primero = L.Primero.Siguiente
+	L.Primero.Anterior = nil
+	L.Size--
+}

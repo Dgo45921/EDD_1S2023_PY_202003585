@@ -82,6 +82,8 @@ func menuAdministrator() {
 				//fmt.Printf("la ruta dada fue: %q\n", ruta)
 				LeerCsv(ruta)
 				ColaDeAlumnos.Recorrer()
+				//ColaDeAlumnos.Desencolar()
+				//ColaDeAlumnos.Recorrer()
 			}
 
 		case "5":
