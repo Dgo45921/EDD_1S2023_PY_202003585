@@ -16,7 +16,6 @@ func LeerCsv(path string) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("Successfully opened the CSV file")
 	defer fd.Close()
 
 	// Lee el csv
@@ -27,10 +26,19 @@ func LeerCsv(path string) {
 	}
 	// fmt.Println(len(dataStudents))
 	// fmt.Println(dataStudents)
+
 	for i := 1; i <len(dataStudents) ; i++ {
-		carne, _ := strconv.Atoi(dataStudents[i][0])
-		ColaDeAlumnos.AgregaNodoFin(Objetos.Alumno{Id: carne, Name: dataStudents[i][1], Password: dataStudents[i][2]})
+		carne, err := strconv.Atoi(dataStudents[i][0])
+		if err == nil{
+			if !ColaDeAlumnos.Existing(carne){
+				ColaDeAlumnos.AgregaNodoFin(Objetos.Alumno{Id: carne, Name: dataStudents[i][1], Password: dataStudents[i][2]})
+			}
+		} else{
+			fmt.Println("Hay problemas con tu archivo csv")
+			return
+		}
 	}
+
 	//ColaDeAlumnos.Recorrer()
 
 }

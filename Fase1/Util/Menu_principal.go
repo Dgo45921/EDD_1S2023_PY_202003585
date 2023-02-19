@@ -1,9 +1,11 @@
 package Util
 
 import (
+	"Fase1/Objetos"
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 )
 
 func ShowPrincipalMenu() {
@@ -76,6 +78,25 @@ func menuAdministrator() {
 			ListaDobleAceptados.Recorrer()
 		case "3":
 			fmt.Println("Registrar estudiante")
+			fmt.Println("Ingrese lo que se le requiere, si desea salir deje algun campo en blanco")
+			var name, ls, iden, pass string
+			fmt.Println("Ingrese el nombre del alumno: "); fmt.Scanln(&name)
+			fmt.Println("Ingrese el apellido del alumno: "); fmt.Scanln(&ls)
+			fmt.Println("Ingrese su registro academico: "); fmt.Scanln(&iden)
+			fmt.Println("Ingrese la contraseña del alumno: "); fmt.Scanln(&pass)
+			if name == "" || ls == "" || iden == "" || pass == "" {
+				menuAdministrator()
+			}
+			var fid int
+			if _, err := strconv.Atoi(iden); err == nil {
+				fid, _ = strconv.Atoi(iden)
+			} else{
+				fmt.Println("Ingrese un registro válido")
+				menuAdministrator()
+			}
+
+			newStudent := Objetos.Alumno{Id: fid, Name: name + " " + ls, Password: pass}
+			ColaDeAlumnos.AgregaNodoFin(newStudent)
 		case "4":
 			fmt.Println("Carga masiva")
 			scanner := bufio.NewScanner(os.Stdin)

@@ -61,3 +61,19 @@ func (L *ListaColaAlumnos) Desencolar(){
 	L.Primero.Anterior = nil
 	L.Size--
 }
+
+
+func (L *ListaColaAlumnos) Existing(identifier int) bool  {
+	actual := L.Primero
+	if actual == nil{
+		return false
+	}
+	for actual != nil{
+		if actual.Alumno.Id == identifier {
+			return true
+		}
+		actual = actual.Siguiente
+	}
+
+	return false
+}
