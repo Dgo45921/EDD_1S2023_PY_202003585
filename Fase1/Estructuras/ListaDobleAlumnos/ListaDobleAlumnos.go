@@ -3,6 +3,8 @@ package ListaDobleAlumnos
 import (
 	"Fase1/Objetos"
 	"fmt"
+	"github.com/jedib0t/go-pretty/table"
+	"os"
 )
 
 type NodoListaDobleAlumno struct {
@@ -72,10 +74,15 @@ func (L *ListaDobleAlumno) Recorrer() {
 		return
 	}
 
+	t := table.NewWriter()
+	t.SetOutputMirror(os.Stdout)
+	t.AppendHeader(table.Row{"Nombre", "Registro académico"})
 	for actual != nil{
-		fmt.Println("Carné: ", actual.Alumno.Id, "Nombre: ", actual.Alumno.Name, "Password: ", actual.Alumno.Password)
+		//fmt.Println("Carné: ", actual.Alumno.Id, "Nombre: ", actual.Alumno.Name, "Password: ", actual.Alumno.Password)
+		t.AppendRow([]interface{}{actual.Alumno.Name, actual.Alumno.Id})
 		actual = actual.Siguiente
 	}
+	t.Render()
 
 }
 

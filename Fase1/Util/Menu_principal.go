@@ -73,6 +73,7 @@ func menuAdministrator() {
 			showqueue()
 		case "2":
 			fmt.Println("Estudiantes del sistema")
+			ListaDobleAceptados.Recorrer()
 		case "3":
 			fmt.Println("Registrar estudiante")
 		case "4":
