@@ -1,6 +1,8 @@
 package Menus
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func ShowPrincipalMenu() {
 	fmt.Println("Bienvenido")
@@ -25,5 +27,26 @@ ciclo:
 }
 
 func login() {
-	fmt.Println("Hola, logueate \n ")
+	var username string
+	var password string
+	for {
+		username = ""
+		password = ""
+		fmt.Println("\n Si deseas regresar al menú anterior deja los dos campos vacíos")
+		fmt.Println("Ingresa tu usuario: ")
+		fmt.Scanln(&username)
+		fmt.Println("Ingresa tu password: ")
+		fmt.Scanln(&password)
+		checkLogin(username, password)
+	}
+}
+
+func checkLogin(username, password string) {
+
+	if username == "admin" && password == "admin" {
+		fmt.Println("Bienvenido administrador")
+	}
+	if username == "" && password == "" {
+		ShowPrincipalMenu()
+	}
 }
