@@ -81,6 +81,7 @@ func menuAdministrator() {
 				ruta := scanner.Text()
 				//fmt.Printf("la ruta dada fue: %q\n", ruta)
 				LeerCsv(ruta)
+				ColaDeAlumnos.Recorrer()
 			}
 
 		case "5":
