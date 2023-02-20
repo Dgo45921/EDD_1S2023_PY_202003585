@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 )
 
 func ShowPrincipalMenu() {
@@ -15,7 +16,8 @@ ciclo:
 	for {
 		fmt.Println("**********GoDrive*********")
 		fmt.Println("* 1. Login               *")
-		fmt.Println("* 2. Exit                *")
+		fmt.Println("* 2. Reports             *")
+		fmt.Println("* 3. Exit                *")
 		fmt.Println("**************************")
 		fmt.Println("Seleccione una opción: \n ")
 		fmt.Scanln(&opcion)
@@ -23,6 +25,8 @@ ciclo:
 		case "1":
 			login()
 		case "2":
+			fmt.Println("reportes")
+		case "3":
 			break ciclo
 		default:
 			fmt.Println("Por favor ingrese una opción válida")
@@ -139,11 +143,14 @@ func showqueue(){
 			return
 		}
 		ListaDobleAceptados.AgregaNodo(ColaDeAlumnos.Primero.Alumno)
+		var newAction = Objetos.AccionAdmin{Status: "Aceptado", NameStudent: ColaDeAlumnos.Primero.Alumno.Name, Idstudent: ColaDeAlumnos.Primero.Alumno.Id, Date: geTime()}
+		PilaAccionesHechasAdmin.Apilar(newAction)
 		ColaDeAlumnos.Desencolar()
 		//fmt.Println("estado actual de la cola")
 		//ColaDeAlumnos.Recorrer()
-		fmt.Println("estado actual de la lista doble de alumnos")
-		ListaDobleAceptados.Recorrer()
+		//fmt.Println("estado actual de la lista doble de alumnos")
+		// ListaDobleAceptados.Recorrer()
+		PilaAccionesHechasAdmin.Recorrer()
 		showqueue()
 	case "2":
 		ColaDeAlumnos.Desencolar()
@@ -151,6 +158,9 @@ func showqueue(){
 		//ColaDeAlumnos.Recorrer()
 		//fmt.Println("estado actual de la lista doble de alumnos")
 		//ListaDobleAceptados.Recorrer()
+		var newAction = Objetos.AccionAdmin{Status: "Rechazado", NameStudent: ColaDeAlumnos.Primero.Alumno.Name, Idstudent: ColaDeAlumnos.Primero.Alumno.Id, Date: geTime()}
+		PilaAccionesHechasAdmin.Apilar(newAction)
+		PilaAccionesHechasAdmin.Recorrer()
 		showqueue()
 	case "3":
 		return
@@ -160,4 +170,8 @@ func showqueue(){
 	}
 
 
+}
+
+func geTime () string{
+	return time.Now().Format("02-01-2006 15:04:05")
 }
