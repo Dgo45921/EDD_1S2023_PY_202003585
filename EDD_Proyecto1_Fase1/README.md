@@ -14,15 +14,17 @@ El almacenamiento de toda esta información será contenido por las siguientes e
 
 - Lista doblemente enlazada que contenga pilas: Se encargará de guardar la información de los alumnos registrados en el sistema incluyendo sus inicios de sesión.
   
-  <img title="" src="imgs/alumnosLista.png" alt="" height="" width="583" data-align="center">
+  <img title="" src="imgs/alumnosLista.png" alt="" height="" width="834" data-align="center">
 
 - Cola: Se encargará de llevar un registro de los alumnos que están a la espera de ser aceptados o rechazados por el administrador.
   
-  <img title="" src="imgs/alumnosCola.png" alt="" height="" width="583" data-align="center">
+  <img title="" src="imgs/alumnosCola.png" alt="" height="" width="804" data-align="center">
 
 - Pila: Se encargará de guardar las acciones que realice el adminsitrador con los alumnos.
-
-<img title="" src="imgs/accionesAdmin.png" alt="" height="300" width="" data-align="center">
+  
+  <p style="position:relative; left:400px;">
+  <img title="" src="imgs/accionesAdmin.png" alt="">
+  </p>
 
 Esta fase del proyecto está pensada para seguir siendo utilizada, es por eso que tiene la capacidad de generar un reporte .json sobre los alumnos que estaban registrados en el sistema en ese momento
 
