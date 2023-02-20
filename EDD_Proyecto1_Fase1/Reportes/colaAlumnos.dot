@@ -1,7 +1,0 @@
-digraph G {
-  node [shape=box, fixedsize=true, width=3, height = 1]
- rankdir=LR;
-alumno0[label = "joj adlsfj\n23432"];
-alumno1[label = "dfsklj adsf\n231312"];
-alumno1->alumno0
-}
