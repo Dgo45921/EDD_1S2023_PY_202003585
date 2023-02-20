@@ -123,7 +123,7 @@ func menuAdministrator() {
 				menuAdministrator()
 			}
 
-			newStudent := Objetos.Alumno{Id: fid, Name: name + " " + ls, Password: pass}
+			newStudent := Objetos.Alumno{Id: fid, Name: name + " " + ls, Password: pass, Carpeta_Raiz: "/"}
 			ColaDeAlumnos.AgregaNodoFin(newStudent)
 		case "4":
 			fmt.Println("Carga masiva")
@@ -152,10 +152,10 @@ func showqueue(){
 	var opcion string
 	// fmt.Println("***Estudiantes pendientes****")
 	if ColaDeAlumnos.Size == 0{
-		fmt.Println("No hay alumnos en la cola de espera")
+		fmt.Println("No hay final en la cola de espera")
 		menuAdministrator()
 	}
-	fmt.Println("Hay: ", ColaDeAlumnos.Size, " alumnos pendientes")
+	fmt.Println("Hay: ", ColaDeAlumnos.Size, " final pendientes")
 	fmt.Println("Estudiante actual: ", ColaDeAlumnos.Primero.Alumno.Name, " ", ColaDeAlumnos.Primero.Alumno.Id)
 	fmt.Println("¿Qué desea hacer?")
 	fmt.Println("1.Aceptar \n2.Rechazar\n3.Salir")
@@ -163,7 +163,7 @@ func showqueue(){
 	switch opcion {
 	case "1":
 		if ColaDeAlumnos.Size == 0{
-			fmt.Println("No hay alumnos en la cola de espera")
+			fmt.Println("No hay final en la cola de espera")
 			return
 		}
 		ListaDobleAceptados.AgregaNodo(ColaDeAlumnos.Primero.Alumno)
@@ -172,17 +172,17 @@ func showqueue(){
 		ColaDeAlumnos.Desencolar()
 		//fmt.Println("estado actual de la cola")
 		//ColaDeAlumnos.Recorrer()
-		//fmt.Println("estado actual de la lista doble de alumnos")
+		//fmt.Println("estado actual de la lista doble de final")
 		// ListaDobleAceptados.Recorrer()
 		PilaAccionesHechasAdmin.Recorrer()
 		showqueue()
 	case "2":
-		ColaDeAlumnos.Desencolar()
 		//fmt.Println("estado actual de la cola")
 		//ColaDeAlumnos.Recorrer()
-		//fmt.Println("estado actual de la lista doble de alumnos")
+		//fmt.Println("estado actual de la lista doble de final")
 		//ListaDobleAceptados.Recorrer()
 		var newAction = Objetos.AccionAdmin{Status: "Rechazado", NameStudent: ColaDeAlumnos.Primero.Alumno.Name, Idstudent: ColaDeAlumnos.Primero.Alumno.Id, Date: geTime()}
+		ColaDeAlumnos.Desencolar()
 		PilaAccionesHechasAdmin.Apilar(newAction)
 		PilaAccionesHechasAdmin.Recorrer()
 		showqueue()

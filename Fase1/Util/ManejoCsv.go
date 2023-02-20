@@ -10,8 +10,8 @@ import (
 	"os"
 	"strconv"
 )
-var ColaDeAlumnos = ColaAlumnos.InicializarColaAlumnos() // acá se llevará el registro de alumnos pendientes
-var ListaDobleAceptados = ListaDobleAlumnos.InicializarListaDobleAlumnos() // acá se llevara el registro de alumnos aceptados
+var ColaDeAlumnos = ColaAlumnos.InicializarColaAlumnos() // acá se llevará el registro de final pendientes
+var ListaDobleAceptados = ListaDobleAlumnos.InicializarListaDobleAlumnos() // acá se llevara el registro de final aceptados
 var PilaAccionesHechasAdmin = PilaAcciones.InicializarPilaAccionesAdmin()
 func LeerCsv(path string) {
 	fd, err := os.Open(path)
@@ -33,7 +33,7 @@ func LeerCsv(path string) {
 		carne, err := strconv.Atoi(dataStudents[i][0])
 		if err == nil{
 			if !ColaDeAlumnos.Existing(carne){
-				ColaDeAlumnos.AgregaNodoFin(Objetos.Alumno{Id: carne, Name: dataStudents[i][1], Password: dataStudents[i][2]})
+				ColaDeAlumnos.AgregaNodoFin(Objetos.Alumno{Id: carne, Name: dataStudents[i][1], Password: dataStudents[i][2], Carpeta_Raiz: "/"})
 			}
 		} else{
 			fmt.Println("Hay problemas con tu archivo csv")

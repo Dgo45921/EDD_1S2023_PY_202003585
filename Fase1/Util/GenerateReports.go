@@ -1,7 +1,10 @@
 package Util
 
 import (
+	"Fase1/Objetos"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -12,6 +15,7 @@ func GenerateData(){
 	os.MkdirAll("Reportes", os.ModePerm)
 	if ListaDobleAceptados.Size !=0 {
 		reporteAlumnos()
+		createJson()
 	}
 	if ColaDeAlumnos.Size != 0{
 		reporteCola()
@@ -27,7 +31,7 @@ func reporteAlumnos(){
   node [shape=box, fixedsize=true, width=3, height = 2]
 `
 	actual := ListaDobleAceptados.Primero
-	for i := 0; i <ListaDobleAceptados.Size+1 ; i++ {
+	for i := 0; i <ListaDobleAceptados.Size ; i++ {
 		contenido += "alumno" + strconv.Itoa(i) + "[label = \"" + actual.Alumno.Name +"\\n"+ strconv.Itoa(actual.Alumno.Id)+ "\"];\n"
 		var subcadena = ""
 		actualAcciones := actual.Acciones.Primero
@@ -44,8 +48,8 @@ func reporteAlumnos(){
 		contenido += "alumno" + strconv.Itoa(i) + "->" + "accion" + strconv.Itoa(i) + "\n"
 	}
 
-	for i := 0; i <ListaDobleAceptados.Size+1 ; i++ {
-		if i != ListaDobleAceptados.Size {
+	for i := 0; i <ListaDobleAceptados.Size ; i++ {
+		if i != ListaDobleAceptados.Size-1 {
 			contenido += "alumno" + strconv.Itoa(i) + "->"
 		}else {
 			contenido += "alumno" + strconv.Itoa(i)
@@ -53,7 +57,7 @@ func reporteAlumnos(){
 	}
 	contenido+= "\n"
 
-	for i := ListaDobleAceptados.Size; i >=0 ; i -- {
+	for i := ListaDobleAceptados.Size-1; i >=0 ; i -- {
 		if i != 0 {
 			contenido += "alumno" + strconv.Itoa(i) + "->"
 		}else {
@@ -62,8 +66,8 @@ func reporteAlumnos(){
 	}
 	contenido+= "\n"
 	contenido += "{rank = same;"
-	for i := 0; i <ListaDobleAceptados.Size+1 ; i++ {
-		if i != ListaDobleAceptados.Size{
+	for i := 0; i <ListaDobleAceptados.Size ; i++ {
+		if i != ListaDobleAceptados.Size-1{
 			contenido += "alumno" +strconv.Itoa(i) + ","
 		}else {
 			contenido += "alumno" + strconv.Itoa(i) + "}"
@@ -116,7 +120,7 @@ actual := ColaDeAlumnos.Primero
 		actual = actual.Siguiente
 	}
 
-	for i := ColaDeAlumnos.Size; i >=0 ; i -- {
+	for i := ColaDeAlumnos.Size-1; i >=0 ; i -- {
 		if i != 0 {
 			contenido += "alumno" + strconv.Itoa(i) + "->"
 		}else {
@@ -138,7 +142,7 @@ actual := ColaDeAlumnos.Primero
 		f.Close()
 		return
 	}
-	fmt.Println(l, "Se creo el reporte de alumnos")
+	fmt.Println(l, "Se creo el reporte de final")
 	err = f.Close()
 	if err != nil {
 		fmt.Println(err)
@@ -205,4 +209,29 @@ func stackAdmin(){
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func createJson(){
+	actual := ListaDobleAceptados.Primero
+	var n int = ListaDobleAceptados.Size
+	s := make([]Objetos.Alumno, n)
+	for i := 0; i <ListaDobleAceptados.Size ; i++ {
+		s[i] = actual.Alumno
+		actual = actual.Siguiente
+	}
+
+	type final struct {
+		Alumnos []Objetos.Alumno
+	}
+
+	//f2 := final{alumnos: s}
+	//file, err := json.Marshal(final{Alumnos: s})
+	//if err != nil {
+	//	panic(err)
+	//}
+
+	file, _ := json.MarshalIndent(final{Alumnos: s}, "", " ")
+
+	_ = ioutil.WriteFile("Reportes/alumnos.json", file, 0644)
+
 }

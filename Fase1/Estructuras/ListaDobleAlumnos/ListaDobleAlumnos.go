@@ -31,6 +31,7 @@ func (L *ListaDobleAlumno) AgregaNodo(alumno Objetos.Alumno){
 	if L.Primero == nil{
 		L.Primero = nuevoNodo
 		L.Ultimo = nuevoNodo
+		L.Size++
 		return
 	} else{
 
@@ -63,8 +64,6 @@ func (L *ListaDobleAlumno) AgregaNodo(alumno Objetos.Alumno){
 			}
 			actual = actual.Siguiente
 		}
-		
-		
 	}
 
 }
