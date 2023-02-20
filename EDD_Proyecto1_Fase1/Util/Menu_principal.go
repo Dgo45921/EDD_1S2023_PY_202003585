@@ -13,7 +13,6 @@ import (
 func ShowPrincipalMenu() {
 	fmt.Println("Bienvenido")
 	var opcion string
-ciclo:
 	for {
 		fmt.Println("**********GoDrive*********")
 		fmt.Println("* 1. Login               *")
@@ -29,7 +28,7 @@ ciclo:
 			fmt.Println("reportes")
 			GenerateData()
 		case "3":
-			break ciclo
+			os.Exit(3)
 		default:
 			fmt.Println("Por favor ingrese una opción válida")
 		}
