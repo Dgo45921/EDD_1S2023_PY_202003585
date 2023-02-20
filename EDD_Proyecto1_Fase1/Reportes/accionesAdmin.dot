@@ -1,0 +1,6 @@
+digraph G {
+
+  node [shape=record]
+  
+accion[label="{ Aceptado\n20-02-2023 02:13:18\n ultimo\n100|Aceptado\n20-02-2023 02:13:18\n primero\n1|Aceptado\n20-02-2023 02:13:11\n fabiana\n7|Rechazado\n20-02-2023 02:13:06\n lucas\n8|Aceptado\n20-02-2023 02:13:04\n carla\n6|Aceptado\n20-02-2023 02:13:02\n Diego Huite\n3}"];
+}
