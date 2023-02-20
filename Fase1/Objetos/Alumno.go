@@ -5,3 +5,8 @@ type Alumno struct {
 	Name string
 	Password string
 }
+
+type AccionAlumno struct {
+	Date string
+	Accion string
+}

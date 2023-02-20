@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+
 func ShowPrincipalMenu() {
 	fmt.Println("Bienvenido")
 	var opcion string
@@ -40,11 +41,15 @@ func login() {
 	for {
 		username = ""
 		password = ""
-		fmt.Println("\nSi deseas regresar al menú anterior deja los dos campos vacíos")
+		fmt.Println("\nSi deseas regresar al menú anterior deja algun campo vacio")
 		fmt.Println("Ingresa tu usuario: ")
 		fmt.Scanln(&username)
 		fmt.Println("Ingresa tu password: ")
 		fmt.Scanln(&password)
+		if username == "" || password == "" {
+			ShowPrincipalMenu()
+		}
+
 		checkLogin(username, password)
 	}
 }
@@ -54,7 +59,25 @@ func checkLogin(username, password string) {
 	if username == "admin" && password == "admin" {
 		fmt.Println("Bienvenido administrador")
 		menuAdministrator()
+	} else{
+		var carnet int
+		carnet, err := strconv.Atoi(username)
+
+		if err != nil {
+			fmt.Println("Ingresa un carnet valido")
+			return
+		}
+
+		var res = ListaDobleAceptados.CheckUser(carnet, password)
+		if res{
+			// ListaDobleAceptados.RecorrerFull()
+			ShowPrincipalMenu()
+		}else {
+			fmt.Println("Usuario no encontrado")
+			ShowPrincipalMenu()
+		}
 	}
+
 	if username == "" && password == "" {
 		ShowPrincipalMenu()
 	}

@@ -1,16 +1,19 @@
 package ListaDobleAlumnos
 
 import (
+	"Fase1/Estructuras/PilaAcciones"
 	"Fase1/Objetos"
 	"fmt"
 	"github.com/jedib0t/go-pretty/table"
 	"os"
+	"time"
 )
 
 type NodoListaDobleAlumno struct {
 	Alumno    Objetos.Alumno
 	Anterior  *NodoListaDobleAlumno
 	Siguiente *NodoListaDobleAlumno
+	Acciones PilaAcciones.PilaAccionAlumno
 }
 
 type ListaDobleAlumno struct {
@@ -24,7 +27,7 @@ func InicializarListaDobleAlumnos () *ListaDobleAlumno{
 }
 
 func (L *ListaDobleAlumno) AgregaNodo(alumno Objetos.Alumno){
-	nuevoNodo := &NodoListaDobleAlumno{alumno, nil, nil}
+	nuevoNodo := &NodoListaDobleAlumno{alumno, nil, nil, PilaAcciones.PilaAccionAlumno{}}
 	if L.Primero == nil{
 		L.Primero = nuevoNodo
 		L.Ultimo = nuevoNodo
@@ -84,5 +87,40 @@ func (L *ListaDobleAlumno) Recorrer() {
 	}
 	t.Render()
 
+}
+
+func (L *ListaDobleAlumno) RecorrerFull() {
+	actual := L.Primero
+	if actual == nil{
+		fmt.Println("Lista vacía")
+		return
+	}
+
+	for actual != nil{
+		fmt.Println("Alumno: " ,actual.Alumno.Name, "carnet: ", actual.Alumno.Id)
+		actual.Acciones.Recorrer()
+		actual = actual.Siguiente
+	}
+
+
+}
+
+
+func (L *ListaDobleAlumno) CheckUser(iden int, pass string) bool{
+	actual := L.Primero
+
+	for actual != nil{
+		if actual.Alumno.Id == iden && actual.Alumno.Password == pass{
+			fmt.Println("Se ha registrado tu inicio de sesión, bienvenido: ", actual.Alumno.Name)
+			actual.Acciones.ApilarAccionAlumno(Objetos.AccionAlumno{Date:geTime(), Accion: "Inicio de sesión"})
+			return true
+		}
+		actual = actual.Siguiente
+	}
+	return false
+}
+
+func geTime () string{
+	return time.Now().Format("02-01-2006 15:04:05")
 }
 
