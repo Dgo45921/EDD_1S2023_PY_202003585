@@ -5,8 +5,5 @@ import (
 )
 
 func main() {
-
-
 	Util.ShowPrincipalMenu()
-
 }
