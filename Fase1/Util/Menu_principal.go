@@ -27,6 +27,7 @@ ciclo:
 			login()
 		case "2":
 			fmt.Println("reportes")
+			GenerateData()
 		case "3":
 			break ciclo
 		default:
