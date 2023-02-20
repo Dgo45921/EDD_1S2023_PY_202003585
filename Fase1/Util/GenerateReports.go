@@ -13,6 +13,12 @@ func GenerateData(){
 	if ListaDobleAceptados.Size !=0 {
 		reporteAlumnos()
 	}
+	if ColaDeAlumnos.Size != 0{
+		reporteCola()
+	}
+	if PilaAccionesHechasAdmin.Size !=0 {
+		stackAdmin()
+	}
 }
 
 func reporteAlumnos(){
@@ -89,6 +95,110 @@ func reporteAlumnos(){
 	}
 
 	cmd := exec.Command("dot", "-Tpng", "Reportes/alumnos.dot" ,"-o", "Reportes/alumnos.png")
+
+	err = cmd.Run()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+
+func reporteCola(){
+	var contenido string
+	contenido = `digraph G {
+  node [shape=box, fixedsize=true, width=3, height = 1]
+ rankdir=LR;
+`
+actual := ColaDeAlumnos.Primero
+	for i := 0; i <ColaDeAlumnos.Size ; i++ {
+		contenido += "alumno" + strconv.Itoa(i) + "[label = \"" + actual.Alumno.Name +"\\n"+ strconv.Itoa(actual.Alumno.Id)+ "\"];\n"
+		actual = actual.Siguiente
+	}
+
+	for i := ColaDeAlumnos.Size; i >=0 ; i -- {
+		if i != 0 {
+			contenido += "alumno" + strconv.Itoa(i) + "->"
+		}else {
+			contenido += "alumno" + strconv.Itoa(i)
+		}
+	}
+	contenido += "\n}"
+
+	//-------------------------------------------------------------------------
+
+	f, err := os.Create("Reportes/colaAlumnos.dot")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	l, err := f.WriteString(contenido)
+	if err != nil {
+		fmt.Println(err)
+		f.Close()
+		return
+	}
+	fmt.Println(l, "Se creo el reporte de alumnos")
+	err = f.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	cmd := exec.Command("dot", "-Tpng", "Reportes/colaAlumnos.dot" ,"-o", "Reportes/colaAlumnos.png")
+
+	err = cmd.Run()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+
+}
+
+func stackAdmin(){
+	actual := PilaAccionesHechasAdmin.Primero
+	var contenido string
+	contenido = `digraph G {
+
+  node [shape=record]
+  
+`
+
+	contenido += "accion[label=\"{ "
+	var subcadena string = ""
+	for j := 0; j <PilaAccionesHechasAdmin.Size ; j++ {
+		if j==PilaAccionesHechasAdmin.Size-1 {
+			subcadena += actual.Acccion.Status +"\\n" +actual.Acccion.Date + "\\n" + actual.Acccion.NameStudent +"\\n" + strconv.Itoa(actual.Acccion.Idstudent)
+		}else{
+			subcadena += actual.Acccion.Status +"\\n" +actual.Acccion.Date + "\\n" + actual.Acccion.NameStudent +"\\n" + strconv.Itoa(actual.Acccion.Idstudent) + "|"
+		}
+		actual = actual.Siguiente
+	}
+	contenido += subcadena
+	contenido+=  "}\"];"
+
+	contenido += "\n}"
+
+	f, err := os.Create("Reportes/accionesAdmin.dot")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	l, err := f.WriteString(contenido)
+	if err != nil {
+		fmt.Println(err)
+		f.Close()
+		return
+	}
+	fmt.Println(l, "Se creo el reporte de acciones del administrador")
+	err = f.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	cmd := exec.Command("dot", "-Tpng", "Reportes/accionesAdmin.dot" ,"-o", "Reportes/accionesAdmin.png")
 
 	err = cmd.Run()
 
