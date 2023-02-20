@@ -22,11 +22,9 @@ El almacenamiento de toda esta información será contenido por las siguientes e
 
 - Pila: Se encargará de guardar las acciones que realice el adminsitrador con los alumnos.
 
-<img title="" src="imgs/accionesAdmin.png" alt="" height="" width="200" data-align="center">
+<img title="" src="imgs/accionesAdmin.png" alt="" height="300" width="" data-align="center">
 
 Esta fase del proyecto está pensada para seguir siendo utilizada, es por eso que tiene la capacidad de generar un reporte .json sobre los alumnos que estaban registrados en el sistema en ese momento
-
-
 
 La información de los alumnos puede ser extraida de un archivo .csv en el menú de administrador con la siguiente estructura
 
