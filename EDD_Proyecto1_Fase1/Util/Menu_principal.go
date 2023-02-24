@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-
 func ShowPrincipalMenu() {
 	fmt.Println("Bienvenido")
 	var opcion string
@@ -59,7 +58,7 @@ func checkLogin(username, password string) {
 	if username == "admin" && password == "admin" {
 		fmt.Println("Bienvenido administrador")
 		menuAdministrator()
-	} else{
+	} else {
 		var carnet int
 		carnet, err := strconv.Atoi(username)
 
@@ -69,10 +68,10 @@ func checkLogin(username, password string) {
 		}
 
 		var res = ListaDobleAceptados.CheckUser(carnet, password)
-		if res{
+		if res {
 			// ListaDobleAceptados.RecorrerFull()
 			ShowPrincipalMenu()
-		}else {
+		} else {
 			fmt.Println("Usuario no encontrado")
 			ShowPrincipalMenu()
 		}
@@ -107,17 +106,21 @@ func menuAdministrator() {
 			fmt.Println("Registrar estudiante")
 			fmt.Println("Ingrese lo que se le requiere, si desea salir deje algun campo en blanco")
 			var name, ls, iden, pass string
-			fmt.Println("Ingrese el nombre del alumno: "); fmt.Scanln(&name)
-			fmt.Println("Ingrese el apellido del alumno: "); fmt.Scanln(&ls)
-			fmt.Println("Ingrese su registro academico: "); fmt.Scanln(&iden)
-			fmt.Println("Ingrese la contraseña del alumno: "); fmt.Scanln(&pass)
+			fmt.Println("Ingrese el nombre del alumno: ")
+			fmt.Scanln(&name)
+			fmt.Println("Ingrese el apellido del alumno: ")
+			fmt.Scanln(&ls)
+			fmt.Println("Ingrese su registro academico: ")
+			fmt.Scanln(&iden)
+			fmt.Println("Ingrese la contraseña del alumno: ")
+			fmt.Scanln(&pass)
 			if name == "" || ls == "" || iden == "" || pass == "" {
 				menuAdministrator()
 			}
 			var fid int
 			if _, err := strconv.Atoi(iden); err == nil {
 				fid, _ = strconv.Atoi(iden)
-			} else{
+			} else {
 				fmt.Println("Ingrese un registro válido")
 				menuAdministrator()
 			}
@@ -146,14 +149,14 @@ func menuAdministrator() {
 
 }
 
-
-func showqueue(){
+func showqueue() {
 	var opcion string
 	// fmt.Println("***Estudiantes pendientes****")
-	if ColaDeAlumnos.Size == 0{
+	if ColaDeAlumnos.Size == 0 {
 		fmt.Println("No hay final en la cola de espera")
 		menuAdministrator()
 	}
+	ColaDeAlumnos.Recorrer()
 	fmt.Println("Hay: ", ColaDeAlumnos.Size, " final pendientes")
 	fmt.Println("Estudiante actual: ", ColaDeAlumnos.Primero.Alumno.Name, " ", ColaDeAlumnos.Primero.Alumno.Id)
 	fmt.Println("¿Qué desea hacer?")
@@ -161,7 +164,7 @@ func showqueue(){
 	fmt.Scanln(&opcion)
 	switch opcion {
 	case "1":
-		if ColaDeAlumnos.Size == 0{
+		if ColaDeAlumnos.Size == 0 {
 			fmt.Println("No hay final en la cola de espera")
 			return
 		}
@@ -192,9 +195,8 @@ func showqueue(){
 		showqueue()
 	}
 
-
 }
 
-func geTime () string{
+func geTime() string {
 	return time.Now().Format("02-01-2006 15:04:05")
 }

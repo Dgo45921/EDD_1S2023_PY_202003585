@@ -3,6 +3,8 @@ package ColaAlumnos
 import (
 	"Fase1/Objetos"
 	"fmt"
+	"github.com/jedib0t/go-pretty/table"
+	"os"
 )
 
 type NodoListaColaAlumnos struct {
@@ -12,22 +14,22 @@ type NodoListaColaAlumnos struct {
 }
 
 type ListaColaAlumnos struct {
-	Size int
+	Size    int
 	Primero *NodoListaColaAlumnos
-	Ultimo *NodoListaColaAlumnos
+	Ultimo  *NodoListaColaAlumnos
 }
 
-func InicializarColaAlumnos() *ListaColaAlumnos{
+func InicializarColaAlumnos() *ListaColaAlumnos {
 	return &ListaColaAlumnos{}
 }
 
-func (L *ListaColaAlumnos) AgregaNodoFin(alumno Objetos.Alumno){
+func (L *ListaColaAlumnos) AgregaNodoFin(alumno Objetos.Alumno) {
 	nuevoNodo := &NodoListaColaAlumnos{alumno, nil, nil}
-	if L.Primero == nil{
+	if L.Primero == nil {
 		L.Primero = nuevoNodo
 		L.Ultimo = nuevoNodo
 
-	} else{
+	} else {
 		nuevoNodo.Anterior = L.Ultimo
 		L.Ultimo.Siguiente = nuevoNodo
 		L.Ultimo = nuevoNodo
@@ -38,20 +40,26 @@ func (L *ListaColaAlumnos) AgregaNodoFin(alumno Objetos.Alumno){
 
 func (L *ListaColaAlumnos) Recorrer() {
 	actual := L.Primero
-	if actual == nil{
+	if actual == nil {
 		fmt.Println("Lista vacía")
 		return
 	}
 
-	for actual != nil{
-		fmt.Println("Carné: ", actual.Alumno.Id, "Nombre: ", actual.Alumno.Name, "Password: ", actual.Alumno.Password)
+	t := table.NewWriter()
+	t.SetOutputMirror(os.Stdout)
+	t.AppendHeader(table.Row{"Nombre", "Registro académico"})
+	for actual != nil {
+		//fmt.Println("Carné: ", actual.Alumno.Id, "Nombre: ", actual.Alumno.Name, "Password: ", actual.Alumno.Password)
+		t.AppendRow([]interface{}{actual.Alumno.Name, actual.Alumno.Id})
 		actual = actual.Siguiente
 	}
+	fmt.Println("Alumnos en cola")
+	t.Render()
 
 }
 
-func (L *ListaColaAlumnos) Desencolar(){
-	if L.Size == 1{
+func (L *ListaColaAlumnos) Desencolar() {
+	if L.Size == 1 {
 		L.Primero = nil
 		L.Ultimo = nil
 		L.Size--
@@ -62,13 +70,12 @@ func (L *ListaColaAlumnos) Desencolar(){
 	L.Size--
 }
 
-
-func (L *ListaColaAlumnos) Existing(identifier int) bool  {
+func (L *ListaColaAlumnos) Existing(identifier int) bool {
 	actual := L.Primero
-	if actual == nil{
+	if actual == nil {
 		return false
 	}
-	for actual != nil{
+	for actual != nil {
 		if actual.Alumno.Id == identifier {
 			return true
 		}

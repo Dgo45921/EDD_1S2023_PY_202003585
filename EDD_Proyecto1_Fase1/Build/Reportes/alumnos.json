@@ -1,12 +1,6 @@
 {
  "Alumnos": [
   {
-   "Id": 200819325,
-   "Name": "Ethel Herrarte",
-   "Password": "Ethel139",
-   "Carpeta_Raiz": "/"
-  },
-  {
    "Id": 201403877,
    "Name": "Ebany Larios",
    "Password": "qwerty12",
@@ -49,12 +43,6 @@
    "Carpeta_Raiz": "/"
   },
   {
-   "Id": 201900603,
-   "Name": "Karen Gatica",
-   "Password": "Karen132",
-   "Carpeta_Raiz": "/"
-  },
-  {
    "Id": 201902259,
    "Name": "Lourdes Reyes",
    "Password": "Lourdes123",
@@ -94,12 +82,6 @@
    "Id": 202101648,
    "Name": "Juan Valle",
    "Password": "Juan137",
-   "Carpeta_Raiz": "/"
-  },
-  {
-   "Id": 202113553,
-   "Name": "Kevin Garc\ufffda",
-   "Password": "Kevin133",
    "Carpeta_Raiz": "/"
   }
  ]

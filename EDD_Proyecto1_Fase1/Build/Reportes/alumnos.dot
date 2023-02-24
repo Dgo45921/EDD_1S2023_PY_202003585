@@ -1,58 +1,49 @@
 digraph G {
   node [shape=box, fixedsize=true, width=3, height = 2]
-alumno0[label = "Ethel Herrarte\n200819325"];
+alumno0[label = "Ebany Larios\n201403877"];
 accion0[label="{}" shape=record];
 alumno0->accion0
-alumno1[label = "Ebany Larios\n201403877"];
-accion1[label="{}" shape=record];
+alumno1[label = "Bryan Montepeque\n201700375"];
+accion1[label="{Inicio de sesi贸n\n24-02-2023 11:24:35|Inicio de sesi贸n\n24-02-2023 11:24:22}" shape=record];
 alumno1->accion1
-alumno2[label = "Bryan Montepeque\n201700375"];
+alumno2[label = "Kevyn Gir髇\n201700653"];
 accion2[label="{}" shape=record];
 alumno2->accion2
-alumno3[label = "Kevyn Gir髇\n201700653"];
-accion3[label="{}" shape=record];
+alumno3[label = "Cristian Suy\n201700918"];
+accion3[label="{Inicio de sesi贸n\n24-02-2023 11:23:53}" shape=record];
 alumno3->accion3
-alumno4[label = "Cristian Suy\n201700918"];
+alumno4[label = "Leonardo Martinez\n201780044"];
 accion4[label="{}" shape=record];
 alumno4->accion4
-alumno5[label = "Leonardo Martinez\n201780044"];
+alumno5[label = "Juan Augusto\n201801683"];
 accion5[label="{}" shape=record];
 alumno5->accion5
-alumno6[label = "Juan Augusto\n201801683"];
+alumno6[label = "Jonatan Gonzalez\n201900570"];
 accion6[label="{}" shape=record];
 alumno6->accion6
-alumno7[label = "Jonatan Gonzalez\n201900570"];
+alumno7[label = "Lourdes Reyes\n201902259"];
 accion7[label="{}" shape=record];
 alumno7->accion7
-alumno8[label = "Karen Gatica\n201900603"];
+alumno8[label = "Alejandro Caballeros\n201903549"];
 accion8[label="{}" shape=record];
 alumno8->accion8
-alumno9[label = "Lourdes Reyes\n201902259"];
+alumno9[label = "Roberto G髆ez\n202000544"];
 accion9[label="{}" shape=record];
 alumno9->accion9
-alumno10[label = "Alejandro Caballeros\n201903549"];
+alumno10[label = "Sebasti醤 Godoy\n202002940"];
 accion10[label="{}" shape=record];
 alumno10->accion10
-alumno11[label = "Roberto G髆ez\n202000544"];
-accion11[label="{}" shape=record];
+alumno11[label = "Diego Huite\n202003585"];
+accion11[label="{Inicio de sesi贸n\n24-02-2023 11:23:27|Inicio de sesi贸n\n24-02-2023 11:23:12}" shape=record];
 alumno11->accion11
-alumno12[label = "Sebasti醤 Godoy\n202002940"];
+alumno12[label = "Eduardo Cuevas\n202004703"];
 accion12[label="{}" shape=record];
 alumno12->accion12
-alumno13[label = "Diego Huite\n202003585"];
-accion13[label="{Inicio de sesi贸n\n23-02-2023 18:31:43|Inicio de sesi贸n\n23-02-2023 18:31:25}" shape=record];
+alumno13[label = "Juan Valle\n202101648"];
+accion13[label="{Inicio de sesi贸n\n24-02-2023 11:25:20}" shape=record];
 alumno13->accion13
-alumno14[label = "Eduardo Cuevas\n202004703"];
-accion14[label="{}" shape=record];
-alumno14->accion14
-alumno15[label = "Juan Valle\n202101648"];
-accion15[label="{Inicio de sesi贸n\n23-02-2023 18:33:19}" shape=record];
-alumno15->accion15
-alumno16[label = "Kevin Garc韆\n202113553"];
-accion16[label="{}" shape=record];
-alumno16->accion16
-alumno0->alumno1->alumno2->alumno3->alumno4->alumno5->alumno6->alumno7->alumno8->alumno9->alumno10->alumno11->alumno12->alumno13->alumno14->alumno15->alumno16
-alumno16->alumno15->alumno14->alumno13->alumno12->alumno11->alumno10->alumno9->alumno8->alumno7->alumno6->alumno5->alumno4->alumno3->alumno2->alumno1->alumno0
-{rank = same;alumno0,alumno1,alumno2,alumno3,alumno4,alumno5,alumno6,alumno7,alumno8,alumno9,alumno10,alumno11,alumno12,alumno13,alumno14,alumno15,alumno16}
+alumno0->alumno1->alumno2->alumno3->alumno4->alumno5->alumno6->alumno7->alumno8->alumno9->alumno10->alumno11->alumno12->alumno13
+alumno13->alumno12->alumno11->alumno10->alumno9->alumno8->alumno7->alumno6->alumno5->alumno4->alumno3->alumno2->alumno1->alumno0
+{rank = same;alumno0,alumno1,alumno2,alumno3,alumno4,alumno5,alumno6,alumno7,alumno8,alumno9,alumno10,alumno11,alumno12,alumno13}
 
 }
