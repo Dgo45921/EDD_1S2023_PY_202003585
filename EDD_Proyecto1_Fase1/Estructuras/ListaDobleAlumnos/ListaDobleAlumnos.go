@@ -110,8 +110,10 @@ func (L *ListaDobleAlumno) CheckUser(iden int, pass string) bool{
 
 	for actual != nil{
 		if actual.Alumno.Id == iden && actual.Alumno.Password == pass{
+			fmt.Println("Fecha y hora: ", geTime())
 			fmt.Println("Se ha registrado tu inicio de sesión, bienvenido: ", actual.Alumno.Name)
 			actual.Acciones.ApilarAccionAlumno(Objetos.AccionAlumno{Date:geTime(), Accion: "Inicio de sesión"})
+			fmt.Println("Has iniciado sesión un total de: ", actual.Acciones.Size, " veces")
 			return true
 		}
 		actual = actual.Siguiente

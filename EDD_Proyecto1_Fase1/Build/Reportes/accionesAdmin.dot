@@ -1,0 +1,6 @@
+digraph G {
+
+  node [shape=record]
+  
+accion[label="{ Aceptado\n23-02-2023 18:30:11\nEthel Herrarte\n200819325|Rechazado\n23-02-2023 18:30:11\nJose Melendez\n201325511|Aceptado\n23-02-2023 18:30:10\nJuan Valle\n202101648|Rechazado\n23-02-2023 18:30:10\nSergio Ralda\n202103216|Rechazado\n23-02-2023 18:30:10\nJosue Porres\n202112026|Aceptado\n23-02-2023 18:30:08\nDiego Huite\n202003585|Aceptado\n23-02-2023 18:30:07\nKevin García\n202113553|Aceptado\n23-02-2023 18:30:07\nKaren Gatica\n201900603|Aceptado\n23-02-2023 18:30:07\nBryan Montepeque\n201700375|Aceptado\n23-02-2023 18:30:07\nJuan Augusto\n201801683|Aceptado\n23-02-2023 18:30:06\nSebastián Godoy\n202002940|Aceptado\n23-02-2023 18:30:06\nRoberto Gómez\n202000544|Aceptado\n23-02-2023 18:30:06\nEduardo Cuevas\n202004703|Aceptado\n23-02-2023 18:30:06\nKevyn Girón\n201700653|Aceptado\n23-02-2023 18:30:05\nJonatan Gonzalez\n201900570|Aceptado\n23-02-2023 18:30:05\nAlejandro Caballeros\n201903549|Aceptado\n23-02-2023 18:30:05\nLourdes Reyes\n201902259|Aceptado\n23-02-2023 18:30:05\nEbany Larios\n201403877|Aceptado\n23-02-2023 18:30:05\nLeonardo Martinez\n201780044|Aceptado\n23-02-2023 18:30:04\nCristian Suy\n201700918}"];
+}

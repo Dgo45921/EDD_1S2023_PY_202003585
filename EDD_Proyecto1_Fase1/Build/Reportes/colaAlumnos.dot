@@ -1,0 +1,28 @@
+digraph G {
+  node [shape=box, fixedsize=true, width=3, height = 1]
+ rankdir=LR;
+alumno0[label = "Sergio Guix\n201906468"];
+alumno1[label = "José Donis\n201801444"];
+alumno2[label = "Marvin Castellanos\n201700490"];
+alumno3[label = "Ludwing Lopez\n201907608"];
+alumno4[label = "Sergio Bucaro\n201800673"];
+alumno5[label = "Christian Esquite\n200819074"];
+alumno6[label = "Luis Yaquian\n202001471"];
+alumno7[label = "Luis Lizama\n202010023"];
+alumno8[label = "Olivert Vargas\n201503617"];
+alumno9[label = "José Ibarra\n202001800"];
+alumno10[label = "Mauricio Castro\n202100299"];
+alumno11[label = "Velveth Pérez\n202010810"];
+alumno12[label = "Miguel Sac\n201222535"];
+alumno13[label = "José Panaza\n202111478"];
+alumno14[label = "Pablo Fernández\n201807411"];
+alumno15[label = "Henderson Hernandez\n201019694"];
+alumno16[label = "Aída Mansilla\n202100239"];
+alumno17[label = "Jeser Rodas\n202105561"];
+alumno18[label = "Anthony Zea\n202104782"];
+alumno19[label = "Julio Fernández\n201902416"];
+alumno20[label = "Hugo Giron\n202004807"];
+alumno21[label = "Mario Lopez\n202109554"];
+alumno22[label = "Diana contreras\n22214"];
+alumno22->alumno21->alumno20->alumno19->alumno18->alumno17->alumno16->alumno15->alumno14->alumno13->alumno12->alumno11->alumno10->alumno9->alumno8->alumno7->alumno6->alumno5->alumno4->alumno3->alumno2->alumno1->alumno0
+}

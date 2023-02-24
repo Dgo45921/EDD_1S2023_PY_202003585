@@ -1,0 +1,106 @@
+{
+ "Alumnos": [
+  {
+   "Id": 200819325,
+   "Name": "Ethel Herrarte",
+   "Password": "Ethel139",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 201403877,
+   "Name": "Ebany Larios",
+   "Password": "qwerty12",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 201700375,
+   "Name": "Bryan Montepeque",
+   "Password": "Bryan131",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 201700653,
+   "Name": "Kevyn Gir\ufffdn",
+   "Password": "Kevyn126",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 201700918,
+   "Name": "Cristian Suy",
+   "Password": "Cris123",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 201780044,
+   "Name": "Leonardo Martinez",
+   "Password": "leo123",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 201801683,
+   "Name": "Juan Augusto",
+   "Password": "Juan130",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 201900570,
+   "Name": "Jonatan Gonzalez",
+   "Password": "Jonatan125",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 201900603,
+   "Name": "Karen Gatica",
+   "Password": "Karen132",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 201902259,
+   "Name": "Lourdes Reyes",
+   "Password": "Lourdes123",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 201903549,
+   "Name": "Alejandro Caballeros",
+   "Password": "Alejandro124",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 202000544,
+   "Name": "Roberto G\ufffdmez",
+   "Password": "Roberto128",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 202002940,
+   "Name": "Sebasti\ufffdn Godoy",
+   "Password": "Sebasti\ufffdn129",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 202003585,
+   "Name": "Diego Huite",
+   "Password": "Diego134",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 202004703,
+   "Name": "Eduardo Cuevas",
+   "Password": "Eduardo127",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 202101648,
+   "Name": "Juan Valle",
+   "Password": "Juan137",
+   "Carpeta_Raiz": "/"
+  },
+  {
+   "Id": 202113553,
+   "Name": "Kevin Garc\ufffda",
+   "Password": "Kevin133",
+   "Carpeta_Raiz": "/"
+  }
+ ]
+}
