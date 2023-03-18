@@ -16,7 +16,8 @@ function login(){
     }
 
     else if (username === "admin" && password === "admin" ){
-        alert("Bienvenido admin")
+        location.href = '../html/moduloAdmin.html';
+
     }
     else{
         console.log("busco en el arbol avl")
