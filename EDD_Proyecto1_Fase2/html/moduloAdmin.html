@@ -32,11 +32,20 @@
         <div class="col-md-4">
             <button class="btn btn-primary btn-block">Árbol de estudiantes</button>
         </div>
-        <div class="col-md-4">
-            <button class="btn btn-primary btn-block">Carga masiva</button>
+         <div class="col-md-4">
+        <div class="input-group">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" accept=".json" id="cargaMasiva">
+                <label class="custom-file-label" for="cargaMasiva">Carga masiva</label>
+            </div>
+            <div class="input-group-append">
+                <button class="btn btn-primary btn-file" type="button" id="load_button" >Cargar</button>
+            </div>
         </div>
     </div>
+    </div>
 </div>
+
 
 <!-- JavaScript de Bootstrap -->
 <script
@@ -55,4 +64,5 @@
         crossorigin="anonymous"
 ></script>
 </body>
+<script src="../js/adminModule.js"></script>
 </html>
