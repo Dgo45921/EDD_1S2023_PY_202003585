@@ -1,29 +1,13 @@
 digraph G {
   node [shape=box, fixedsize=true, width=3, height = 1]
  rankdir=LR;
-alumno0[label = "Jose Melendez\n201325511"];
-alumno1[label = "Ethel Herrarte\n200819325"];
-alumno2[label = "Sergio Guix\n201906468"];
-alumno3[label = "José Donis\n201801444"];
-alumno4[label = "Marvin Castellanos\n201700490"];
-alumno5[label = "Ludwing Lopez\n201907608"];
-alumno6[label = "Sergio Bucaro\n201800673"];
-alumno7[label = "Christian Esquite\n200819074"];
-alumno8[label = "Luis Yaquian\n202001471"];
-alumno9[label = "Luis Lizama\n202010023"];
-alumno10[label = "Olivert Vargas\n201503617"];
-alumno11[label = "José Ibarra\n202001800"];
-alumno12[label = "Mauricio Castro\n202100299"];
-alumno13[label = "Velveth Pérez\n202010810"];
-alumno14[label = "Miguel Sac\n201222535"];
-alumno15[label = "José Panaza\n202111478"];
-alumno16[label = "Pablo Fernández\n201807411"];
-alumno17[label = "Henderson Hernandez\n201019694"];
-alumno18[label = "Aída Mansilla\n202100239"];
-alumno19[label = "Jeser Rodas\n202105561"];
-alumno20[label = "Anthony Zea\n202104782"];
-alumno21[label = "Julio Fernández\n201902416"];
-alumno22[label = "Hugo Giron\n202004807"];
-alumno23[label = "Mario Lopez\n202109554"];
-alumno23->alumno22->alumno21->alumno20->alumno19->alumno18->alumno17->alumno16->alumno15->alumno14->alumno13->alumno12->alumno11->alumno10->alumno9->alumno8->alumno7->alumno6->alumno5->alumno4->alumno3->alumno2->alumno1->alumno0
+alumno0[label = "Alejandro Caballeros\n201903549"];
+alumno1[label = "Jonatan Gonzalez\n201900570"];
+alumno2[label = "Kevyn Giron\n201700653"];
+alumno3[label = "Eduardo Cuevas\n202004703"];
+alumno4[label = "Roberto Gomez\n202000544"];
+alumno5[label = "Sebastian Godoy\n202002940"];
+alumno6[label = "Juan Augusto\n201801683"];
+alumno7[label = "Bryan Montepeque\n201700375"];
+alumno7->alumno6->alumno5->alumno4->alumno3->alumno2->alumno1->alumno0
 }

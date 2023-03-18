@@ -1,49 +1,19 @@
 digraph G {
   node [shape=box, fixedsize=true, width=3, height = 2]
-alumno0[label = "Ebany Larios\n201403877"];
+alumno0[label = "Prueba 1\n222"];
 accion0[label="{}" shape=record];
 alumno0->accion0
-alumno1[label = "Bryan Montepeque\n201700375"];
-accion1[label="{Inicio de sesi贸n\n24-02-2023 11:24:35|Inicio de sesi贸n\n24-02-2023 11:24:22}" shape=record];
+alumno1[label = "prueba 2\n555"];
+accion1[label="{}" shape=record];
 alumno1->accion1
-alumno2[label = "Kevyn Gir髇\n201700653"];
-accion2[label="{}" shape=record];
+alumno2[label = "Cristian Suy\n201700918"];
+accion2[label="{Inicio de sesi贸n\n01-03-2023 17:45:25}" shape=record];
 alumno2->accion2
-alumno3[label = "Cristian Suy\n201700918"];
-accion3[label="{Inicio de sesi贸n\n24-02-2023 11:23:53}" shape=record];
+alumno3[label = "Leonardo Martinez\n201780044"];
+accion3[label="{Inicio de sesi贸n\n01-03-2023 17:46:42}" shape=record];
 alumno3->accion3
-alumno4[label = "Leonardo Martinez\n201780044"];
-accion4[label="{}" shape=record];
-alumno4->accion4
-alumno5[label = "Juan Augusto\n201801683"];
-accion5[label="{}" shape=record];
-alumno5->accion5
-alumno6[label = "Jonatan Gonzalez\n201900570"];
-accion6[label="{}" shape=record];
-alumno6->accion6
-alumno7[label = "Lourdes Reyes\n201902259"];
-accion7[label="{}" shape=record];
-alumno7->accion7
-alumno8[label = "Alejandro Caballeros\n201903549"];
-accion8[label="{}" shape=record];
-alumno8->accion8
-alumno9[label = "Roberto G髆ez\n202000544"];
-accion9[label="{}" shape=record];
-alumno9->accion9
-alumno10[label = "Sebasti醤 Godoy\n202002940"];
-accion10[label="{}" shape=record];
-alumno10->accion10
-alumno11[label = "Diego Huite\n202003585"];
-accion11[label="{Inicio de sesi贸n\n24-02-2023 11:23:27|Inicio de sesi贸n\n24-02-2023 11:23:12}" shape=record];
-alumno11->accion11
-alumno12[label = "Eduardo Cuevas\n202004703"];
-accion12[label="{}" shape=record];
-alumno12->accion12
-alumno13[label = "Juan Valle\n202101648"];
-accion13[label="{Inicio de sesi贸n\n24-02-2023 11:25:20}" shape=record];
-alumno13->accion13
-alumno0->alumno1->alumno2->alumno3->alumno4->alumno5->alumno6->alumno7->alumno8->alumno9->alumno10->alumno11->alumno12->alumno13
-alumno13->alumno12->alumno11->alumno10->alumno9->alumno8->alumno7->alumno6->alumno5->alumno4->alumno3->alumno2->alumno1->alumno0
-{rank = same;alumno0,alumno1,alumno2,alumno3,alumno4,alumno5,alumno6,alumno7,alumno8,alumno9,alumno10,alumno11,alumno12,alumno13}
+alumno0->alumno1->alumno2->alumno3
+alumno3->alumno2->alumno1->alumno0
+{rank = same;alumno0,alumno1,alumno2,alumno3}
 
 }
