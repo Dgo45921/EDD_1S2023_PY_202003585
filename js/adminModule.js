@@ -1,4 +1,6 @@
-import Student from "./Student.mjs";
+
+import Student from "./Student.js";
+import AVL from "./AVL.js";
 
 const load_button = document.getElementById("load_button");
 
@@ -23,7 +25,7 @@ function load_json(){
 }
 
 function load_students(studentsArray){
-    //const AVLTree = new AVL()
+   const AVLTree = new AVL()
 
     for (let i = 0; i < studentsArray.length ; i++) {
         const id = studentsArray[i].Id;
@@ -31,9 +33,9 @@ function load_students(studentsArray){
         const password = studentsArray[i].Password;
         const rootFolder = studentsArray[i].Carpeta_Raiz;
         const newStudent = new Student(id, name, password, rootFolder);
-        console.log(newStudent)
-        //AVLTree.root = AVLTree.insertStudent(AVLTree.root, newStudent)
+        //console.log(newStudent)
+        AVLTree.root = AVLTree.insertStudent(AVLTree.root, newStudent)
     }
 
-   // AVLTree.preOrder(AVLTree.root)
+    AVLTree.preOrder(AVLTree.root)
 }

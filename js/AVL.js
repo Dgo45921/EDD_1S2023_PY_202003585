@@ -1,5 +1,5 @@
 
-import TreeNode from "./TreeNode";
+import TreeNode from "./TreeNode.js";
 
 export default class AVL{
     constructor() {
@@ -24,10 +24,8 @@ export default class AVL{
         nodito.left = tree2;
 
         // Actualiza alturas
-        nodito.height = this.findMax(this.getTreeHeight(nodito.left),
-            this.getTreeHeight(nodito.right)) + 1;
-        left_one.height = this.getTreeHeight(this.getTreeHeight(left_one.left),
-            this.getTreeHeight(left_one.right)) + 1;
+        nodito.height = this.findMax(this.getTreeHeight(nodito.left), this.getTreeHeight(nodito.right)) + 1;
+        left_one.height = this.getTreeHeight(this.getTreeHeight(left_one.left), this.getTreeHeight(left_one.right)) + 1;
 
         // Retorna nueva root
         return left_one;
@@ -64,15 +62,15 @@ export default class AVL{
 
         if (student.id < root.student.id)
             root.left = this.insertStudent(root.left, student);
-        else if (student > root.key)
+        else if (student.id > root.student.id)
             root.right = this.insertStudent(root.right, student);
         // Duplicate keys not allowed
         else return root;
 
         /* 2. Update height of this ancestor root */
-        root.height =
-            1 + this.getTreeHeight(this.getTreeHeight(root.left),
-                this.getTreeHeight(root.right));
+        root.height = 1 + this.findMax(this.getTreeHeight(root.left), this.getTreeHeight(root.right));
+
+
 
         /* 3. Get the balance factor of this ancestor
           root to check whether this root became
@@ -81,6 +79,7 @@ export default class AVL{
 
         // If this root becomes unbalanced, then there
         // are 4 cases Left Left Case
+
         // LL rotation
         if (balance > 1 && student.id < root.left.student.id)
             return this.rRotation(root);
@@ -107,7 +106,7 @@ export default class AVL{
 
     preOrder(node) {
         if (node != null) {
-            document.write(node.student.id + " ");
+            console.log(node.student.id + " ");
             this.preOrder(node.left);
             this.preOrder(node.right);
         }
