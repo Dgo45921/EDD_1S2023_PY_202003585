@@ -16,7 +16,7 @@ function login(){
     }
 
     else if (username === "admin" && password === "admin" ){
-        location.href = '../html/moduloAdmin.html';
+        location.href = 'moduloAdmin.html';
 
     }
     else{
