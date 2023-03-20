@@ -77,6 +77,7 @@ export default class AVL{
           unbalanced */
         var balance = this.getBF(root);
 
+
         // If this root becomes unbalanced, then there
         // are 4 cases Left Left Case
 
