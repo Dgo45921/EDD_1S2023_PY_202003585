@@ -5,11 +5,9 @@ import AVL from "./AVL.js";
 
 const load_button = document.getElementById("load_button");
 const showStudents_button = document.getElementById("showStudents");
+const graphStudentTree_button = document.getElementById("graphStudentTreeButton");
 let AVLTree = new AVL()
 
-load_button.addEventListener("click", function() {
-    load_json()
-});
 
 function cleanTable(){
     // cleaning table
@@ -21,7 +19,7 @@ function cleanTable(){
 
 function preOrderTable(node){
     // obtaining body of student table
-   let tbody = document.getElementById("studentTableBody")
+    let tbody = document.getElementById("studentTableBody")
     if (node != null) {
         const new_row = tbody.insertRow();
         const student_id = new_row.insertCell(0);
@@ -62,6 +60,59 @@ function postOrderTable(node){
 
     }
 }
+
+function getNodesGraphviz(node){
+
+
+    if (node === null){
+        return ""
+    }
+
+    let codigo_arbol = ""
+    codigo_arbol += "nodo" + node.student.id + " [label=\"" + "carnet: " + node.student.id + "\\n" + "nombre: " + node.student.name + "\\n" + "altura: " + node.height + "\"];\n";
+    if (node.left != null) {
+        codigo_arbol += "nodo" + node.student.id+ " -> " + "nodo" + node.left.student.id + ";\n";
+    }
+    if (node.right != null) {
+        codigo_arbol += "nodo" + node.student.id + " -> " + "nodo" + node.right.student.id + ";\n";
+    }
+    codigo_arbol += getNodesGraphviz(node.left);
+    codigo_arbol += getNodesGraphviz(node.right);
+
+    return codigo_arbol
+
+}
+
+
+function graphTree(node){
+    let cadena = "";
+    cadena += "digraph tree  { \n"
+    cadena += "fontsize=\"5\"node [ shape=\"record\" ];"
+    let intermedio = getNodesGraphviz(node)
+    cadena+= intermedio
+    cadena += "}"
+
+    return cadena
+}
+
+
+load_button.addEventListener("click", function() {
+    load_json()
+});
+
+
+graphStudentTree_button.addEventListener("click", function() {
+    if(AVLTree.root === null){
+        alert("No hay alumnos cargados al sistema")
+        return
+    }
+    let viz_code = graphTree(AVLTree.root)
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let tree_image = document.getElementById("studentTree")
+    tree_image.setAttribute("src", url+viz_code)
+
+
+});
 
 showStudents_button.addEventListener("click", function() {
 
