@@ -6,6 +6,7 @@ import AVL from "./AVL.js";
 const load_button = document.getElementById("load_button");
 const showStudents_button = document.getElementById("showStudents");
 const graphStudentTree_button = document.getElementById("graphStudentTreeButton");
+const log_out_admin_button = document.getElementById("log_out_admin");
 let AVLTree = new AVL()
 
 
@@ -131,15 +132,20 @@ showStudents_button.addEventListener("click", function() {
         inOrderTable(AVLTree.root)
     }
     else if (index === 1){
-        //post
-        postOrderTable(AVLTree.root)
-    }
-    else{
         //pre
         preOrderTable(AVLTree.root)
     }
+    else{
+        //post
+        postOrderTable(AVLTree.root)
+    }
 
 
+});
+
+log_out_admin_button.addEventListener("click", function() {
+    console.log(window.location.origin)
+    window.location.href = window.location.origin + "/EDD_1S2023_PY_202003585/index.html"
 });
 
 
