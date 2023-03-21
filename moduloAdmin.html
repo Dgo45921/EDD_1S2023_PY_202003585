@@ -22,8 +22,8 @@
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-4">
-            <button class="btn btn-primary btn-block">Mostrar alumnos</button>
-            <select class="form-control mt-3 btn-block">
+            <button id="showStudents" class="btn btn-primary btn-block">Mostrar alumnos</button>
+            <select id="traverseOptions" class="form-control mt-3 btn-block">
                 <option selected>Inorden</option>
                 <option>Postorden</option>
                 <option>Preorden</option>
@@ -43,6 +43,38 @@
             </div>
         </div>
     </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <p>Recorrido del árbol</p>
+
+
+            <table class="table" id="studentTable">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Carnet</th>
+                    <th>Nombre</th>
+                </tr>
+                </thead>
+                <tbody id="studentTableBody">
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <p>Imagen árbol</p>
+            <img src="https://www.gatevidyalay.com/wp-content/uploads/2018/08/Not-An-AVL-Tree.png" alt="Descripción de la imagen" class="img-fluid">
+        </div>
     </div>
 </div>
 
