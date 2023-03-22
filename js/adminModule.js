@@ -3,11 +3,12 @@ import Student from "./Student.js";
 import AVL from "./AVL.js";
 
 
-const load_button = document.getElementById("load_button");
-const showStudents_button = document.getElementById("showStudents");
-const graphStudentTree_button = document.getElementById("graphStudentTreeButton");
-const log_out_admin_button = document.getElementById("log_out_admin");
-let AVLTree = new AVL()
+let AVLTree = new AVL();
+
+window.graphtree= graphtree;
+window.show_students=show_students;
+window.log_out_admin= log_out_admin;
+window.load_json= load_json;
 
 
 function cleanTable(){
@@ -97,12 +98,9 @@ function graphTree(node){
 }
 
 
-load_button.addEventListener("click", function() {
-    load_json()
-});
 
 
-graphStudentTree_button.addEventListener("click", function() {
+function graphtree() {
     if(AVLTree.root === null){
         alert("No hay alumnos cargados al sistema")
         return
@@ -113,10 +111,9 @@ graphStudentTree_button.addEventListener("click", function() {
     tree_image.setAttribute("src", url+viz_code)
 
 
-});
+}
 
-showStudents_button.addEventListener("click", function() {
-
+ function show_students() {
     // obtaining index from droplist menu to traverse students
     let dropDownMenu = document.getElementById("traverseOptions")
     let index = dropDownMenu.selectedIndex
@@ -141,14 +138,12 @@ showStudents_button.addEventListener("click", function() {
     }
 
 
-});
+}
 
-log_out_admin_button.addEventListener("click", function() {
-    console.log(window.location.origin)
+function log_out_admin() {
+    // console.log(window.location.origin)
     window.location.href = window.location.origin + "/EDD_1S2023_PY_202003585/index.html"
-});
-
-
+}
 
 
 function load_json(){
@@ -163,10 +158,13 @@ function load_json(){
         const jsonObject = JSON.parse(jsonContent)
         const studentsArray = jsonObject.Alumnos
         load_students(studentsArray)
+        localStorage.setItem("jsonArbol", jsonContent)
+        alert("Datos cargados con éxito")
     }
+
 }
 
-function load_students(studentsArray){
+export function load_students(studentsArray){
     AVLTree = new AVL()
     for (let i = 0; i < studentsArray.length ; i++) {
         const id = studentsArray[i].Id;
@@ -177,4 +175,7 @@ function load_students(studentsArray){
         //console.log(newStudent)
         AVLTree.root = AVLTree.insertStudent(AVLTree.root, newStudent)
     }
+    return AVLTree
 }
+
+
