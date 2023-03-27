@@ -1,5 +1,5 @@
 
-export default class TreeNode {
+export default class AvlNode {
 constructor(student) {
     this.student = student
     this.height = 1

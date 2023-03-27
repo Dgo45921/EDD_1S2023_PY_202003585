@@ -1,5 +1,5 @@
 
-import TreeNode from "./TreeNode.js";
+import AvlNode from "./AvlNode.js";
 
 export default class AVL{
     constructor() {
@@ -58,7 +58,7 @@ export default class AVL{
 
     insertStudent(root, student) {
         /* 1. Perform the normal BST insertion */
-        if (root == null) return new TreeNode(student);
+        if (root == null) return new AvlNode(student);
 
         if (student.id < root.student.id)
             root.left = this.insertStudent(root.left, student);

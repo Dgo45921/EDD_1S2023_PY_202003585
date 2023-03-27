@@ -152,7 +152,7 @@ function load_json(){
     let file = fileContainer.files[0]
     const fr = new FileReader();
     fr.readAsText(file)
-    fr.onload = function (){
+    fr.onloadend = function (){
         const jsonContent = fr.result;
         //console.log(jsonContent)
         const jsonObject = JSON.parse(jsonContent)

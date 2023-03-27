@@ -20,23 +20,28 @@
   <div class="row mt-5">
     <div class="col-md-3">
       <div class="form-group">
-        <label for="input-text1">Nombre de tu nueva carpeta</label>
-        <input type="text" class="form-control" id="input-text1" placeholder="Ejemplo: carpeta3">
+        <label for="new_folder_path">Nombre de tu nueva carpeta</label>
+        <input type="text" class="form-control" id="new_folder_path" placeholder="Ejemplo: carpeta3">
       </div>
-      <button type="button" class="btn btn-primary mb-3">Crear Carpeta</button>
+      <button type="button" class="btn btn-primary mb-3" onclick="createFolder()" >Crear Carpeta</button>
       <div class="form-group">
-        <label for="input-text2">Nombre de carpeta a borrar</label>
-        <input type="text" class="form-control" id="input-text2" placeholder="Ejemplo: carpeta2">
+        <label for="delete_path">Ruta de carpeta o archivo a borrar</label>
+        <input type="text" class="form-control" id="delete_path" placeholder="Ejemplo: /carpeta2">
       </div>
-      <button type="button" class="btn btn-danger mb-3">Eliminar Carpeta</button>
+      <button type="button" class="btn btn-danger mb-3" onclick="deleteFolder()">Eliminar Carpeta</button>
+      <p>Ruta donde cargar archivo<p>
+      <div class="input-group-append">
+        <input type="text" class="form-control" id="new_file_path"  placeholder="Ej:/carpeta1">
+        <button class="btn btn-primary btn-file" type="button" onclick="loadFiletoPath()" >Cargar</button>
+      </div>
+
       <div class="input-group">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" accept=".png, .jpeg, jpg, .pdf, .txt" id="cargaFile">
-          <label class="custom-file-label" for="cargaFile">File</label>
+          <input type="file" class="custom-file-input" accept=".png, .jpeg, jpg, .pdf, .txt" id="fileHolder">
+          <label class="custom-file-label" for="fileHolder">File</label>
         </div>
-        <div class="input-group-append">
-          <button class="btn btn-primary btn-file" type="button" id="load_button" >Cargar</button>
-        </div>
+
+
       </div>
 
     </div>
@@ -44,16 +49,16 @@
 
     <div class="col-md-8">
       <div class="form-group">
-        <label for="input-text3">Ruta carpeta</label>
+        <label for="gotopath">Ruta carpeta</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="input-text3" placeholder="Ej:/carpeta1">
+          <input type="text" class="form-control" id="gotopath" placeholder="Ej:/carpeta1">
           <div class="input-group-append">
-            <button type="button" class="btn btn-primary">Ir</button>
+            <button type="button" class="btn btn-primary" onclick="gotopath()">Ir</button>
           </div>
         </div>
       </div>
       <div class="text-left" style="border-style: solid; border-width: thin; margin-bottom: 10px; padding: 10px">
-        <h4>Nombre Carpeta</h4>
+        <h4 id="actual_folder">Nombre Carpeta</h4>
         <ul class="list-unstyled">
           <li class="media my-3">
             <img class="mr-3" src="img/image.png" alt="Folder Icon" height="30">
