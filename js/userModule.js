@@ -1,8 +1,9 @@
 import AVL from "./AVL.js";
 import Student from "./Student.js";
 import NaryTree from "./NaryTree.js";
+import {reBuildTree} from "./Reconstuctor.js";
 
-let AVLTree = new AVL();
+let AVLTree = reBuildTree()
 let logged_user;
 
 let ruta_actual = "/"
@@ -11,8 +12,14 @@ window.gotopath = gotopath
 window.createFolder = createFolder
 window.deleteFolder = deleteFolder
 window.loadFiletoPath = loadFiletoPath
+window.log_out = log_out
 
 
+
+function log_out() {
+    // console.log(window.location.origin)
+    window.location.href = window.location.origin + "/EDD_1S2023_PY_202003585/index.html"
+}
 function getstudentTree(){
     if (localStorage.getItem("jsonArbol") != null){
         let jsonContent = localStorage.getItem("jsonArbol")
@@ -28,8 +35,8 @@ function getLoggedUser(){
     if (localStorage.getItem("logged_user") != null){
         let jsonContent = localStorage.getItem("logged_user")
         const jsonObject = JSON.parse(jsonContent)
-        logged_user = new Student(jsonObject.id, jsonObject.name, jsonObject.password)
-        logged_user.rootFolder = jsonObject.rootFolder
+        logged_user = Object.assign(Student.prototype, jsonObject);
+        logged_user.rootFolder = Object.assign(NaryTree.prototype, jsonObject.rootFolder);
     }
 }
 
@@ -80,7 +87,8 @@ function gotopath(){
 
 function createFolder(){
     const path = document.getElementById("new_folder_path").value
-    console.log(path)
+    const name = document.getElementById("new_folder_name").value
+    console.log(logged_user.rootFolder.root)
 }
 
 function deleteFolder(){
@@ -113,7 +121,8 @@ function loadFiletoPath(){
 
 
 
-getstudentTree()
+console.log(JSON.stringify(AVLTree))
+//AVLTree.preOrder(AVLTree.root)
 getLoggedUser()
 greetUser()
 display_actualFolder()

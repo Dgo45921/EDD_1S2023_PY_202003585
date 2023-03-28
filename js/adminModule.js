@@ -161,7 +161,7 @@ function load_json(){
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
         alert("Datos cargados con éxito")
     }
-
+    console.log(JSON.stringify(AVLTree))
 }
 
 export function load_students(studentsArray){

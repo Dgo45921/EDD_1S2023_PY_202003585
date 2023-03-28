@@ -13,7 +13,7 @@
 <body>
 <nav class="navbar navbar-dark bg-dark">
   <span class="navbar-brand mb-0 h1" id="message_user">Dashboard user</span>
-  <button class="btn btn-danger ml-auto">Cerrar sesión</button>
+  <button class="btn btn-danger ml-auto" onclick="log_out()">Cerrar sesión</button>
 </nav>
 
 <div class="container">
@@ -22,6 +22,8 @@
       <div class="form-group">
         <label for="new_folder_path">Nombre de tu nueva carpeta</label>
         <input type="text" class="form-control" id="new_folder_path" placeholder="Ejemplo: carpeta3">
+        <label for="new_folder_name">Ruta de tu nueva carpeta</label>
+        <input type="text" class="form-control" id="new_folder_name" placeholder="Ejemplo: carpeta3">
       </div>
       <button type="button" class="btn btn-primary mb-3" onclick="createFolder()" >Crear Carpeta</button>
       <div class="form-group">
