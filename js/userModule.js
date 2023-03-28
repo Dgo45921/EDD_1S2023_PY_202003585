@@ -1,4 +1,9 @@
+import AVL from "./AVL.js";
+import Student from "./Student.js";
+import NaryTree from "./NaryTree.js";
 
+let AVLTree = new AVL();
+let logged_user;
 
 let ruta_actual = "/"
 
@@ -6,6 +11,27 @@ window.gotopath = gotopath
 window.createFolder = createFolder
 window.deleteFolder = deleteFolder
 window.loadFiletoPath = loadFiletoPath
+
+
+function getstudentTree(){
+    if (localStorage.getItem("jsonArbol") != null){
+        let jsonContent = localStorage.getItem("jsonArbol")
+        const jsonObject = JSON.parse(jsonContent)
+        AVLTree = new AVL()
+        AVLTree.root = jsonObject.root
+    }
+    // AVLTree.preOrder(AVLTree.root)
+
+}
+
+function getLoggedUser(){
+    if (localStorage.getItem("logged_user") != null){
+        let jsonContent = localStorage.getItem("logged_user")
+        const jsonObject = JSON.parse(jsonContent)
+        logged_user = new Student(jsonObject.id, jsonObject.name, jsonObject.password)
+        logged_user.rootFolder = jsonObject.rootFolder
+    }
+}
 
 function fromb64tofile(base64String, fileName) {
     // Decode the base64 string and convert to Uint8Array
@@ -87,7 +113,8 @@ function loadFiletoPath(){
 
 
 
-
+getstudentTree()
+getLoggedUser()
 greetUser()
 display_actualFolder()
 

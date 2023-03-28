@@ -158,7 +158,7 @@ function load_json(){
         const jsonObject = JSON.parse(jsonContent)
         const studentsArray = jsonObject.Alumnos
         load_students(studentsArray)
-        localStorage.setItem("jsonArbol", jsonContent)
+        localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
         alert("Datos cargados con éxito")
     }
 
@@ -170,12 +170,23 @@ export function load_students(studentsArray){
         const id = studentsArray[i].Id;
         const name = studentsArray[i].Name;
         const password = studentsArray[i].Password;
-        const rootFolder = studentsArray[i].Carpeta_Raiz;
-        const newStudent = new Student(id, name, password, rootFolder);
+        const newStudent = new Student(id, name, password);
         //console.log(newStudent)
         AVLTree.root = AVLTree.insertStudent(AVLTree.root, newStudent)
     }
     return AVLTree
 }
+
+function check_existingStudents(){
+    let arbol = localStorage.getItem("jsonArbol")
+    if (arbol!==null){
+        const jsonObject = JSON.parse(arbol)
+        AVLTree = new AVL()
+        AVLTree.root = jsonObject.root
+    }
+
+}
+
+check_existingStudents()
 
 

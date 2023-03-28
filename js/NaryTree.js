@@ -1,5 +1,5 @@
 import N_aryNode from "./N_aryNode.js";
-class NaryTree{
+export default class NaryTree{
     constructor() {
         this.root = new N_aryNode("/")
         this.nodo_creados = 1;

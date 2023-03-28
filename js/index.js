@@ -54,8 +54,8 @@ function check_students(){
     if (localStorage.getItem("jsonArbol") != null){
         let jsonContent = localStorage.getItem("jsonArbol")
         const jsonObject = JSON.parse(jsonContent)
-        const studentsArray = jsonObject.Alumnos
-        AVLTree = load_students(studentsArray)
+        AVLTree = new AVL()
+        AVLTree.root = jsonObject.root
     }
     // AVLTree.preOrder(AVLTree.root)
 

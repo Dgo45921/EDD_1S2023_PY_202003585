@@ -1,7 +1,12 @@
 export default class File{
-    constructor(type) {
-        this.name = null
+    constructor(name , type, content) {
+        this.name = name
         this.type = type
-        this.content = null
+        if (this.type === "folder"){
+            this.content = ""
+        }
+        else{
+            this.content = content
+        }
     }
 }

@@ -1,9 +1,9 @@
-import File from "./File.js";
+
 export default class N_aryNode {
-    constructor(id, path, type) {
+    constructor(id, path, file) {
         this.id = id
         this.path = path
-        this.type = type
-        this.file_list = null
+        this.file = file
+        this.next = null
     }
 }
