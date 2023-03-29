@@ -2,9 +2,10 @@ import AVL from "./AVL.js";
 import Student from "./Student.js";
 import NaryTree from "./NaryTree.js";
 import {reBuildTree} from "./Reconstuctor.js";
+import {returnStudentNode} from "./Reconstuctor.js";
 
 let AVLTree = reBuildTree()
-let logged_user;
+let logged_user = returnStudentNode(AVLTree.root, JSON.parse(localStorage.getItem("logged_user")).id);
 
 let ruta_actual = "/"
 
@@ -13,6 +14,15 @@ window.createFolder = createFolder
 window.deleteFolder = deleteFolder
 window.loadFiletoPath = loadFiletoPath
 window.log_out = log_out
+window.graphnary = graphnary
+
+function graphnary(){
+    let viz_code = logged_user.rootFolder.graph_nary()
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let tree_image = document.getElementById("NaryGraph")
+    tree_image.setAttribute("src", url+viz_code)
+    console.log(viz_code)
+}
 
 
 
@@ -20,25 +30,7 @@ function log_out() {
     // console.log(window.location.origin)
     window.location.href = window.location.origin + "/EDD_1S2023_PY_202003585/index.html"
 }
-function getstudentTree(){
-    if (localStorage.getItem("jsonArbol") != null){
-        let jsonContent = localStorage.getItem("jsonArbol")
-        const jsonObject = JSON.parse(jsonContent)
-        AVLTree = new AVL()
-        AVLTree.root = jsonObject.root
-    }
-    // AVLTree.preOrder(AVLTree.root)
 
-}
-
-function getLoggedUser(){
-    if (localStorage.getItem("logged_user") != null){
-        let jsonContent = localStorage.getItem("logged_user")
-        const jsonObject = JSON.parse(jsonContent)
-        logged_user = Object.assign(Student.prototype, jsonObject);
-        logged_user.rootFolder = Object.assign(NaryTree.prototype, jsonObject.rootFolder);
-    }
-}
 
 function fromb64tofile(base64String, fileName) {
     // Decode the base64 string and convert to Uint8Array
@@ -64,9 +56,6 @@ function fromb64tofile(base64String, fileName) {
 
 
 
-function getFileExtension(path){
-    return path.split(".")[1]
-}
 
 function display_actualFolder(){
     let actual_folder = document.getElementById("actual_folder")
@@ -88,6 +77,8 @@ function gotopath(){
 function createFolder(){
     const path = document.getElementById("new_folder_path").value
     const name = document.getElementById("new_folder_name").value
+
+    logged_user.rootFolder.insert_folder(name, path)
     console.log(logged_user.rootFolder.root)
 }
 
@@ -99,19 +90,21 @@ function deleteFolder(){
 
 function loadFiletoPath(){
     let fileContainer = document.getElementById("fileHolder")
-
-
-    const extension = getFileExtension(fileContainer.value)
     let file = fileContainer.files[0]
 
     const fr = new FileReader();
-
     fr.readAsDataURL(file)
     fr.onloadend = () => {
         let b64 = fr.result.split(',')[1]
         //console.log(fr.result)
-        console.log(b64)
+       // console.log(b64)
        // fromb64tofile(b64, "prueba.pdf")
+
+        const path = document.getElementById("new_file_path").value
+        const name = fileContainer.value.replace('C:\\fakepath\\', '')
+
+        logged_user.rootFolder.insertFile(path, name, b64)
+        console.log(logged_user.rootFolder.root)
     };
 
 }
@@ -121,9 +114,12 @@ function loadFiletoPath(){
 
 
 
-console.log(JSON.stringify(AVLTree))
+// console.log(JSON.stringify(AVLTree))
 //AVLTree.preOrder(AVLTree.root)
-getLoggedUser()
+// console.log(logged_user)
+// let alumnoprueba = AVLTree.root.student
+// alumnoprueba.name = "pruebaaaa"
+// console.log(JSON.stringify(AVLTree))
 greetUser()
 display_actualFolder()
 

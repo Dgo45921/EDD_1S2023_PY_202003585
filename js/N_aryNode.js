@@ -6,5 +6,6 @@ export default class N_aryNode {
         this.path = path
         this.type = type
         this.next = null
+        this.content = ""
     }
 }

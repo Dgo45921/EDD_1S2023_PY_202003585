@@ -55,3 +55,17 @@ function recreateFolderList(jsonLinkedList){
     }
     return head;
 }
+
+
+export function returnStudentNode(root, id){
+    if (root == null) return false
+    // obtaining root from tree
+    let current_identifier = root.student.id
+    if (id === current_identifier) {
+        localStorage.setItem("logged_user", JSON.stringify(root.student))
+        return root.student
+    }
+    if (id > current_identifier) return returnStudentNode(root.right, id)
+    if (id < current_identifier) return returnStudentNode(root.left, id)
+
+}
