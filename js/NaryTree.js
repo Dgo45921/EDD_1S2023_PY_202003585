@@ -126,7 +126,7 @@ export default class NaryTree{
         let parent_nodeadd = parent_node
         if(actual !== null){
             while(actual){
-                cadena += "node" + actual.id + "[label=\"" + actual.type + "\\n" +  actual.path  + "\"] \n"
+                cadena += "node" + actual.id + "[label=\"" + "type: " +  actual.type + "\\n" + "name: " +  actual.path  + "\"] \n"
                 actual = actual.next
             }
             actual = root

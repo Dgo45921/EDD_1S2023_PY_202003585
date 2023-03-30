@@ -6,8 +6,8 @@ import {returnStudentNode} from "./Reconstuctor.js";
 
 let AVLTree = reBuildTree()
 let logged_user = returnStudentNode(AVLTree.root, JSON.parse(localStorage.getItem("logged_user")).id);
+let current_folder = logged_user.rootFolder.root
 
-let ruta_actual = "/"
 
 window.gotopath = gotopath
 window.createFolder = createFolder
@@ -21,13 +21,12 @@ function graphnary(){
     let url = 'https://quickchart.io/graphviz?graph=';
     let tree_image = document.getElementById("NaryGraph")
     tree_image.setAttribute("src", url+viz_code)
-    console.log(viz_code)
+    //console.log(viz_code)
 }
 
 
 
 function log_out() {
-    // console.log(window.location.origin)
     window.location.href = window.location.origin + "/EDD_1S2023_PY_202003585/index.html"
 }
 
@@ -55,11 +54,62 @@ function fromb64tofile(base64String, fileName) {
 }
 
 
-
-
 function display_actualFolder(){
     let actual_folder = document.getElementById("actual_folder")
-    actual_folder.innerHTML = "path: " + ruta_actual
+    actual_folder.innerHTML = "path: " + current_folder.path
+    let current_file = current_folder.first
+    let list_files = document.getElementById("file_list")
+    list_files.innerHTML = ""
+    while (current_file){
+
+
+        let li = document.createElement('li');
+        li.setAttribute('class','media my-3');
+        list_files.appendChild(li);
+
+        let img = document.createElement('img');
+        img.setAttribute("height", "30")
+        img.setAttribute("class", "mr-3")
+        if (current_file.path.endsWith(".txt")){
+            img.setAttribute("src", "img/text.png")
+        }
+        else if (current_file.path.endsWith(".pdf")){
+            img.setAttribute("src", "img/pdf.png")
+        }
+
+        else if (current_file.path.endsWith(".png") || current_file.path.endsWith(".jpg") || current_file.path.endsWith(".jpeg") || current_file.path.endsWith(".gif") || current_file.path.endsWith(".tiff")){
+            img.setAttribute("src", "img/image.png")
+        }
+
+        else{
+            img.setAttribute("src", "img/folder.png")
+        }
+
+        li.appendChild(img)
+
+        let div = document.createElement('media-body');
+        li.appendChild(div)
+        let a = document.createElement("a")
+        a.setAttribute("href", "#")
+        a.innerHTML = current_file.path
+        div.appendChild(a)
+
+
+
+
+
+        switch (current_file.type){
+            case "folder":
+                console.log("folder")
+                break
+            case "file":
+                console.log("file")
+                break
+
+        }
+
+        current_file = current_file.next
+    }
 }
 
 
@@ -80,6 +130,7 @@ function createFolder(){
 
     logged_user.rootFolder.insert_folder(name, path)
     console.log(logged_user.rootFolder.root)
+    display_actualFolder()
 }
 
 function deleteFolder(){
@@ -105,6 +156,7 @@ function loadFiletoPath(){
 
         logged_user.rootFolder.insertFile(path, name, b64)
         console.log(logged_user.rootFolder.root)
+        display_actualFolder()
     };
 
 }
@@ -113,13 +165,6 @@ function loadFiletoPath(){
 
 
 
-
-// console.log(JSON.stringify(AVLTree))
-//AVLTree.preOrder(AVLTree.root)
-// console.log(logged_user)
-// let alumnoprueba = AVLTree.root.student
-// alumnoprueba.name = "pruebaaaa"
-// console.log(JSON.stringify(AVLTree))
 greetUser()
 display_actualFolder()
 
