@@ -162,7 +162,19 @@ function createFolder(){
 
 function deleteFolder(){
     const path = document.getElementById("delete_path").value
-    console.log(path)
+    if (path === "/"){
+        alert("No puede borrar la carpeta root")
+        return
+    }
+    const response = confirm("¿Está seguro de eliminar ese archivo/carpeta?");
+
+    if (response) {
+        logged_user.rootFolder.delete(path)
+        localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
+        display_actualFolder()
+        updateHyperLinks()
+    }
+
 }
 
 

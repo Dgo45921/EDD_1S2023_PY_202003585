@@ -158,6 +158,47 @@ export default class NaryTree{
     }
 
 
+    delete(path){
+        path = path.split("/")
+
+        if(path[0] === "" && this.root.first === null){
+
+        }
+
+        else if (path[0] === "" && this.root.first !== null){
+
+            let actual = this.root.first
+            let anterior = null
+            for (let i = 1; i <path.length ; i++) {
+                while (actual){
+                    if (actual.path === path[i]){
+                        break
+                    }
+                    anterior = actual
+                    actual = actual.next
+                }
+                if (!actual) alert("Archivo o carpeta inexistente");
+
+                if (i === path.length-1) {
+                    if (!anterior){
+                        this.root.first = actual.next
+                    }
+                    else if (actual){
+                        anterior.next = actual.next
+                        actual.next = null
+                    }
+                }
+
+                anterior = actual;
+                actual = actual.first
+
+            }
+        }
+    }
+
+
+
+
     insert_folder(path, new_folderName){
         let subPaths = path.split('/')
         this.addFile(new_folderName, subPaths, "folder", "")
