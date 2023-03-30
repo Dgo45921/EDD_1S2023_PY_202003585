@@ -1,5 +1,6 @@
 import N_aryNode from "./N_aryNode.js";
 import {count_repeatedfiles} from "./LLFolderHandler.js";
+import {abs_pathGenerator} from "./LLFolderHandler.js";
 export default class NaryTree{
     constructor() {
         this.nodo_creados = 1;
@@ -7,23 +8,27 @@ export default class NaryTree{
     }
 
 
-    addFile(new_folder, path, type, content){
-        const new_node = new N_aryNode(new_folder, this.nodo_creados)
+    addFile(newFileName, path, type, content){
+        const new_node = new N_aryNode(newFileName, this.nodo_creados)
         new_node.type = type
         new_node.content = content
         //Check if insertion is at empty root folder
         if(path[1] === "" && this.root.first === null){
+            new_node.absolute_path = "/" + newFileName
             this.root.first = new_node
             this.nodo_creados++
         }
         //Check if insertion is in root folder but this has multiple files
         else if(path[1] === "" && this.root.first !== null){
-            let counter = count_repeatedfiles(this.root.first, new_folder)
+            let counter = count_repeatedfiles(this.root.first, newFileName)
             let current_node = this.root.first
             while (current_node.next){
                 current_node = current_node.next
             }
-            if (counter !== 0)  {new_node.path = new_node.path + "("+ (counter) +")"}
+            if (counter !== 0)  {
+                new_node.path = new_node.path + "("+ (counter) +")"
+            }
+            new_node.absolute_path = "/" + new_node.path
             current_node.next = new_node
             this.nodo_creados++
 
@@ -66,23 +71,56 @@ export default class NaryTree{
             else{
                 // check if the new file is going to be first inside a folder
                 if(current_node.first === null){
+                    new_node.absolute_path = abs_pathGenerator(path) + newFileName
                     current_node.first = new_node
                     this.nodo_creados++
                 }
                 // traverse all files to insert at the end
                 else{
 
-                    let counter = count_repeatedfiles(current_node.first, new_folder)
+                    let counter = count_repeatedfiles(current_node.first, newFileName)
                     let actual = current_node.first
                     while (actual.next){
                         actual = actual.next
                     }
                     if (counter !== 0) {new_node.path = new_node.path + "("+ (counter) +")"}
+                    new_node.absolute_path = abs_pathGenerator(path) + newFileName
                     actual.next = new_node
                     this.nodo_creados++
                 }
             }
         }
+
+    }
+
+    getFolder(path){
+        path = path.split("/")
+
+        if(path[0] === "" && this.root.first === null){
+            return null;
+        }
+
+        else if (path[0] === "" && this.root.first !== null){
+
+
+            let actual = this.root.first
+            for (let i = 1; i <path.length ; i++) {
+                while (actual){
+                    if (actual.path === path[i]){
+                        break
+                    }
+                    actual = actual.next
+                }
+                if (!actual) return null;
+
+                if (i === path.length-1 && actual.type === "folder") return actual
+
+                actual = actual.first
+
+            }
+        }
+
+        return null
 
     }
 
@@ -126,7 +164,7 @@ export default class NaryTree{
         let parent_nodeadd = parent_node
         if(actual !== null){
             while(actual){
-                cadena += "node" + actual.id + "[label=\"" + "type: " +  actual.type + "\\n" + "name: " +  actual.path  + "\"] \n"
+                cadena += "node" + actual.id + "[label=\"" + "type: " +  actual.type + "\\n" + "name: " +  actual.path + "\\n" + "absolute_path: " + actual.absolute_path + "\"] \n"
                 actual = actual.next
             }
             actual = root

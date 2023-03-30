@@ -1,12 +1,11 @@
-import AVL from "./AVL.js";
-import Student from "./Student.js";
-import NaryTree from "./NaryTree.js";
+
 import {reBuildTree} from "./Reconstuctor.js";
 import {returnStudentNode} from "./Reconstuctor.js";
 
 let AVLTree = reBuildTree()
 let logged_user = returnStudentNode(AVLTree.root, JSON.parse(localStorage.getItem("logged_user")).id);
 let current_folder = logged_user.rootFolder.root
+const hyperlinks = document.getElementsByTagName("a");
 
 
 window.gotopath = gotopath
@@ -91,6 +90,7 @@ function display_actualFolder(){
         li.appendChild(div)
         let a = document.createElement("a")
         a.setAttribute("href", "#")
+        a.setAttribute("abs_path", current_file.absolute_path)
         a.innerHTML = current_file.path
         div.appendChild(a)
 
@@ -122,7 +122,23 @@ function greetUser (){
 function gotopath(){
     const path = document.getElementById("gotopath").value
     console.log(path)
+    if (path === "/"){
+        current_folder = logged_user.rootFolder.root
+        display_actualFolder()
+        return
+    }
+
+    let foundFolder = logged_user.rootFolder.getFolder(path)
+    if (!foundFolder) {
+        alert("Carpeta no encontrada")
+    }
+    else{
+        current_folder = foundFolder
+        display_actualFolder()
+    }
+    updateHyperLinks()
 }
+
 
 function createFolder(){
     const path = document.getElementById("new_folder_path").value
@@ -132,6 +148,7 @@ function createFolder(){
     console.log(logged_user.rootFolder.root)
     display_actualFolder()
     localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
+    updateHyperLinks()
 }
 
 function deleteFolder(){
@@ -161,15 +178,38 @@ function loadFiletoPath(){
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
         console.log(localStorage.getItem("jsonArbol"))
     };
+    updateHyperLinks()
 
 }
 
+function updateHyperLinks(){
+    const buttonPressed = e => {
+        let path = e.target.getAttribute("abs_path")
+        let foundFolder = logged_user.rootFolder.getFolder(path)
+        if (!foundFolder) {
+            alert("Carpeta no encontrada")
+        }
+        else{
+            current_folder = foundFolder
+            display_actualFolder()
+        }
 
+    }
+
+    for (let button of hyperlinks) {
+        button.addEventListener("click", buttonPressed);
+    }
+}
 
 
 
 greetUser()
 display_actualFolder()
+updateHyperLinks()
+
+
+
+
 
 
 

@@ -59,6 +59,7 @@ function recreateFileList(jsonLinkedList){
     }
     let head = new N_aryNode(jsonLinkedList.path, jsonLinkedList.id, jsonLinkedList.type)
     head.content = jsonLinkedList.content
+    head.absolute_path = jsonLinkedList.absolute_path
     head.next = recreateFileList(jsonLinkedList.next)
     head.first = recreateFileList(jsonLinkedList.first)
     return head
