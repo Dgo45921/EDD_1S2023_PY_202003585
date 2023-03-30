@@ -92,17 +92,6 @@ function display_actualFolder(){
 
 
 
-
-        switch (current_file.type){
-            case "folder":
-                console.log("folder")
-                break
-            case "file":
-                console.log("file")
-                break
-
-        }
-
         current_file = current_file.next
     }
 
@@ -130,7 +119,7 @@ function gotopath(){
 
 
     const path = document.getElementById("gotopath").value
-    console.log(path)
+    //console.log(path)
     if (path === "/"){
         current_folder = logged_user.rootFolder.root
         display_actualFolder()
@@ -194,10 +183,10 @@ function loadFiletoPath(){
         const name = fileContainer.value.replace('C:\\fakepath\\', '')
 
         logged_user.rootFolder.insertFile(path, name, b64)
-        console.log(logged_user.rootFolder.root)
+        //console.log(logged_user.rootFolder.root)
         display_actualFolder()
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
-        console.log(localStorage.getItem("jsonArbol"))
+        //console.log(localStorage.getItem("jsonArbol"))
     };
     updateHyperLinks()
 

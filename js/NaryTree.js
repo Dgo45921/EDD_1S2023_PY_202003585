@@ -21,13 +21,21 @@ export default class NaryTree{
         }
         //Check if insertion is in root folder but this has multiple files
         else if(path[1] === "" && this.root.first !== null){
-            let counter = count_repeatedfiles(this.root.first, newFileName)
+            let extension = "." + newFileName.split(".")[1]
+            let counter = count_repeatedfiles(this.root.first, newFileName.replace(extension, ""))
             let current_node = this.root.first
             while (current_node.next){
                 current_node = current_node.next
             }
             if (counter !== 0)  {
-                new_node.path = new_node.path + "("+ (counter) +")"
+                if (newFileName.endsWith(".png") || newFileName.endsWith(".jpeg") || newFileName.endsWith(".jpg") || newFileName.endsWith(".tiff") || newFileName.endsWith(".gif") || newFileName.endsWith(".pdf") || newFileName.endsWith(".txt")){
+                    let extension = "." + newFileName.split(".")[1]
+                    new_node.path = new_node.path.replace(extension, "")
+                    new_node.path = new_node.path + "("+ (counter) +")" +extension
+                }
+                else{
+                    new_node.path = new_node.path + "("+ (counter) +")"
+                }
             }
             new_node.absolute_path = "/" + new_node.path
             current_node.next = new_node
@@ -79,12 +87,22 @@ export default class NaryTree{
                 // traverse all files to insert at the end
                 else{
 
-                    let counter = count_repeatedfiles(current_node.first, newFileName)
+                    let extension = "." + newFileName.split(".")[1]
+                    let counter = count_repeatedfiles(current_node.first, newFileName.replace(extension, ""))
                     let actual = current_node.first
                     while (actual.next){
                         actual = actual.next
                     }
-                    if (counter !== 0) {new_node.path = new_node.path + "("+ (counter) +")"}
+                    if (counter !== 0)  {
+                        if (newFileName.endsWith(".png") || newFileName.endsWith(".jpeg") || newFileName.endsWith(".jpg") || newFileName.endsWith(".tiff") || newFileName.endsWith(".gif") || newFileName.endsWith(".pdf") || newFileName.endsWith(".txt")){
+                            let extension = "." + newFileName.split(".")[1]
+                            new_node.path = new_node.path.replace(extension, "")
+                            new_node.path = new_node.path + "("+ (counter) +")" + extension
+                        }
+                        else{
+                            new_node.path = new_node.path + "("+ (counter) +")"
+                        }
+                    }
                     new_node.absolute_path = abs_pathGenerator(path) + newFileName
                     actual.next = new_node
                     this.nodo_creados++
