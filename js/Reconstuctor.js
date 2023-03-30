@@ -46,14 +46,22 @@ function recreateFolderList(jsonLinkedList){
         return null;
     }
     const head = new N_aryNode(jsonLinkedList.path, jsonLinkedList.id, jsonLinkedList.type)
-    let current = head;
-    let nextNode = jsonLinkedList.next;
-    while (nextNode) {
-        current.next = new N_aryNode(nextNode.path, nextNode.id, nextNode.type)
-        current = current.next;
-        nextNode = nextNode.next;
+    if (jsonLinkedList.first !== null){
+        head.first = recreateFileList(jsonLinkedList.first)
     }
     return head;
+}
+
+
+function recreateFileList(jsonLinkedList){
+    if (!jsonLinkedList) {
+        return null;
+    }
+    let head = new N_aryNode(jsonLinkedList.path, jsonLinkedList.id, jsonLinkedList.type)
+    head.content = jsonLinkedList.content
+    head.next = recreateFileList(jsonLinkedList.next)
+    head.first = recreateFileList(jsonLinkedList.first)
+    return head
 }
 
 

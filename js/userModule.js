@@ -131,6 +131,7 @@ function createFolder(){
     logged_user.rootFolder.insert_folder(name, path)
     console.log(logged_user.rootFolder.root)
     display_actualFolder()
+    localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
 }
 
 function deleteFolder(){
@@ -157,6 +158,8 @@ function loadFiletoPath(){
         logged_user.rootFolder.insertFile(path, name, b64)
         console.log(logged_user.rootFolder.root)
         display_actualFolder()
+        localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
+        console.log(localStorage.getItem("jsonArbol"))
     };
 
 }
