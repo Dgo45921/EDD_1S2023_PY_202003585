@@ -5,6 +5,7 @@ export default class NaryTree{
     constructor() {
         this.nodo_creados = 1;
         this.root = new N_aryNode("/", 1, "folder")
+
     }
 
 
@@ -114,6 +115,38 @@ export default class NaryTree{
                 if (!actual) return null;
 
                 if (i === path.length-1 && actual.type === "folder") return actual
+
+                actual = actual.first
+
+            }
+        }
+
+        return null
+
+    }
+
+
+    getFile(path){
+        path = path.split("/")
+
+        if(path[0] === "" && this.root.first === null){
+            return null;
+        }
+
+        else if (path[0] === "" && this.root.first !== null){
+
+
+            let actual = this.root.first
+            for (let i = 1; i <path.length ; i++) {
+                while (actual){
+                    if (actual.path === path[i]){
+                        break
+                    }
+                    actual = actual.next
+                }
+                if (!actual) return null;
+
+                if (i === path.length-1) return actual
 
                 actual = actual.first
 

@@ -7,6 +7,6 @@ export default class N_aryNode {
         this.type = type
         this.next = null
         this.content = ""
-        this.absolute_path = ""
+        this.absolute_path = "/"
     }
 }

@@ -1,11 +1,10 @@
-
-import {reBuildTree} from "./Reconstuctor.js";
-import {returnStudentNode} from "./Reconstuctor.js";
+import {reBuildTree, returnStudentNode} from "./Reconstuctor.js";
 
 let AVLTree = reBuildTree()
 let logged_user = returnStudentNode(AVLTree.root, JSON.parse(localStorage.getItem("logged_user")).id);
 let current_folder = logged_user.rootFolder.root
 const hyperlinks = document.getElementsByTagName("a");
+
 
 
 window.gotopath = gotopath
@@ -30,32 +29,28 @@ function log_out() {
 }
 
 
-function fromb64tofile(base64String, fileName) {
+function fromb64tofile(base64String, type) {
     // Decode the base64 string and convert to Uint8Array
     const decodedArray = Uint8Array.from(atob(base64String), c => c.charCodeAt(0));
 
     // Create a Blob from the Uint8Array
-    const blob = new Blob([decodedArray], { type: 'application/pdf' });
+    const blob = new Blob([decodedArray], { type: 'application/' + type });
 
     // Create a URL from the Blob
     const url = URL.createObjectURL(blob);
 
-    // Create a new a element and set its attributes
-    const a = document.createElement('a');
-    a.setAttribute('href', url);
-
-
-    // Programmatically click the a element to download the file
-    a.click();
+    // Open the Blob in a new window/tab
+    window.open(url, '_blank');
 
     // Clean up the URL object
     URL.revokeObjectURL(url);
 }
 
 
+
 function display_actualFolder(){
     let actual_folder = document.getElementById("actual_folder")
-    actual_folder.innerHTML = "path: " + current_folder.path
+    actual_folder.innerHTML = "path: " + current_folder.absolute_path
     let current_file = current_folder.first
     let list_files = document.getElementById("file_list")
     list_files.innerHTML = ""
@@ -110,6 +105,18 @@ function display_actualFolder(){
 
         current_file = current_file.next
     }
+
+    let li = document.createElement('li');
+    li.setAttribute('class','media my-3');
+    list_files.appendChild(li);
+    let div = document.createElement('media-body');
+    li.appendChild(div)
+    let a = document.createElement("a")
+    a.setAttribute("href", "#")
+    a.setAttribute("abs_path", "/")
+    a.innerHTML = "Root"
+    div.appendChild(a)
+    updateHyperLinks()
 }
 
 
@@ -120,6 +127,8 @@ function greetUser (){
 }
 
 function gotopath(){
+
+
     const path = document.getElementById("gotopath").value
     console.log(path)
     if (path === "/"){
@@ -183,15 +192,31 @@ function loadFiletoPath(){
 }
 
 function updateHyperLinks(){
+
     const buttonPressed = e => {
+
+
         let path = e.target.getAttribute("abs_path")
-        let foundFolder = logged_user.rootFolder.getFolder(path)
-        if (!foundFolder) {
-            alert("Carpeta no encontrada")
+        if (path === "/"){
+            current_folder = logged_user.rootFolder.root
+            display_actualFolder()
+            return
+        }
+
+        if (path.endsWith(".png") || path.endsWith(".jpeg") || path.endsWith(".jpg") || path.endsWith(".tiff") || path.endsWith(".gif") || path.endsWith(".pdf") || path.endsWith(".txt")){
+            let foundFile = logged_user.rootFolder.getFile(path)
+
+            fromb64tofile(foundFile.content, foundFile.path.split(".")[1])
         }
         else{
-            current_folder = foundFolder
-            display_actualFolder()
+            let foundFolder = logged_user.rootFolder.getFolder(path)
+            if (!foundFolder) {
+                alert("Carpeta no encontrada")
+            }
+            else{
+                current_folder = foundFolder
+                display_actualFolder()
+            }
         }
 
     }
