@@ -18,6 +18,7 @@ export default class NaryTree{
             new_node.absolute_path = "/" + newFileName
             this.root.first = new_node
             this.nodo_creados++
+            return true
         }
         //Check if insertion is in root folder but this has multiple files
         else if(path[1] === "" && this.root.first !== null){
@@ -40,13 +41,14 @@ export default class NaryTree{
             new_node.absolute_path = "/" + new_node.path
             current_node.next = new_node
             this.nodo_creados++
+            return true
 
         }
 
         //If the path requires to enter to another folder but the root is empty
         if (this.root.first === null){
             alert("Ruta inválida, carpeta raíz vacía.")
-            return
+            return false
         }
 
 
@@ -76,6 +78,7 @@ export default class NaryTree{
             //check if the node that we got previously is null
             if (current_node === null){
                 alert("Ruta inválida, revisa la ruta ingresada")
+                return false
             }
             else{
                 // check if the new file is going to be first inside a folder
@@ -83,6 +86,7 @@ export default class NaryTree{
                     new_node.absolute_path = abs_pathGenerator(path) + newFileName
                     current_node.first = new_node
                     this.nodo_creados++
+                    return true
                 }
                 // traverse all files to insert at the end
                 else{
@@ -106,6 +110,7 @@ export default class NaryTree{
                     new_node.absolute_path = abs_pathGenerator(path) + newFileName
                     actual.next = new_node
                     this.nodo_creados++
+                    return true
                 }
             }
         }
@@ -195,7 +200,7 @@ export default class NaryTree{
                     anterior = actual
                     actual = actual.next
                 }
-                if (!actual) alert("Archivo o carpeta inexistente");
+                if (!actual) return false;
 
                 if (i === path.length-1) {
                     if (!anterior){
@@ -205,6 +210,7 @@ export default class NaryTree{
                         anterior.next = actual.next
                         actual.next = null
                     }
+                    return true
                 }
 
                 anterior = actual;
@@ -219,12 +225,12 @@ export default class NaryTree{
 
     insert_folder(path, new_folderName){
         let subPaths = path.split('/')
-        this.addFile(new_folderName, subPaths, "folder", "")
+        return this.addFile(new_folderName, subPaths, "folder", "")
     }
 
     insertFile(path, new_fileName, b64){
         let subPaths = path.split('/')
-        this.addFile(new_fileName, subPaths, "file", b64)
+        return this.addFile(new_fileName, subPaths, "file", b64)
     }
 
     graph_nary(){

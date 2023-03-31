@@ -1,4 +1,5 @@
 import NaryTree from "./NaryTree.js";
+import CircularList from "./CircularList.js";
 export default class Student {
     constructor(id, name, password) {
         this.id = id
