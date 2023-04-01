@@ -177,7 +177,7 @@ function createFolder(){
     if (logged_user.rootFolder.insert_folder(name, path)){
         display_actualFolder()
         updateHyperLinks()
-        let new_action = new Action("Se creó carpeta: " + name + path, getDate(), "folderCreation", "", path, name)
+        let new_action = new Action("Se creó carpeta: " + name + " en el directorio: " + path, getDate(), "folderCreation", "", path, name)
         bitacora.insertAction(new_action)
         graphBitacora()
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))

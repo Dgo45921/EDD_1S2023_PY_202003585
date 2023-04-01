@@ -64,12 +64,19 @@ function recreateNary(bitacora){
         nary.insert_folder(actual.action.path, actual.action.name)
     }
 
+    if (actual.action.type === "folderDeletion"){
+        nary.delete(actual.action.path)
+    }
+
 
     while (actual.next1 !== bitacora.first1){
         actual = actual.next1
         console.log(actual)
         if (actual.action.type === "folderCreation"){
             nary.insert_folder(actual.action.path, actual.action.name)
+        }
+        if (actual.action.type === "folderDeletion"){
+            nary.delete(actual.action.path)
         }
     }
 
