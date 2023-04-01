@@ -1,12 +1,13 @@
 import {reBuildTree, returnStudentNode} from "./Reconstuctor.js";
 import Action from "./Action.js";
-import CircularList from "./CircularList.js";
 
-let bitacora = new CircularList()
+
+
 let AVLTree = reBuildTree()
 let logged_user = returnStudentNode(AVLTree.root, JSON.parse(localStorage.getItem("logged_user")).id);
 let current_folder = logged_user.rootFolder.root
 const hyperlinks = document.getElementsByTagName("a");
+let bitacora = logged_user.bitacora
 
 
 
@@ -27,13 +28,13 @@ function graphnary(){
 }
 
 function graphBitacora(){
-   if (bitacora.size >0){
+   if (bitacora && bitacora.size >0){
        let viz_code = bitacora.getVizCode()
        let url = 'https://quickchart.io/graphviz?graph=';
        let bita = document.getElementById("imagenbita")
        bita.setAttribute("src", url+viz_code)
-       console.log(viz_code)
-       console.log(url+viz_code)
+       //console.log(viz_code)
+       //console.log(url+viz_code)
    }
 
 }
@@ -88,20 +89,9 @@ function display_actualFolder(){
         let img = document.createElement('img');
         img.setAttribute("height", "30")
         img.setAttribute("class", "mr-3")
-        if (current_file.path.endsWith(".txt")){
-            img.setAttribute("src", "img/text.png")
-        }
-        else if (current_file.path.endsWith(".pdf")){
-            img.setAttribute("src", "img/pdf.png")
-        }
 
-        else if (current_file.path.endsWith(".png") || current_file.path.endsWith(".jpg") || current_file.path.endsWith(".jpeg") || current_file.path.endsWith(".gif") || current_file.path.endsWith(".tiff")){
-            img.setAttribute("src", "img/image.png")
-        }
+        img.setAttribute("src", "img/folder.png")
 
-        else{
-            img.setAttribute("src", "img/folder.png")
-        }
 
         li.appendChild(img)
 
@@ -176,7 +166,7 @@ function getDate(){
     if (minutes < 10) mm = '0' + minutes;
     if (seconds < 10) mm = '0' + seconds;
 
-    return dd + '/' + mm + '/' + yyyy + '/' + hh + ' : ' + minutes  + ':' + seconds
+    return dd + '/' + mm + '/' + yyyy + '/ ' + hh + ':' + minutes  + ':' + seconds
 }
 
 
@@ -186,14 +176,23 @@ function createFolder(){
 
     if (logged_user.rootFolder.insert_folder(name, path)){
         display_actualFolder()
-        localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
         updateHyperLinks()
-        let new_action = new Action("Se creó carpeta: " + name + path, getDate())
+        let new_action = new Action("Se creó carpeta: " + name + path, getDate(), "folderCreation", "", path, name)
         bitacora.insertAction(new_action)
+        graphBitacora()
+        localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
 
     }
     else alert("No se pudo agregar la carpeta, revise la ruta")
-    graphBitacora()
+    // console.log(JSON.stringify(bitacora, replacer))
+    // localStorage.setItem("bitacora", JSON.stringify(bitacora, replacer))
+}
+
+function replacer(key, value){
+    if (key==="first1") return undefined;
+    else if (key==="next1") return undefined;
+    else if (key === "rootFolder") return undefined;
+    else return value;
 }
 
 function deleteFolder(){
@@ -206,16 +205,16 @@ function deleteFolder(){
 
     if (response) {
         if (logged_user.rootFolder.delete(path)){
-            let new_action = new Action("Se eliminó archivo: " + path, getDate())
+            let new_action = new Action("Se eliminó carpeta: " + path, getDate(), "folderDeletion", "", path, path)
             bitacora.insertAction(new_action)
-            localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
+            localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
             display_actualFolder()
             updateHyperLinks()
+            graphBitacora()
         }
         else alert("No se pudo eliminar el archivo, revise la ruta")
 
     }
-    graphBitacora()
 
 }
 
@@ -235,18 +234,6 @@ function loadFiletoPath(){
         const path = document.getElementById("new_file_path").value
         const name = fileContainer.value.replace('C:\\fakepath\\', '')
 
-        if (logged_user.rootFolder.insertFile(path, name, b64)){
-            //console.log(logged_user.rootFolder.root)
-            display_actualFolder()
-            localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
-            //console.log(localStorage.getItem("jsonArbol"))
-            let new_action = new Action("Se creó archivo: " + name, getDate())
-            bitacora.insertAction(new_action)
-            updateHyperLinks()
-            graphBitacora()
-
-        }
-        else alert("No se pudo agregar el archivo, revise la ruta")
 
     };
 
@@ -256,21 +243,12 @@ function loadFiletoPath(){
 function updateHyperLinks(){
 
     const buttonPressed = e => {
-
-
         let path = e.target.getAttribute("abs_path")
         if (path === "/"){
             current_folder = logged_user.rootFolder.root
             display_actualFolder()
             return
         }
-
-        if (path.endsWith(".png") || path.endsWith(".jpeg") || path.endsWith(".jpg") || path.endsWith(".tiff") || path.endsWith(".gif") || path.endsWith(".pdf") || path.endsWith(".txt")){
-            let foundFile = logged_user.rootFolder.getFile(path)
-
-            fromb64tofile(foundFile.content, foundFile.path.split(".")[1], foundFile.path)
-        }
-        else{
             let foundFolder = logged_user.rootFolder.getFolder(path)
             if (!foundFolder) {
                 alert("Carpeta no encontrada")
@@ -279,7 +257,7 @@ function updateHyperLinks(){
                 current_folder = foundFolder
                 display_actualFolder()
             }
-        }
+
 
     }
 
@@ -293,10 +271,7 @@ function updateHyperLinks(){
 greetUser()
 display_actualFolder()
 updateHyperLinks()
-
-
-
-
+graphBitacora()
 
 
 

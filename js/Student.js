@@ -6,6 +6,7 @@ export default class Student {
         this.name = name
         this.password = password
         this.rootFolder = new NaryTree()
+        this.bitacora = new CircularList()
     }
 
 }

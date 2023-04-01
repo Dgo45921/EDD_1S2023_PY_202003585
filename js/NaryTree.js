@@ -9,10 +9,8 @@ export default class NaryTree{
     }
 
 
-    addFile(newFileName, path, type, content){
+    addFile(newFileName, path){
         const new_node = new N_aryNode(newFileName, this.nodo_creados)
-        new_node.type = type
-        new_node.content = content
         //Check if insertion is at empty root folder
         if(path[1] === "" && this.root.first === null){
             new_node.absolute_path = "/" + newFileName
@@ -29,14 +27,7 @@ export default class NaryTree{
                 current_node = current_node.next
             }
             if (counter !== 0)  {
-                if (newFileName.endsWith(".png") || newFileName.endsWith(".jpeg") || newFileName.endsWith(".jpg") || newFileName.endsWith(".tiff") || newFileName.endsWith(".gif") || newFileName.endsWith(".pdf") || newFileName.endsWith(".txt")){
-                    let extension = "." + newFileName.split(".")[1]
-                    new_node.path = new_node.path.replace(extension, "")
-                    new_node.path = new_node.path + "("+ (counter) +")" +extension
-                }
-                else{
-                    new_node.path = new_node.path + "("+ (counter) +")"
-                }
+                new_node.path = new_node.path + "("+ (counter) +")"
             }
             new_node.absolute_path = "/" + new_node.path
             current_node.next = new_node
@@ -60,7 +51,7 @@ export default class NaryTree{
                 if(current_node !== null){
                     while(current_node){
                         // Check position not going out of the bounds of path array and if the folder is found
-                        if(position < path.length && path[position] === current_node.path && current_node.type === "folder"){
+                        if(position < path.length && path[position] === current_node.path){
                             position++
                             //Get the root folder we need
                             if(current_node.first !== null && position < path.length){
@@ -98,14 +89,9 @@ export default class NaryTree{
                         actual = actual.next
                     }
                     if (counter !== 0)  {
-                        if (newFileName.endsWith(".png") || newFileName.endsWith(".jpeg") || newFileName.endsWith(".jpg") || newFileName.endsWith(".tiff") || newFileName.endsWith(".gif") || newFileName.endsWith(".pdf") || newFileName.endsWith(".txt")){
-                            let extension = "." + newFileName.split(".")[1]
-                            new_node.path = new_node.path.replace(extension, "")
-                            new_node.path = new_node.path + "("+ (counter) +")" + extension
-                        }
-                        else{
-                            new_node.path = new_node.path + "("+ (counter) +")"
-                        }
+
+                        new_node.path = new_node.path + "("+ (counter) +")"
+
                     }
                     new_node.absolute_path = abs_pathGenerator(path) + newFileName
                     actual.next = new_node
@@ -137,38 +123,6 @@ export default class NaryTree{
                 }
                 if (!actual) return null;
 
-                if (i === path.length-1 && actual.type === "folder") return actual
-
-                actual = actual.first
-
-            }
-        }
-
-        return null
-
-    }
-
-
-    getFile(path){
-        path = path.split("/")
-
-        if(path[0] === "" && this.root.first === null){
-            return null;
-        }
-
-        else if (path[0] === "" && this.root.first !== null){
-
-
-            let actual = this.root.first
-            for (let i = 1; i <path.length ; i++) {
-                while (actual){
-                    if (actual.path === path[i]){
-                        break
-                    }
-                    actual = actual.next
-                }
-                if (!actual) return null;
-
                 if (i === path.length-1) return actual
 
                 actual = actual.first
@@ -179,6 +133,8 @@ export default class NaryTree{
         return null
 
     }
+
+
 
 
     delete(path){
@@ -228,10 +184,6 @@ export default class NaryTree{
         return this.addFile(new_folderName, subPaths, "folder", "")
     }
 
-    insertFile(path, new_fileName, b64){
-        let subPaths = path.split('/')
-        return this.addFile(new_fileName, subPaths, "file", b64)
-    }
 
     graph_nary(){
         let cadena = "";
@@ -262,7 +214,7 @@ export default class NaryTree{
         let parent_nodeadd = parent_node
         if(actual !== null){
             while(actual){
-                cadena += "node" + actual.id + "[label=\"" + "type: " +  actual.type + "\\n" + "name: " +  actual.path + "\\n" + "absolute_path: " + actual.absolute_path + "\"] \n"
+                cadena += "node" + actual.id + "[label=\"" + "name: " +  actual.path + "\\n" + "absolute_path: " + actual.absolute_path + "\"] \n"
                 actual = actual.next
             }
             actual = root

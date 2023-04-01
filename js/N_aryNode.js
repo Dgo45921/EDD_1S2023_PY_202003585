@@ -1,12 +1,10 @@
 
 export default class N_aryNode {
-    constructor(path, id, type) {
+    constructor(path, id) {
         this.first = null
         this.id = id
         this.path = path
-        this.type = type
         this.next = null
-        this.content = ""
         this.absolute_path = "/"
     }
 }
