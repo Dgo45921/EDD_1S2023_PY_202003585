@@ -1,0 +1,9 @@
+export default class HeaderNode{
+    constructor(id) {
+        this.id=id
+        this.next = null
+        this.previous = null
+        this.access = null
+        this.content = ""
+    }
+}

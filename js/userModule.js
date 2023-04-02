@@ -1,5 +1,7 @@
 import {reBuildTree, returnStudentNode} from "./Reconstuctor.js";
 import Action from "./Action.js";
+import InternalNode from "./InternalNode.js";
+import HeaderNode from "./HeaderNode.js";
 
 
 
@@ -234,6 +236,13 @@ function loadFiletoPath(){
         const path = document.getElementById("new_file_path").value
         const name = fileContainer.value.replace('C:\\fakepath\\', '')
 
+        let headerNew = new HeaderNode(name)
+        headerNew.content = b64
+
+        logged_user.rootFolder.getFolder(path).matrix.rows.insert(headerNew)
+        console.log(logged_user)
+
+
 
     };
 
@@ -267,12 +276,24 @@ function updateHyperLinks(){
 }
 
 
+function studentDropList(node){
+    // obtaining body of student table
+    let list = document.getElementById("id_set")
+    if (node != null) {
+        studentDropList(node.left)
+        let option = document.createElement("option");
+        option.text = node.student.id
+        list.appendChild(option)
+        studentDropList(node.right);
+    }
+}
+
 
 greetUser()
 display_actualFolder()
 updateHyperLinks()
 graphBitacora()
-
+studentDropList(AVLTree.root)
 
 
 

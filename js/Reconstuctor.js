@@ -45,7 +45,7 @@ function recreateBitacora(head){
 
     let actual = head
     while(actual){
-        console.log(actual.action.path)
+        //console.log(actual.action.path)
         let new_action = new Action(actual.action.action, actual.action.date, actual.action.type, actual.action.content, actual.action.name, actual.action.path)
         bitacora.insertAction(new_action)
         actual = actual.next2
@@ -59,7 +59,7 @@ function recreateNary(bitacora){
     let actual = bitacora.first1
     if (actual === null) return nary
 
-    console.log(actual)
+    //console.log(actual)
     if (actual.action.type === "folderCreation"){
         nary.insert_folder(actual.action.path, actual.action.name)
     }
@@ -71,7 +71,7 @@ function recreateNary(bitacora){
 
     while (actual.next1 !== bitacora.first1){
         actual = actual.next1
-        console.log(actual)
+        //console.log(actual)
         if (actual.action.type === "folderCreation"){
             nary.insert_folder(actual.action.path, actual.action.name)
         }

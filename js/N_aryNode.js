@@ -1,3 +1,4 @@
+import FileMatrix from "./FileMatrix.js";
 
 export default class N_aryNode {
     constructor(path, id) {
@@ -6,5 +7,6 @@ export default class N_aryNode {
         this.path = path
         this.next = null
         this.absolute_path = "/"
+        this.matrix = new FileMatrix()
     }
 }
