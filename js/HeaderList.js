@@ -9,8 +9,8 @@ export default class HeaderList{
     }
 
     insert(newHeaderNode){
-
         this.size++
+        newHeaderNode.id2 = this.size
         if (!this.first){
             this.first = newHeaderNode
             this.last = newHeaderNode
@@ -30,12 +30,10 @@ export default class HeaderList{
                     newHeaderNode.id = newHeaderNode.id + "("+ (counter) +")" +extension
                 }
 
-
+        }
             this.last.next = newHeaderNode
             newHeaderNode.previous = this.last
             this.last = newHeaderNode
-
-        }
     }
     }
 
@@ -63,6 +61,17 @@ export default class HeaderList{
             actual = actual.next
         }
         return null
+    }
+
+    findFile(filename){
+        let actual = this.first
+        while (actual){
+            if (actual.id === filename) return true
+            actual = actual.next
+        }
+
+        return false
+
     }
 
 

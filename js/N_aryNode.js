@@ -7,6 +7,6 @@ export default class N_aryNode {
         this.path = path
         this.next = null
         this.absolute_path = "/"
-        this.matrix = new FileMatrix()
+        this.matrix = new FileMatrix(this.path)
     }
 }

@@ -1,8 +1,7 @@
 import {reBuildTree, returnStudentNode} from "./Reconstuctor.js";
 import Action from "./Action.js";
-import InternalNode from "./InternalNode.js";
 import HeaderNode from "./HeaderNode.js";
-
+import InternalNode from "./InternalNode.js";
 
 
 let AVLTree = reBuildTree()
@@ -12,35 +11,34 @@ const hyperlinks = document.getElementsByTagName("a");
 let bitacora = logged_user.bitacora
 
 
-
-
 window.gotopath = gotopath
 window.createFolder = createFolder
 window.deleteFolder = deleteFolder
 window.loadFiletoPath = loadFiletoPath
 window.log_out = log_out
 window.graphnary = graphnary
+window.graphMatrix = graphMatrix
+window.addPermission = addPermission
 
-function graphnary(){
+function graphnary() {
     let viz_code = logged_user.rootFolder.graph_nary()
     let url = 'https://quickchart.io/graphviz?graph=';
     let tree_image = document.getElementById("NaryGraph")
-    tree_image.setAttribute("src", url+viz_code)
+    tree_image.setAttribute("src", url + viz_code)
     //console.log(viz_code)
 }
 
-function graphBitacora(){
-   if (bitacora && bitacora.size >0){
-       let viz_code = bitacora.getVizCode()
-       let url = 'https://quickchart.io/graphviz?graph=';
-       let bita = document.getElementById("imagenbita")
-       bita.setAttribute("src", url+viz_code)
-       //console.log(viz_code)
-       //console.log(url+viz_code)
-   }
+function graphBitacora() {
+    if (bitacora && bitacora.size > 0) {
+        let viz_code = bitacora.getVizCode()
+        let url = 'https://quickchart.io/graphviz?graph=';
+        let bita = document.getElementById("imagenbita")
+        bita.setAttribute("src", url + viz_code)
+        //console.log(viz_code)
+        //console.log(url+viz_code)
+    }
 
 }
-
 
 
 function log_out() {
@@ -56,7 +54,7 @@ function fromb64tofile(base64String, type, filename) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', 'data:application/' + type + ';base64,' + base64String);
     xhr.responseType = 'blob';
-    xhr.onload = function() {
+    xhr.onload = function () {
         // Create a URL from the Blob
         const blob = xhr.response;
         const url = URL.createObjectURL(blob);
@@ -74,18 +72,17 @@ function fromb64tofile(base64String, type, filename) {
 }
 
 
-
-function display_actualFolder(){
+function display_actualFolder() {
     let actual_folder = document.getElementById("actual_folder")
     actual_folder.innerHTML = "path: " + current_folder.absolute_path
     let current_file = current_folder.first
     let list_files = document.getElementById("file_list")
     list_files.innerHTML = ""
-    while (current_file){
+    while (current_file) {
 
 
         let li = document.createElement('li');
-        li.setAttribute('class','media my-3');
+        li.setAttribute('class', 'media my-3');
         list_files.appendChild(li);
 
         let img = document.createElement('img');
@@ -106,13 +103,11 @@ function display_actualFolder(){
         div.appendChild(a)
 
 
-
-
         current_file = current_file.next
     }
 
     let li = document.createElement('li');
-    li.setAttribute('class','media my-3');
+    li.setAttribute('class', 'media my-3');
     list_files.appendChild(li);
     let div = document.createElement('media-body');
     li.appendChild(div)
@@ -125,18 +120,18 @@ function display_actualFolder(){
 }
 
 
-function greetUser (){
+function greetUser() {
     const jsonObject = JSON.parse(localStorage.getItem("logged_user"))
     let message = document.getElementById("message_user")
     message.innerHTML = "Bienvenido " + jsonObject.name
 }
 
-function gotopath(){
+function gotopath() {
 
 
     const path = document.getElementById("gotopath").value
     //console.log(path)
-    if (path === "/"){
+    if (path === "/") {
         current_folder = logged_user.rootFolder.root
         display_actualFolder()
         return
@@ -145,15 +140,14 @@ function gotopath(){
     let foundFolder = logged_user.rootFolder.getFolder(path)
     if (!foundFolder) {
         alert("Carpeta no encontrada")
-    }
-    else{
+    } else {
         current_folder = foundFolder
         display_actualFolder()
     }
     updateHyperLinks()
 }
 
-function getDate(){
+function getDate() {
     const today = new Date();
     const yyyy = today.getFullYear();
     let mm = today.getMonth() + 1; // Months start at 0!
@@ -168,15 +162,15 @@ function getDate(){
     if (minutes < 10) mm = '0' + minutes;
     if (seconds < 10) mm = '0' + seconds;
 
-    return dd + '/' + mm + '/' + yyyy + '/ ' + hh + ':' + minutes  + ':' + seconds
+    return dd + '/' + mm + '/' + yyyy + '/ ' + hh + ':' + minutes + ':' + seconds
 }
 
 
-function createFolder(){
+function createFolder() {
     const path = document.getElementById("new_folder_path").value
     const name = document.getElementById("new_folder_name").value
 
-    if (logged_user.rootFolder.insert_folder(name, path)){
+    if (logged_user.rootFolder.insert_folder(name, path)) {
         display_actualFolder()
         updateHyperLinks()
         let new_action = new Action("Se creó carpeta: " + name + " en el directorio: " + path, getDate(), "folderCreation", "", path, name)
@@ -184,44 +178,42 @@ function createFolder(){
         graphBitacora()
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
 
-    }
-    else alert("No se pudo agregar la carpeta, revise la ruta")
+    } else alert("No se pudo agregar la carpeta, revise la ruta")
     // console.log(JSON.stringify(bitacora, replacer))
     // localStorage.setItem("bitacora", JSON.stringify(bitacora, replacer))
 }
 
-function replacer(key, value){
-    if (key==="first1") return undefined;
-    else if (key==="next1") return undefined;
+function replacer(key, value) {
+    if (key === "first1") return undefined;
+    else if (key === "next1") return undefined;
     else if (key === "rootFolder") return undefined;
     else return value;
 }
 
-function deleteFolder(){
+function deleteFolder() {
     const path = document.getElementById("delete_path").value
-    if (path === "/"){
+    if (path === "/") {
         alert("No puede borrar la carpeta root")
         return
     }
     const response = confirm("¿Está seguro de eliminar ese archivo/carpeta?");
 
     if (response) {
-        if (logged_user.rootFolder.delete(path)){
+        if (logged_user.rootFolder.delete(path)) {
             let new_action = new Action("Se eliminó carpeta: " + path, getDate(), "folderDeletion", "", path, path)
             bitacora.insertAction(new_action)
             localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
             display_actualFolder()
             updateHyperLinks()
             graphBitacora()
-        }
-        else alert("No se pudo eliminar el archivo, revise la ruta")
+        } else alert("No se pudo eliminar el archivo, revise la ruta")
 
     }
 
 }
 
 
-function loadFiletoPath(){
+function loadFiletoPath() {
     let fileContainer = document.getElementById("fileHolder")
     let file = fileContainer.files[0]
 
@@ -230,8 +222,8 @@ function loadFiletoPath(){
     fr.onloadend = () => {
         let b64 = fr.result.split(',')[1]
         //console.log(fr.result)
-       // console.log(b64)
-       // fromb64tofile(b64, "prueba.pdf")
+        // console.log(b64)
+        // fromb64tofile(b64, "prueba.pdf")
 
         const path = document.getElementById("new_file_path").value
         const name = fileContainer.value.replace('C:\\fakepath\\', '')
@@ -239,9 +231,9 @@ function loadFiletoPath(){
         let headerNew = new HeaderNode(name)
         headerNew.content = b64
 
+
         logged_user.rootFolder.getFolder(path).matrix.rows.insert(headerNew)
         console.log(logged_user)
-
 
 
     };
@@ -249,23 +241,22 @@ function loadFiletoPath(){
     graphBitacora()
 }
 
-function updateHyperLinks(){
+function updateHyperLinks() {
 
     const buttonPressed = e => {
         let path = e.target.getAttribute("abs_path")
-        if (path === "/"){
+        if (path === "/") {
             current_folder = logged_user.rootFolder.root
             display_actualFolder()
             return
         }
-            let foundFolder = logged_user.rootFolder.getFolder(path)
-            if (!foundFolder) {
-                alert("Carpeta no encontrada")
-            }
-            else{
-                current_folder = foundFolder
-                display_actualFolder()
-            }
+        let foundFolder = logged_user.rootFolder.getFolder(path)
+        if (!foundFolder) {
+            alert("Carpeta no encontrada")
+        } else {
+            current_folder = foundFolder
+            display_actualFolder()
+        }
 
 
     }
@@ -276,7 +267,7 @@ function updateHyperLinks(){
 }
 
 
-function studentDropList(node){
+function studentDropList(node) {
     // obtaining body of student table
     let list = document.getElementById("id_set")
     if (node != null) {
@@ -286,6 +277,66 @@ function studentDropList(node){
         list.appendChild(option)
         studentDropList(node.right);
     }
+}
+
+function graphMatrix() {
+
+
+    if (current_folder === logged_user.rootFolder) {
+        if (current_folder.matrix.rows.size > 0) {
+            console.log(current_folder.matrix.getVizCode())
+        } else {
+            alert("No hay suficientes archivos para hacer el reporte")
+        }
+    }
+
+
+    if (current_folder.matrix.rows.size > 0) {
+        console.log(current_folder.matrix.getVizCode())
+    } else {
+        alert("No hay suficientes archivos para hacer el reporte")
+    }
+
+}
+
+function addPermission() {
+    let permission = document.getElementById("permission_set").value
+    let carnet = document.getElementById("id_set").value
+    let folderToFind = document.getElementById("permissionToFile").value
+    let pathArray = folderToFind.split("/")
+    let filename = pathArray.pop()
+    folderToFind = pathArray.join("/");
+    let nuevo_interno = new InternalNode(filename, carnet, permission)
+    //console.log(nuevo_interno)
+
+    console.log("Tengo que buscar la carpeta: ", folderToFind)
+    console.log("Y otorgarle permiso: ", permission ," al carnet: ", carnet)
+    console.log(filename)
+
+    if (folderToFind === ""){
+        console.log("debo buscar en la root")
+        console.log(logged_user.rootFolder.getFolder("/").matrix.rows.findFile(filename))
+        if (logged_user.rootFolder.getFolder("/").matrix.rows.findFile(filename)){
+            logged_user.rootFolder.getFolder("/").matrix.insert(nuevo_interno)
+            console.log(logged_user.rootFolder.root)
+        }
+        else {
+            alert("archivo inexistente, revise la ruta")
+        }
+
+
+
+    }
+    else{
+        if (logged_user.rootFolder.getFolder(folderToFind).matrix.rows.findFile(filename)){
+            logged_user.rootFolder.getFolder(folderToFind).matrix.insert(nuevo_interno)
+            console.log(logged_user.rootFolder.root)
+        }
+        else {
+            alert("archivo inexistente, revise la ruta")
+        }
+    }
+
 }
 
 

@@ -7,5 +7,8 @@ export default class InternalNode{
         this.down=null
         this.right=null
         this.left=null
+
+        this.xCoordinate = 0
+        this.yCoordinate = 0
     }
 }

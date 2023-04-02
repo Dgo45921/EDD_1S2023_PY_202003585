@@ -106,6 +106,8 @@ export default class NaryTree{
     getFolder(path){
         path = path.split("/")
 
+        if (path[1] === "") return this.root
+
         if(path[0] === "" && this.root.first === null){
             return null;
         }

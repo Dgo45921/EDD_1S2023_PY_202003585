@@ -5,5 +5,6 @@ export default class HeaderNode{
         this.previous = null
         this.access = null
         this.content = ""
+        this.id2 = 0
     }
 }
