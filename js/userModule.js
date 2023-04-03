@@ -111,32 +111,22 @@ function display_actualFolder() {
     // code to display files
 
     let actual_file = current_folder.matrix.rows.first
-    while (actual_file){
-        if (current_folder.absolute_path === "/"){
-            actual_file.abs_path = current_folder.absolute_path  + actual_file.id
-        }
-        else{
-            actual_file.abs_path = current_folder.absolute_path  + "/" + actual_file.id
-        }
+    while (actual_file) {
+
         let li = document.createElement('li');
-        li.setAttribute('class','media my-3');
+        li.setAttribute('class', 'media my-3');
         list_files.appendChild(li);
 
         let img = document.createElement('img');
         img.setAttribute("height", "30")
         img.setAttribute("class", "mr-3")
-        if (actual_file.id.endsWith(".txt")){
+        if (actual_file.id.endsWith(".txt")) {
             img.setAttribute("src", "img/text.png")
-        }
-        else if (actual_file.id.endsWith(".pdf")){
+        } else if (actual_file.id.endsWith(".pdf")) {
             img.setAttribute("src", "img/pdf.png")
-        }
-
-        else if (actual_file.id.endsWith(".png") || actual_file.id.endsWith(".jpg") || actual_file.id.path.endsWith(".jpeg") || actual_file.id.path.endsWith(".gif") || actual_file.id.path.endsWith(".tiff")){
+        } else if (actual_file.id.endsWith(".png") || actual_file.id.endsWith(".jpg") || actual_file.id.path.endsWith(".jpeg") || actual_file.id.path.endsWith(".gif") || actual_file.id.path.endsWith(".tiff")) {
             img.setAttribute("src", "img/image.png")
-        }
-
-        else{
+        } else {
             img.setAttribute("src", "img/folder.png")
         }
 
@@ -152,11 +142,8 @@ function display_actualFolder() {
         div.appendChild(a)
 
 
-
         actual_file = actual_file.next
     }
-
-
 
 
     let li = document.createElement('li');
@@ -169,11 +156,6 @@ function display_actualFolder() {
     a.setAttribute("abs_path", "/")
     a.innerHTML = "Root"
     div.appendChild(a)
-
-
-
-
-
 
 
     updateHyperLinks()
@@ -222,7 +204,7 @@ function getDate() {
     if (minutes < 10) mm = '0' + minutes;
     if (seconds < 10) mm = '0' + seconds;
 
-    return dd + '/' + mm + '/' + yyyy + '/ ' + hh + ':' + minutes + ':' + seconds
+    return dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + minutes + ':' + seconds
 }
 
 
@@ -233,7 +215,7 @@ function createFolder() {
     if (logged_user.rootFolder.insert_folder(name, path)) {
         display_actualFolder()
         updateHyperLinks()
-        let new_action = new Action("Se creó carpeta: " + name + " en el directorio: " + path, getDate(), "folderCreation", "", path, name)
+        let new_action = new Action("Se creó carpeta: " + name + " en el directorio: " + path, getDate(), "folderCreation", "", path, name, "")
         bitacora.insertAction(new_action)
         graphBitacora()
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
@@ -251,24 +233,57 @@ function replacer(key, value) {
 }
 
 function deleteFolder() {
-    const path = document.getElementById("delete_path").value
+    const response = confirm("¿Está seguro de eliminar ese archivo/carpeta?");
+    let path = document.getElementById("delete_path").value
+
+
     if (path === "/") {
         alert("No puede borrar la carpeta root")
         return
     }
-    const response = confirm("¿Está seguro de eliminar ese archivo/carpeta?");
 
-    if (response) {
-        if (logged_user.rootFolder.delete(path)) {
-            let new_action = new Action("Se eliminó carpeta: " + path, getDate(), "folderDeletion", "", path, path)
-            bitacora.insertAction(new_action)
-            localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
-            display_actualFolder()
-            updateHyperLinks()
-            graphBitacora()
-        } else alert("No se pudo eliminar el archivo, revise la ruta")
+        if (path.endsWith(".txt") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".pdf") || path.endsWith(".gif") || path.endsWith(".tiff")) {
+            if (response) {
+            let pathArray = path.split("/")
+            let filename = pathArray.pop()
+            path = pathArray.join("/");
+            console.log("tengo que eliminar el archivo: ", filename, " perteneciente a la carpeta: ", path)
+            if (path === ""){
+                logged_user.rootFolder.getFolder("/").matrix.rows.delete(filename)
+                display_actualFolder()
+                updateHyperLinks()
+                let new_action = new Action("Se eliminó archivo: " + filename, getDate(), "fileDeletion", "", "/", filename, "")
+                bitacora.insertAction(new_action)
+                localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
+            }
+            else {
+                logged_user.rootFolder.getFolder(path).matrix.rows.delete(filename)
+                display_actualFolder()
+                updateHyperLinks()
+                let new_action = new Action("Se eliminó archivo: " + filename, getDate(), "fileDeletion", "", path, filename, "")
+                bitacora.insertAction(new_action)
+                localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
+            }
+        }
+
+    } else {
+        if (response) {
+            if (logged_user.rootFolder.delete(path)) {
+                let new_action = new Action("Se eliminó carpeta: " + path, getDate(), "folderDeletion", "", path, path, "")
+                bitacora.insertAction(new_action)
+                localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
+                display_actualFolder()
+                updateHyperLinks()
+                graphBitacora()
+            } else {
+                alert("No se pudo eliminar el archivo, revise la ruta")
+            }
+
+        }
+
 
     }
+
 
 }
 
@@ -281,14 +296,18 @@ function loadFiletoPath() {
     fr.readAsDataURL(file)
     fr.onloadend = () => {
         let b64 = fr.result.split(',')[1]
-        //console.log(fr.result)
-        // console.log(b64)
-        // fromb64tofile(b64, "prueba.pdf")
 
         const path = document.getElementById("new_file_path").value
         const name = fileContainer.value.replace('C:\\fakepath\\', '')
 
         let headerNew = new HeaderNode(name)
+
+        if (path === "/") {
+            headerNew.abs_path = "/" + headerNew.id
+        } else {
+            headerNew.abs_path = path + "/" + headerNew.id
+        }
+
         headerNew.content = b64
 
 
@@ -297,6 +316,11 @@ function loadFiletoPath() {
         display_actualFolder()
         graphBitacora()
 
+        let new_action = new Action("Se agregó archivo: " + name + " en el directorio: " + path, getDate(), "fileAdition", b64, name, path, "")
+        console.log(new_action)
+        bitacora.insertAction(new_action)
+        graphBitacora()
+        localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
     };
 
 
@@ -305,6 +329,7 @@ function loadFiletoPath() {
 function updateHyperLinks() {
 
     const buttonPressed = e => {
+        e.preventDefault()
         let path = e.target.getAttribute("abs_path")
         if (path === "/") {
             current_folder = logged_user.rootFolder.root
@@ -312,30 +337,22 @@ function updateHyperLinks() {
             return
         }
 
-        if (path.endsWith(".txt") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".pdf") || path.endsWith(".gif") || path.endsWith(".tiff")){
-            if (document.getElementById("permissionToFile").value===""){
-                alert("Ruta inválida")
-                return
-            }
-
-
+        if (path.endsWith(".txt") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".pdf") || path.endsWith(".gif") || path.endsWith(".tiff")) {
             let pathArray = path.split("/")
             let filename = pathArray.pop()
             let folderToFind = pathArray.join("/");
             //console.log(nuevo_interno)
-            if (folderToFind === ""){
+            if (folderToFind === "") {
                 let foundFolder = logged_user.rootFolder.getFolder("/")
                 let file = foundFolder.matrix.rows.getHeaderNode(filename)
                 fromb64tofile(file.content, file.id.split(".")[1], file.id)
-            }
-            else{
+            } else {
                 let foundFolder = logged_user.rootFolder.getFolder(path)
                 let file = foundFolder.matrix.rows.getHeaderNode(filename)
                 fromb64tofile(file.content, file.id.split(".")[1], file.id)
             }
 
-        }
-        else{
+        } else {
             let foundFolder = logged_user.rootFolder.getFolder(path)
             if (!foundFolder) {
                 alert("Carpeta no encontrada")
@@ -382,7 +399,7 @@ function graphMatrix() {
 }
 
 function addPermission() {
-    if (document.getElementById("permissionToFile").value===""){
+    if (document.getElementById("permissionToFile").value === "") {
         alert("Ruta inválida")
         return
     }
@@ -400,11 +417,13 @@ function addPermission() {
     console.log(filename)
 
     if (folderToFind === "") {
-        console.log("debo buscar en la root")
-        console.log(logged_user.rootFolder.getFolder("/").matrix.rows.findFile(filename))
         if (logged_user.rootFolder.getFolder("/").matrix.rows.findFile(filename)) {
             logged_user.rootFolder.getFolder("/").matrix.insert(nuevo_interno)
-            console.log(logged_user.rootFolder.root)
+            let new_action = new Action("Se otorgó permiso del archivo: " + "/" + filename + " a : " + carnet, getDate(), "permission", permission, filename, carnet, "/")
+            console.log(new_action)
+            bitacora.insertAction(new_action)
+            graphBitacora()
+            localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
         } else {
             alert("archivo inexistente, revise la ruta")
         }
@@ -413,7 +432,11 @@ function addPermission() {
     } else {
         if (logged_user.rootFolder.getFolder(folderToFind).matrix.rows.findFile(filename)) {
             logged_user.rootFolder.getFolder(folderToFind).matrix.insert(nuevo_interno)
-            console.log(logged_user.rootFolder.root)
+            let new_action = new Action("Se otorgó permiso del archivo: " + folderToFind + "/" + filename + " a : " + carnet, getDate(), "permission", permission, filename, carnet, folderToFind)
+            console.log(new_action)
+            bitacora.insertAction(new_action)
+            graphBitacora()
+            localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
         } else {
             alert("archivo inexistente, revise la ruta")
         }

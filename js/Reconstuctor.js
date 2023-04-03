@@ -5,6 +5,8 @@ import N_aryNode from "./N_aryNode.js";
 import AVL from "./AVL.js";
 import CircularList from "./CircularList.js";
 import Action from "./Action.js";
+import HeaderNode from "./HeaderNode.js";
+import InternalNode from "./InternalNode.js";
 
 
 export function reBuildTree(){
@@ -46,7 +48,7 @@ function recreateBitacora(head){
     let actual = head
     while(actual){
         //console.log(actual.action.path)
-        let new_action = new Action(actual.action.action, actual.action.date, actual.action.type, actual.action.content, actual.action.name, actual.action.path)
+        let new_action = new Action(actual.action.action, actual.action.date, actual.action.type, actual.action.content, actual.action.name, actual.action.path, actual.action.path2)
         bitacora.insertAction(new_action)
         actual = actual.next2
     }
@@ -75,8 +77,32 @@ function recreateNary(bitacora){
         if (actual.action.type === "folderCreation"){
             nary.insert_folder(actual.action.path, actual.action.name)
         }
-        if (actual.action.type === "folderDeletion"){
+        else if (actual.action.type === "folderDeletion"){
             nary.delete(actual.action.path)
+        }
+        else if (actual.action.type === "fileAdition"){
+            let headerNew = new HeaderNode(actual.action.name)
+            let path = actual.action.path
+            headerNew.content =actual.action.content
+            if (path === "/"){
+                headerNew.abs_path = "/"  + headerNew.id
+            }
+            else{
+                headerNew.abs_path = path  + "/" + headerNew.id
+            }
+
+            nary.getFolder(path).matrix.rows.insert(headerNew)
+        }
+
+        else if (actual.action.type === "permission"){
+            //console.log(actual)
+            let nuevo_interno = new InternalNode(actual.action.name, actual.action.path, actual.action.content)
+            nary.getFolder(actual.action.path2).matrix.insert(nuevo_interno)
+        }
+        else if (actual.action.type === "fileDeletion"){
+            // console.log(actual)
+            nary.getFolder(actual.action.name).matrix.rows.delete(actual.action.path)
+
         }
     }
 

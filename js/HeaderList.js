@@ -74,6 +74,86 @@ export default class HeaderList{
 
     }
 
+    delete(filename){
+        if (this.size === 0) return false
+
+        let nodeTodelete = null
+        let actual = this.first
+        while (actual){
+            if (actual.id === filename) {
+                nodeTodelete = actual
+            }
+            actual = actual.next
+        }
+
+        if (!nodeTodelete) return false
+
+
+        // case where the node to delete is the first row
+        if (nodeTodelete === this.first){
+            nodeTodelete.next.previous = null
+            this.first = nodeTodelete.next
+            // disconnecting inner vertical edges
+            let actual = nodeTodelete.access
+            while (actual){
+                if (actual.down){
+                    actual.up.down = actual.down
+                    actual.down.up = actual.up
+                }
+                else{
+                    actual.up.down = null
+                }
+
+                actual = actual.right
+            }
+
+
+
+            return true
+        }
+
+        // case where the node to delete is the last row
+        if (nodeTodelete === this.last){
+            nodeTodelete.previous.next = null
+            this.last = nodeTodelete.previous
+            // disconnecting inner vertical edges
+            let actual = nodeTodelete.access
+            while (actual){
+                if (actual.up){
+                    actual.up.down = null
+                }
+
+                actual = actual.right
+            }
+
+
+
+            return true
+        }
+
+
+
+        // case where the node to delete is in the middle
+        nodeTodelete.previous.next = nodeTodelete.next
+        nodeTodelete.next.previous = nodeTodelete.previous
+        actual = nodeTodelete.access
+        while (actual){
+            if (actual.down){
+                actual.up.down = actual.down
+                actual.down.up = actual.up
+            }
+            else{
+                actual.up.down = null
+            }
+
+            actual = actual.right
+        }
+
+        return true
+
+
+    }
+
 
 
 }
