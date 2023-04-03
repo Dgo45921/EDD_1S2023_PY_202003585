@@ -156,7 +156,7 @@ function load_json(){
         const jsonContent = fr.result;
         //console.log(jsonContent)
         const jsonObject = JSON.parse(jsonContent)
-        const studentsArray = jsonObject.Alumnos
+        const studentsArray = jsonObject.alumnos
         load_students(studentsArray)
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
         alert("Datos cargados con éxito")
@@ -167,9 +167,9 @@ function load_json(){
 export function load_students(studentsArray){
     AVLTree = new AVL()
     for (let i = 0; i < studentsArray.length ; i++) {
-        const id = studentsArray[i].Id;
-        const name = studentsArray[i].Name;
-        const password = studentsArray[i].Password;
+        const id = studentsArray[i].carnet;
+        const name = studentsArray[i].nombre;
+        const password = studentsArray[i].password;
         const newStudent = new Student(id, name, password);
         //console.log(newStudent)
         AVLTree.root = AVLTree.insertStudent(AVLTree.root, newStudent)
