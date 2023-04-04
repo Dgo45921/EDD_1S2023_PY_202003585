@@ -349,7 +349,7 @@ function updateHyperLinks() {
                 let file = foundFolder.matrix.rows.getHeaderNode(filename)
                 fromb64tofile(file.content, file.id.split(".")[1], file.id)
             } else {
-                let foundFolder = logged_user.rootFolder.getFolder(path)
+                let foundFolder = logged_user.rootFolder.getFolder(folderToFind)
                 let file = foundFolder.matrix.rows.getHeaderNode(filename)
                 fromb64tofile(file.content, file.id.split(".")[1], file.id)
             }
