@@ -215,7 +215,7 @@ function createFolder() {
     if (logged_user.rootFolder.insert_folder(name, path)) {
         display_actualFolder()
         updateHyperLinks()
-        let new_action = new Action("Se creó carpeta: " + name + " en el directorio: " + path, getDate(), "folderCreation", "", path, name, "")
+        let new_action = new Action("Se creó carpeta: " + path + " en el directorio: " + name, getDate(), "folderCreation", "", path, name, "")
         bitacora.insertAction(new_action)
         graphBitacora()
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
@@ -242,12 +242,13 @@ function deleteFolder() {
         return
     }
 
+    if (response) {
         if (path.endsWith(".txt") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".pdf") || path.endsWith(".gif") || path.endsWith(".tiff")) {
             if (response) {
             let pathArray = path.split("/")
             let filename = pathArray.pop()
             path = pathArray.join("/");
-            console.log("tengo que eliminar el archivo: ", filename, " perteneciente a la carpeta: ", path)
+            //console.log("tengo que eliminar el archivo: ", filename, " perteneciente a la carpeta: ", path)
             if (path === ""){
                 logged_user.rootFolder.getFolder("/").matrix.rows.delete(filename)
                 display_actualFolder()
@@ -266,8 +267,9 @@ function deleteFolder() {
             }
         }
 
-    } else {
-        if (response) {
+    }
+        else {
+
             if (logged_user.rootFolder.delete(path)) {
                 let new_action = new Action("Se eliminó carpeta: " + path, getDate(), "folderDeletion", "", path, path, "")
                 bitacora.insertAction(new_action)
