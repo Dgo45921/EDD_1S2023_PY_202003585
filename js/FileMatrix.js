@@ -135,17 +135,17 @@ export default class FileMatrix{
 
         let x_row = this.rows.first
         while (x_row){
-            grafo += `Node${"row"+x_row.id.replace(".", "").replace("(", "").replace(")", "")}[label="${x_row.id}",fillcolor="plum"];\n`
+            grafo += `Node${"row"+x_row.id.replaceAll(/[.()_\s-]/g, "")}[label="${x_row.id}",fillcolor="plum"];\n`
             x_row = x_row.next
         }
 
         // conectando nodos de la fila cabecera
 
-        grafo += `root -> Node${"row"+ this.rows.first.id.replace(".", "").replace("(", "").replace(")", "")} [dir=both];\n` // connecting root node to first row
+        grafo += `root -> Node${"row"+ this.rows.first.id.replaceAll(/[.()_\s-]/g, "")} [dir=both];\n` // connecting root node to first row
 
         x_row = this.rows.first
         while (x_row.next){
-            grafo += `Node${"row"+x_row.id.replace(".", "").replace("(", "").replace(")", "")} -> Node${"row"+ x_row.next.id.replace(".", "").replace("(", "").replace(")", "")} [dir=both];\n`
+            grafo += `Node${"row"+x_row.id.replaceAll(/[.()_\s-]/g, "")} -> Node${"row"+ x_row.next.id.replaceAll(/[.()_\s-]/g, "")} [dir=both];\n`
             x_row = x_row.next
         }
 
@@ -189,7 +189,7 @@ export default class FileMatrix{
             while (x_row){
                 let x_row2 = x_row.access
                 while (x_row2){
-                    grafo += `Node${x_row2.x.replace(".", "").replace("(", "").replace(")", "")+x_row2.y}[label="${x_row2.permission}",fillcolor="plum"];\n`
+                    grafo += `Node${x_row2.x.replaceAll(/[.()_\s-]/g, "")+x_row2.y}[label="${x_row2.permission}",fillcolor="plum"];\n`
                     x_row2= x_row2.right
                 }
 
@@ -199,10 +199,10 @@ export default class FileMatrix{
             // definiendo los niveles de cada nodo interno
             x_row = this.rows.first
             while (x_row){
-                grafo += "{rank=same;" + "Noderow"+ x_row.id.replace(".", "").replace("(", "").replace(")", "") + ";"
+                grafo += "{rank=same;" + "Noderow"+ x_row.id.replaceAll(/[.()_\s-]/g, "") + ";"
                 let x_row2 = x_row.access
                 while (x_row2){
-                    grafo += `Node${x_row2.x.replace(".", "").replace("(", "").replace(")", "")+x_row2.y};`
+                    grafo += `Node${x_row2.x.replaceAll(/[.()_\s-]/g, "")+x_row2.y};`
                     x_row2= x_row2.right
                 }
 
@@ -218,10 +218,10 @@ export default class FileMatrix{
                 let x_row2 = x_row.access
                 while (x_row2){
                     if (x_row2.up instanceof HeaderNode){
-                        grafo += `Node${x_row2.x.replace(".", "").replace("(", "").replace(")", "")+x_row2.y} -> Node${"col"+x_row2.y} [dir=both];\n`
+                        grafo += `Node${x_row2.x.replaceAll(/[.()_\s-]/g, "")+x_row2.y} -> Node${"col"+x_row2.y} [dir=both];\n`
                     }
                     else{
-                        grafo += `Node${x_row2.x.replace(".", "").replace("(", "").replace(")", "")+x_row2.y} ->Node${x_row2.up.x.replace(".", "").replace("(", "").replace(")", "")+x_row2.up.y} [dir=both];\n`
+                        grafo += `Node${x_row2.x.replaceAll(/[.()_\s-]/g, "")+x_row2.y} ->Node${x_row2.up.x.replaceAll(/[.()_\s-]/g, "")+x_row2.up.y} [dir=both];\n`
 
                     }
                     x_row2= x_row2.right
@@ -238,10 +238,10 @@ export default class FileMatrix{
                 let x_row2 = x_row.access
                 while (x_row2){
                     if (x_row2.left instanceof HeaderNode){
-                        grafo += `Node${"row"+x_row2.left.id.replace(".", "").replace("(", "").replace(")", "")} -> Node${x_row2.x.replace(".", "").replace("(", "").replace(")", "")+x_row2.y} [dir=both];\n`
+                        grafo += `Node${"row"+x_row2.left.id.replaceAll(/[.()_\s-]/g, "")} -> Node${x_row2.x.replaceAll(/[.()_\s-]/g, "")+x_row2.y} [dir=both];\n`
                     }
                     else{
-                        grafo += `Node${x_row2.left.x.replace(".", "").replace("(", "").replace(")", "")+x_row2.left.y} -> Node${x_row2.x.replace(".", "").replace("(", "").replace(")", "")+x_row2.y} [dir=both];\n`
+                        grafo += `Node${x_row2.left.x.replaceAll(/[.()_\s-]/g, "")+x_row2.left.y} -> Node${x_row2.x.replaceAll(/[.()_\s-]/g, "")+x_row2.y} [dir=both];\n`
 
                     }
                     x_row2= x_row2.right
