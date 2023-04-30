@@ -1,15 +1,40 @@
-
+import {reBuildTree} from "./Reconstuctor.js";
 import Student from "./Student.js";
 import AVL from "./AVL.js";
+import HashTable from "./HashTable.js";
 
 
-let AVLTree = new AVL();
+let AVLTree;
+let StudentHashTable = new HashTable()
 
 window.graphtree= graphtree;
 window.show_students=show_students;
 window.log_out_admin= log_out_admin;
 window.load_json= load_json;
 
+
+
+// checking if avl tree already exists
+if(localStorage.getItem('jsonArbol')){
+    AVLTree = reBuildTree()
+    createHashTableStudents(AVLTree.root)
+    console.log(StudentHashTable)
+
+}
+else{
+    AVLTree = new AVL()
+
+}
+
+
+function createHashTableStudents(node){
+    if (node) {
+        createHashTableStudents(node.left)
+        StudentHashTable.insert(node.student)
+        createHashTableStudents(node.right);
+    }
+
+}
 
 function cleanTable(){
     // cleaning table

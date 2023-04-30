@@ -1,4 +1,3 @@
-import {load_students} from "./adminModule.js";
 import AVL from "./AVL.js";
 
 let AVLTree = new AVL();
@@ -51,7 +50,7 @@ function login(){
 
 
 function check_students(){
-    if (localStorage.getItem("jsonArbol") != null){
+    if (localStorage.getItem("jsonArbol")){
         let jsonContent = localStorage.getItem("jsonArbol")
         const jsonObject = JSON.parse(jsonContent)
         AVLTree = new AVL()
