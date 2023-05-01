@@ -1,6 +1,31 @@
 import AVL from "./AVL.js";
+import {reBuildTree} from "./Reconstuctor.js";
+import HashTable from "./HashTable.js";
 
-let AVLTree = new AVL();
+let AVLTree
+let StudentHashTable = new HashTable()
+// checking if avl tree already exists
+if(localStorage.getItem('jsonArbol')){
+    AVLTree = reBuildTree()
+    createHashTableStudents(AVLTree.root)
+    console.log(StudentHashTable)
+
+}
+else{
+    AVLTree = new AVL()
+
+}
+
+
+function createHashTableStudents(node){
+    if (node) {
+        createHashTableStudents(node.left)
+        StudentHashTable.insert(node.student)
+        createHashTableStudents(node.right);
+    }
+
+}
+
 
 const loginButton = document.getElementById("login_button");
 

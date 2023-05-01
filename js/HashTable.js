@@ -7,21 +7,21 @@ export default class HashTable{
     }
 
     insert(student){
-        let indice = this.calculateIndex(student.id)
-        if(indice < this.capacity){
+        let index = this.calculateIndex(student.id)
+        if(index < this.capacity){
             try{
-                if(this.table[indice] == null){
-                    this.table[indice] = student
+                if(!this.table[index]){
+                    this.table[index] = student
                     this.utilization++
                     this.tableCapacity()
                 }else{
                     let counter = 1
-                    indice = this.recalculateIndex(student.id,counter)
-                    while(this.table[indice] != null){
+                    index = this.recalculateIndex(student.id,counter)
+                    while(this.table[index] != null){
                         counter++
-                        indice = this.recalculateIndex(student.id, counter)
+                        index = this.recalculateIndex(student.id, counter)
                     }
-                    this.table[indice] = student
+                    this.table[index] = student
                     this.utilization++
                     this.tableCapacity()
                 }
