@@ -4,6 +4,8 @@ import AVL from "./AVL.js";
 import HashTable from "./HashTable.js";
 
 
+
+
 let AVLTree;
 let StudentHashTable = new HashTable()
 
@@ -19,6 +21,7 @@ if(localStorage.getItem('jsonArbol')){
     AVLTree = reBuildTree()
     createHashTableStudents(AVLTree.root)
     console.log(StudentHashTable)
+    console.log(StudentHashTable.table.length)
 
 }
 else{
@@ -30,6 +33,7 @@ else{
 function createHashTableStudents(node){
     if (node) {
         createHashTableStudents(node.left)
+        node.student.password = CryptoJS.SHA256(node.student.password).toString()
         StudentHashTable.insert(node.student)
         createHashTableStudents(node.right);
     }

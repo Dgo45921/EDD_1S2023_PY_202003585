@@ -20,6 +20,7 @@ else{
 function createHashTableStudents(node){
     if (node) {
         createHashTableStudents(node.left)
+        node.student.password = CryptoJS.SHA256(node.student.password).toString()
         StudentHashTable.insert(node.student)
         createHashTableStudents(node.right);
     }
@@ -33,24 +34,29 @@ loginButton.addEventListener("click", function() {
     login()
 });
 
-function findUser(identifier, password, root){
-    if (root == null) return false
-    // obtaining root from tree
-    let current_identifier = root.student.id
-    let current_password = root.student.password
-    if (identifier === current_identifier && password === current_password) {
-        localStorage.setItem("logged_user", JSON.stringify(root.student))
-        return true
+function findUser(identifier, password){
+    for (let i = 0; i <StudentHashTable.table.length ; i++) {
+        if (StudentHashTable.table[i]){
+            if (StudentHashTable.table[i].id === identifier && StudentHashTable.table[i].password === password){
+                localStorage.setItem("logged_user", JSON.stringify(StudentHashTable.table[i]))
+                return true
+            }
+
+        }
+
+
     }
-    if (identifier > current_identifier) return findUser(identifier, password, root.right)
-    if (identifier < current_identifier) return findUser(identifier, password, root.left)
+    return false
 
 }
 
 
+
+
+// -------------New login function------------------------
 function login(){
-    const username = document.getElementById("username_input").value.replace(" ", "");
-    const password = document.getElementById("password_input").value.replace(" ", "");
+    const username = document.getElementById("username_input").value
+    const password = document.getElementById("password_input").value
    // console.log(password)
    // console.log(username)
 
@@ -62,7 +68,7 @@ function login(){
         location.href = 'moduloAdmin.html';
     }
     else{
-        if (findUser(parseInt(username), password, AVLTree.root))
+        if (findUser(parseInt(username), CryptoJS.SHA256(password).toString()))
             location.href = 'moduloUser.html';
 
         else{
@@ -72,6 +78,7 @@ function login(){
 
 
 }
+
 
 
 function check_students(){
