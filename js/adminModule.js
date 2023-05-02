@@ -13,6 +13,25 @@ window.graphtree= graphtree;
 window.show_students=show_students;
 window.log_out_admin= log_out_admin;
 window.load_json= load_json;
+window.avlView = avlView
+window.hashview = hashview
+window.Hashshow_students = Hashshow_students
+
+function avlView(){
+    let divAVL = document.getElementById('vistaAVL')
+    let divHash = document.getElementById('vistaHASH')
+    divHash.style.display = 'none'
+    divAVL.style.display = 'block'
+}
+
+function hashview(){
+    let divAVL = document.getElementById('vistaAVL')
+    let divHash = document.getElementById('vistaHASH')
+    divHash.style.display = 'block'
+    divAVL.style.display = 'none'
+}
+
+
 
 
 
@@ -45,6 +64,15 @@ function cleanTable(){
     const old_tbody = document.getElementById("studentTableBody")
     const new_tbody = document.createElement('tbody');
     new_tbody.setAttribute("id", "studentTableBody")
+    old_tbody.parentNode.replaceChild(new_tbody, old_tbody)
+}
+
+
+function cleanHashTable(){
+    // cleaning table
+    const old_tbody = document.getElementById("hashstudentTableBody")
+    const new_tbody = document.createElement('tbody');
+    new_tbody.setAttribute("id", "hashstudentTableBody")
     old_tbody.parentNode.replaceChild(new_tbody, old_tbody)
 }
 
@@ -169,6 +197,36 @@ function graphtree() {
 
 }
 
+
+function Hashshow_students() {
+    console.log('hola')
+   if(StudentHashTable.utilization === 0){
+       alert('No hay alumnos en la tabla hash')
+   }
+   else{
+       cleanHashTable()
+       let tbody = document.getElementById("hashstudentTableBody")
+
+       for (let i = 0; i <StudentHashTable.table.length ; i++) {
+           if(StudentHashTable.table[i]){
+               const new_row = tbody.insertRow();
+               const student_id = new_row.insertCell(0);
+               const student_name = new_row.insertCell(1);
+               const student_password = new_row.insertCell(2);
+               student_id.innerHTML = StudentHashTable.table[i].id
+               student_name.innerHTML = StudentHashTable.table[i].name
+               student_password.innerHTML = StudentHashTable.table[i].password
+
+           }
+
+       }
+
+
+
+   }
+
+}
+
 function log_out_admin() {
     // console.log(window.location.origin)
     window.location.href = window.location.origin + "/EDD_1S2023_PY_202003585/index.html"
@@ -190,7 +248,7 @@ function load_json(){
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
         alert("Datos cargados con éxito")
     }
-    console.log(JSON.stringify(AVLTree))
+    createHashTableStudents(AVLTree.root)
 }
 
 export function load_students(studentsArray){

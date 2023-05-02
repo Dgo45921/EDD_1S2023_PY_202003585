@@ -80,9 +80,11 @@ export default class HashTable{
         if(index < this.capacity){
             try{
                 if(this.table[index] == null){
-                    alert("Bienvenido " + this.table[index].name)
+
+                    return true
                 }else if(this.table[index] && this.table[index].id === id){
-                    alert("Bienvenido " + this.table[index].name)
+
+                    return true
                 }else{
                     let counter = 1
                     index = this.recalculateIndex(id,counter)
@@ -90,8 +92,8 @@ export default class HashTable{
                         counter++
                         index = this.recalculateIndex(id, counter)
                         if(this.table[index].id === id){
-                            alert("Bienvenido " + this.table[index].name)
-                            return
+
+                            return true
                         }
                     }
                 }
@@ -99,6 +101,7 @@ export default class HashTable{
                 console.log(err)
             }
         }
+        return false
     }
 
 
