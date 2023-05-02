@@ -2,6 +2,7 @@ import {reBuildTree, returnStudentNode} from "./Reconstuctor.js";
 import Action from "./Action.js";
 import HeaderNode from "./HeaderNode.js";
 import InternalNode from "./InternalNode.js";
+import Graph from "./FolderGraph.js";
 
 
 let AVLTree = reBuildTree()
@@ -220,9 +221,19 @@ function createFolder() {
         graphBitacora()
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
 
-    } else alert("No se pudo agregar la carpeta, revise la ruta")
+
+
+
+    }
+
+
+    else alert("No se pudo agregar la carpeta, revise la ruta")
     // console.log(JSON.stringify(bitacora, replacer))
     // localStorage.setItem("bitacora", JSON.stringify(bitacora, replacer))
+}
+
+function foo(){
+
 }
 
 function replacer(key, value) {
@@ -452,6 +463,7 @@ display_actualFolder()
 updateHyperLinks()
 graphBitacora()
 studentDropList(AVLTree.root)
+console.log(logged_user.graph.getVizCode())
 
 
 

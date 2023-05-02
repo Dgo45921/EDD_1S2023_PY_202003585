@@ -199,7 +199,6 @@ function graphtree() {
 
 
 function Hashshow_students() {
-    console.log('hola')
    if(StudentHashTable.utilization === 0){
        alert('No hay alumnos en la tabla hash')
    }

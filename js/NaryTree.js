@@ -8,6 +8,55 @@ export default class NaryTree{
 
     }
 
+    traverse(node = this.root) {
+
+        if(node.absolute_path === '/'){
+            console.log('soy el nodo raiz')
+            console.log(node.absolute_path)
+        }
+
+        else{
+            console.log(`soy la carpeta ${node.path} y mi parent folder es: ${node.absolute_path.replace(node.path, '')}`)
+        }
+
+        let child = node.first;
+        while (child) {
+            this.traverse(child);
+            child = child.next;
+        }
+    }
+
+
+    generateGraph(node, graph) {
+
+        if(node.absolute_path === '/'){
+            // console.log('soy el nodo raiz')
+            // console.log(node.absolute_path)
+        }
+
+        else{
+            let pathsito = node.absolute_path.replace(node.path, '')
+            pathsito =  pathsito.slice(0, -1);
+            if (pathsito === ''){
+                // console.log(`soy la carpeta ${node.path} y mi parent folder es la raiz: /`)
+                graph.insertarValores('/', node.path)
+
+            }
+            else{
+
+                // console.log(`soy la carpeta ${node.path} y mi parent folder es: ${pathsito}`)
+                graph.insertarValores(pathsito, node.path)
+
+            }
+        }
+
+        let child = node.first;
+        while (child) {
+            this.generateGraph(child, graph);
+            child = child.next;
+        }
+    }
+
 
     addFile(newFileName, path){
         const new_node = new N_aryNode(newFileName, this.nodo_creados)

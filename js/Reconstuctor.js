@@ -7,6 +7,7 @@ import CircularList from "./CircularList.js";
 import Action from "./Action.js";
 import HeaderNode from "./HeaderNode.js";
 import InternalNode from "./InternalNode.js";
+import Graph from "./FolderGraph.js";
 
 
 export function reBuildTree(){
@@ -33,9 +34,12 @@ function recreateTree(json) {
 }
 
 function recreateStudent(jsonStudent){
+    let grafito = new Graph()
     let new_student = new Student(jsonStudent.id, jsonStudent.name, jsonStudent.password)
     new_student.bitacora = recreateBitacora(jsonStudent.bitacora.first2)
     new_student.rootFolder =recreateNary(new_student.bitacora)
+    new_student.rootFolder.generateGraph(new_student.rootFolder.root, grafito)
+    new_student.graph = grafito
     return new_student
 }
 
