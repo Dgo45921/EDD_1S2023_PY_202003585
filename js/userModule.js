@@ -23,6 +23,8 @@ window.graphMatrix = graphMatrix
 window.addPermission = addPermission
 window.vistaNario = vistaNario
 window.vistaGrafo = vistaGrafo
+window.graphGraph = graphGraph
+
 
 function createHashTableStudents(node){
     if (node) {
@@ -69,6 +71,13 @@ function graphBitacora() {
         //console.log(url+viz_code)
     }
 
+}
+function graphGraph() {
+    let viz_code = logged_user.graph.getVizCode()
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let tree_image = document.getElementById("graphImage")
+    tree_image.setAttribute("src", url + viz_code)
+    //console.log(viz_code)
 }
 
 

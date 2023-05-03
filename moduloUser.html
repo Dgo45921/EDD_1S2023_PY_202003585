@@ -170,19 +170,7 @@
       </div>
     </div>
     <div class="row mt-5">
-      <div class="col-md-3">
-        <div class="form-group">
-          <label for="new_folder_path">Nombre de tu nueva carpeta</label>
-          <input type="text" class="form-control" id="new_folder_nameGraph" placeholder="Ejemplo: carpeta3">
-          <label for="new_folder_name">Ruta de tu nueva carpeta</label>
-          <input type="text" class="form-control" id="new_folder_pathGraph" placeholder="Ejemplo: carpeta3">
-        </div>
-        <button type="button" class="btn btn-primary mb-3" onclick="createFolder()" >Crear Carpeta</button>
 
-
-
-
-      </div>
 
 
       <div class="col-md-8">
@@ -191,7 +179,7 @@
           <div class="input-group">
             <input type="text" class="form-control" id="gotopathGraph" placeholder="Ej:/carpeta1">
             <div class="input-group-append">
-              <button type="button" class="btn btn-primary" onclick="gotopath()">Ir</button>
+              <button type="button" class="btn btn-primary" onclick="">Ir</button>
             </div>
           </div>
         </div>
@@ -225,13 +213,24 @@
           </ul>
         </div>
 
+        <button type="button" class="btn btn-warning mb-3" onclick="graphGraph()" >Reporte Grafo </button>
         <button type="button" class="btn btn-info mb-3" >Compartidos conmigo</button>
         <button type="button" class="btn btn-success mb-3" >Mensajeria </button>
+
       </div>
 
     </div>
   </div>
 
+
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <p>Imagen Grafo</p>
+        <img id="graphImage" src="" class="img-fluid">
+      </div>
+    </div>
+  </div>
 </div>
 
 
