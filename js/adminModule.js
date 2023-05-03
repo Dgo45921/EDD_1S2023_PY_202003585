@@ -275,7 +275,7 @@ function Hashshow_studentspermissions() {
                                 const permission = new_row.insertCell(4);
                                 owner.innerHTML = StudentHashTable.table[i].id
                                 destiny.innerHTML = accessRow.y
-                                path.innerHTML = actualMatrixRow.abs_path
+                                path.innerHTML = '/' + actualMatrixRow.id
                                 name.innerHTML = actualMatrixRow.id
                                 permission.innerHTML = accessRow.permission
 
