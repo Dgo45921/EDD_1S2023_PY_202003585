@@ -1,8 +1,11 @@
+import FileMatrix from "./FileMatrix.js";
+
 class NodeAdjacencyMatrix{
-    constructor(valor){
+    constructor(path){
         this.siguiente = null
         this.abajo = null
-        this.valor = valor
+        this.path = path
+        this.matrix = null
     }
 }
 
@@ -14,20 +17,24 @@ export default class Graph {
     searchRow(padre){
         let actual = this.rootNode
         while(actual){
-            if(actual.valor === padre) return true
+            if(actual.path === padre) return true
             actual = actual.abajo
         }
         return false
     }
 
-    insertRow(texto){
+    insertRow(texto, matrix){
         const nuevoNodo = new NodeAdjacencyMatrix(texto)
+
         if(this.rootNode === null){
             this.rootNode = nuevoNodo
+            if(matrix){
+                this.rootNode.matrix = matrix
+            }
         }else{
             let aux = this.rootNode
             while(aux.abajo){
-                if(aux.valor === nuevoNodo.valor){
+                if(aux.path === nuevoNodo.path){
                     return
                 }
                 aux = aux.abajo
@@ -36,9 +43,13 @@ export default class Graph {
         }
     }
 
-    insertarC(padre, hijo){
+    insertColumn(padre, hijo, matrix){
         const nuevoNodo = new NodeAdjacencyMatrix(hijo)
-        if(this.rootNode !== null && this.rootNode.valor === padre){
+        if(matrix){
+         nuevoNodo.matrix = matrix
+        }
+
+        if(this.rootNode !== null && this.rootNode.path === padre){
             let aux = this.rootNode
             while(aux.siguiente){
                 aux = aux.siguiente
@@ -47,28 +58,32 @@ export default class Graph {
         }else{
 
             if (!this.searchRow(padre)){
-                this.insertRow(padre)
+                this.insertRow(padre, matrix)
             }
-            let aux = this.rootNode
-            while(aux){
-                if(aux.valor === padre){
-                    break;
+            if (padre !== '/'){
+                let aux = this.rootNode
+                while(aux){
+                    if(aux.path === padre){
+                        break;
+                    }
+                    aux = aux.abajo
                 }
-                aux = aux.abajo
-            }
-            if(aux !== null){
-                while(aux.siguiente){
-                    aux = aux.siguiente
+                if(aux !== null){
+                    while(aux.siguiente){
+                        aux = aux.siguiente
+                    }
+                    aux.siguiente = nuevoNodo
                 }
-                aux.siguiente = nuevoNodo
+
             }
+
         }
     }
 
-    insertarValores(padre, hijos){
+    insertarValores(padre, hijos, matrix){
         let cadena = hijos.split(',')
         for(let i = 0; i < cadena.length; i++){
-            this.insertarC(padre,cadena[i])
+            this.insertColumn(padre,cadena[i], matrix)
         }
     }
 
@@ -80,15 +95,15 @@ export default class Graph {
         let weight = 0
         while(parentNode){
             childNode = parentNode.siguiente
-            let profundidad = parentNode.valor.split('/')
+            let profundidad = parentNode.path.split('/')
             let padre = ""
             if(profundidad.length === 2 && profundidad[1] === ""){ weight = 1}
             else if(profundidad.length === 2 && profundidad[1] !== ""){ weight = 2 }
             else { weight = profundidad.length }
-            if(parentNode.valor !== "/"){ padre = profundidad[profundidad.length-1] }
+            if(parentNode.path !== "/"){ padre = profundidad[profundidad.length-1] }
             else { padre = "/" }
             while(childNode){
-                vizCode += "\"" + padre + "\"" + " -- " + "\"" + childNode.valor + "\"" + " [label=\"" + weight + "\"] "
+                vizCode += "\"" + padre + "\"" + " -- " + "\"" + childNode.path+ "\"" + " [label=\"" + weight + "\"] "
                 childNode = childNode.siguiente
             }
             parentNode = parentNode.abajo

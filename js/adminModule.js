@@ -16,6 +16,7 @@ window.load_json= load_json;
 window.avlView = avlView
 window.hashview = hashview
 window.Hashshow_students = Hashshow_students
+window.Hashshow_studentspermissions = Hashshow_studentspermissions
 
 function avlView(){
     let divAVL = document.getElementById('vistaAVL')
@@ -73,6 +74,15 @@ function cleanHashTable(){
     const old_tbody = document.getElementById("hashstudentTableBody")
     const new_tbody = document.createElement('tbody');
     new_tbody.setAttribute("id", "hashstudentTableBody")
+    old_tbody.parentNode.replaceChild(new_tbody, old_tbody)
+}
+
+
+function cleanPermissionTable(){
+    // cleaning table
+    const old_tbody = document.getElementById("permissionTableBody")
+    const new_tbody = document.createElement('tbody');
+    new_tbody.setAttribute("id", "permissionTableBody")
     old_tbody.parentNode.replaceChild(new_tbody, old_tbody)
 }
 
@@ -226,6 +236,57 @@ function Hashshow_students() {
 
 }
 
+
+
+function Hashshow_studentspermissions() {
+    if(StudentHashTable.utilization === 0){
+        alert('No hay alumnos en la tabla hash')
+    }
+    else{
+        cleanHashTable()
+        let tbody = document.getElementById("permissionTableBody")
+
+        for (let i = 0; i <StudentHashTable.table.length ; i++) {
+
+
+            if(StudentHashTable.table[i]){
+                if (StudentHashTable.table[i].name === 'Diego'){
+                    console.log('zzz')
+                    console.log(StudentHashTable.table[i].graph)
+                }
+                let currentGraph = StudentHashTable.table[i].graph
+                let actualRow = currentGraph.rootNode
+                while(actualRow){
+                    let actualColumn = actualRow.siguiente
+                    while(actualColumn){
+                        console.log(`estoy en la fila ${actualRow.path}, y en la columna ${actualColumn.path}`)
+
+
+                        actualColumn = actualColumn.siguiente
+                    }
+
+
+
+                    actualRow = actualRow.abajo
+                }
+            }
+
+        }
+
+
+
+    }
+
+
+    /* const new_row = tbody.insertRow();
+                const student_id = new_row.insertCell(0);
+                const student_name = new_row.insertCell(1);
+                const student_password = new_row.insertCell(2);
+                student_id.innerHTML = StudentHashTable.table[i].id
+                student_name.innerHTML = StudentHashTable.table[i].name
+                student_password.innerHTML = StudentHashTable.table[i].password*/
+
+}
 function log_out_admin() {
     // console.log(window.location.origin)
     window.location.href = window.location.origin + "/EDD_1S2023_PY_202003585/index.html"

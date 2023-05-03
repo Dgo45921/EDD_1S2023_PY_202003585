@@ -221,8 +221,7 @@ function createFolder() {
         graphBitacora()
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
 
-
-
+        updateGraph()
 
     }
 
@@ -232,14 +231,18 @@ function createFolder() {
     // localStorage.setItem("bitacora", JSON.stringify(bitacora, replacer))
 }
 
-function foo(){
-
+function updateGraph(){
+    let grafito = new Graph()
+    logged_user.rootFolder.generateGraph(logged_user.rootFolder.root, grafito)
+    logged_user.graph = grafito
 }
+
 
 function replacer(key, value) {
     if (key === "first1") return undefined;
     else if (key === "next1") return undefined;
     else if (key === "rootFolder") return undefined;
+    else if (key === "graph") return undefined;
     else return value;
 }
 
@@ -267,6 +270,7 @@ function deleteFolder() {
                 let new_action = new Action("Se eliminó archivo: " + filename, getDate(), "fileDeletion", "", "/", filename, "")
                 bitacora.insertAction(new_action)
                 localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
+                updateGraph()
             }
             else {
                 logged_user.rootFolder.getFolder(path).matrix.rows.delete(filename)
@@ -275,6 +279,7 @@ function deleteFolder() {
                 let new_action = new Action("Se eliminó archivo: " + filename, getDate(), "fileDeletion", "", path, filename, "")
                 bitacora.insertAction(new_action)
                 localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
+                updateGraph()
             }
         }
 
@@ -288,6 +293,7 @@ function deleteFolder() {
                 display_actualFolder()
                 updateHyperLinks()
                 graphBitacora()
+                updateGraph()
             } else {
                 alert("No se pudo eliminar el archivo, revise la ruta")
             }
@@ -464,6 +470,7 @@ updateHyperLinks()
 graphBitacora()
 studentDropList(AVLTree.root)
 console.log(logged_user.graph.getVizCode())
+console.log(logged_user)
 
 
 

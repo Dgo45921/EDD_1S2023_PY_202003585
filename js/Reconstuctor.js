@@ -24,7 +24,6 @@ function recreateTree(json) {
     const student = recreateStudent(json.student)
     const left = recreateTree(json.left);
     const right = recreateTree(json.right);
-
     let nuevo_nodo = new AvlNode(student)
     nuevo_nodo.left = left
     nuevo_nodo.right = right
@@ -37,7 +36,7 @@ function recreateStudent(jsonStudent){
     let grafito = new Graph()
     let new_student = new Student(jsonStudent.id, jsonStudent.name, jsonStudent.password)
     new_student.bitacora = recreateBitacora(jsonStudent.bitacora.first2)
-    new_student.rootFolder =recreateNary(new_student.bitacora)
+    new_student.rootFolder = recreateNary(new_student.bitacora)
     new_student.rootFolder.generateGraph(new_student.rootFolder.root, grafito)
     new_student.graph = grafito
     return new_student

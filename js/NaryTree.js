@@ -32,6 +32,7 @@ export default class NaryTree{
         if(node.absolute_path === '/'){
             // console.log('soy el nodo raiz')
             // console.log(node.absolute_path)
+            graph.insertarValores('/', node.path, node.matrix)
         }
 
         else{
@@ -39,13 +40,13 @@ export default class NaryTree{
             pathsito =  pathsito.slice(0, -1);
             if (pathsito === ''){
                 // console.log(`soy la carpeta ${node.path} y mi parent folder es la raiz: /`)
-                graph.insertarValores('/', node.path)
+                graph.insertarValores('/', node.path, node.matrix)
 
             }
             else{
 
                 // console.log(`soy la carpeta ${node.path} y mi parent folder es: ${pathsito}`)
-                graph.insertarValores(pathsito, node.path)
+                graph.insertarValores(pathsito, node.path, node.matrix)
 
             }
         }
