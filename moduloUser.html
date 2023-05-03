@@ -125,8 +125,6 @@
         </div>
         <button type="button" class="btn btn-info mb-3" onclick="graphnary()">Reporte Carpetas</button>
         <button type="button" class="btn btn-success mb-3"  onclick="graphMatrix()">Reporte Archivos</button>
-        <button type="button" class="btn btn-warning mb-3" >Compartidos conmigo</button>
-        <button type="button" class="btn btn-info mb-3" >Mensajeria </button>
       </div>
 
     </div>
@@ -175,13 +173,11 @@
       <div class="col-md-3">
         <div class="form-group">
           <label for="new_folder_path">Nombre de tu nueva carpeta</label>
-          <input type="text" class="form-control" id="" placeholder="Ejemplo: carpeta3">
+          <input type="text" class="form-control" id="new_folder_nameGraph" placeholder="Ejemplo: carpeta3">
           <label for="new_folder_name">Ruta de tu nueva carpeta</label>
-          <input type="text" class="form-control" id="" placeholder="Ejemplo: carpeta3">
+          <input type="text" class="form-control" id="new_folder_pathGraph" placeholder="Ejemplo: carpeta3">
         </div>
         <button type="button" class="btn btn-primary mb-3" onclick="createFolder()" >Crear Carpeta</button>
-
-
 
 
 
@@ -193,16 +189,16 @@
         <div class="form-group">
           <label for="gotopath">Ruta carpeta</label>
           <div class="input-group">
-            <input type="text" class="form-control" id="gotopath" placeholder="Ej:/carpeta1">
+            <input type="text" class="form-control" id="gotopathGraph" placeholder="Ej:/carpeta1">
             <div class="input-group-append">
               <button type="button" class="btn btn-primary" onclick="gotopath()">Ir</button>
             </div>
           </div>
         </div>
         <div class="text-left" style="border-style: solid; border-width: thin; margin-bottom: 10px; padding: 10px">
-          <h4 id="actual_folder">Nombre Carpeta</h4>
-          <ul class="list-unstyled" id="file_list">
-            <li class="media my-3" id="fileContainer">
+          <h4 id="actual_folderGraph">Nombre Carpeta</h4>
+          <ul class="list-unstyled" id="file_listGraph">
+            <li class="media my-3" id="fileContainerGraph">
               <img class="mr-3" src="img/image.png" alt="Folder Icon" height="30">
               <div class="media-body">
                 <a href="#">Imagen.png</a>
@@ -228,10 +224,9 @@
             </li>
           </ul>
         </div>
-        <button type="button" class="btn btn-info mb-3" onclick="graphnary()">Reporte Carpetas</button>
-        <button type="button" class="btn btn-success mb-3"  onclick="graphMatrix()">Reporte Archivos</button>
-        <button type="button" class="btn btn-warning mb-3" >Compartidos conmigo</button>
-        <button type="button" class="btn btn-info mb-3" >Mensajeria </button>
+
+        <button type="button" class="btn btn-info mb-3" >Compartidos conmigo</button>
+        <button type="button" class="btn btn-success mb-3" >Mensajeria </button>
       </div>
 
     </div>
