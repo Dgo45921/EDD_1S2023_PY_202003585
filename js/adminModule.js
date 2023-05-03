@@ -250,16 +250,90 @@ function Hashshow_studentspermissions() {
 
 
             if(StudentHashTable.table[i]){
-                if (StudentHashTable.table[i].name === 'Diego'){
+                if (StudentHashTable.table[i].name === 'Diego' || StudentHashTable.table[i].name === 'Zatanna Zatara' ){
                     console.log('zzz')
                     console.log(StudentHashTable.table[i].graph)
                 }
                 let currentGraph = StudentHashTable.table[i].graph
                 let actualRow = currentGraph.rootNode
                 while(actualRow){
+                    // get matrixes of root node in graph
+                    if(actualRow.path === '/'){
+                        console.log('wuuu')
+
+                        let actualMatrixRow = actualRow.matrix.rows.first
+                        while(actualMatrixRow){
+
+                            let accessRow = actualMatrixRow.access
+                            while(accessRow){
+                                console.log(`el archivo ${actualMatrixRow.id} tiene permiso ${accessRow.permission} con ${accessRow.y}`)
+                                const new_row = tbody.insertRow();
+                                const owner = new_row.insertCell(0);
+                                const destiny = new_row.insertCell(1);
+                                const path = new_row.insertCell(2);
+                                const name = new_row.insertCell(3);
+                                const permission = new_row.insertCell(4);
+                                owner.innerHTML = StudentHashTable.table[i].id
+                                destiny.innerHTML = accessRow.y
+                                path.innerHTML = actualMatrixRow.abs_path
+                                name.innerHTML = actualMatrixRow.id
+                                permission.innerHTML = accessRow.permission
+
+
+                                accessRow = accessRow.right
+                            }
+
+
+
+
+                            actualMatrixRow = actualMatrixRow.next
+                        }
+                    }
+
+
+
+
+
+
+
+
+
+                    // gets the matrixes inside
                     let actualColumn = actualRow.siguiente
                     while(actualColumn){
                         console.log(`estoy en la fila ${actualRow.path}, y en la columna ${actualColumn.path}`)
+
+                        let actualMatrixRow = actualColumn.matrix.rows.first
+                        while(actualMatrixRow){
+
+                            let accessRow = actualMatrixRow.access
+                            while(accessRow){
+                                console.log(`el archivo ${actualMatrixRow.id} tiene permiso ${accessRow.permission} con ${accessRow.y}`)
+                                const new_row = tbody.insertRow();
+                                const owner = new_row.insertCell(0);
+                                const destiny = new_row.insertCell(1);
+                                const path = new_row.insertCell(2);
+                                const name = new_row.insertCell(3);
+                                const permission = new_row.insertCell(4);
+                                owner.innerHTML = StudentHashTable.table[i].id
+                                destiny.innerHTML = accessRow.y
+                                path.innerHTML = actualMatrixRow.abs_path
+                                name.innerHTML = actualMatrixRow.id
+                                permission.innerHTML = accessRow.permission
+
+
+                                accessRow = accessRow.right
+                            }
+
+
+
+
+                            actualMatrixRow = actualMatrixRow.next
+                        }
+
+
+
+
 
 
                         actualColumn = actualColumn.siguiente
@@ -278,13 +352,7 @@ function Hashshow_studentspermissions() {
     }
 
 
-    /* const new_row = tbody.insertRow();
-                const student_id = new_row.insertCell(0);
-                const student_name = new_row.insertCell(1);
-                const student_password = new_row.insertCell(2);
-                student_id.innerHTML = StudentHashTable.table[i].id
-                student_name.innerHTML = StudentHashTable.table[i].name
-                student_password.innerHTML = StudentHashTable.table[i].password*/
+
 
 }
 function log_out_admin() {
