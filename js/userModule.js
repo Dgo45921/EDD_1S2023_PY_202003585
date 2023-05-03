@@ -1,16 +1,17 @@
-import {reBuildTree, returnStudentNode} from "./Reconstuctor.js";
+import {reBuildTree, hashreturnStudentNode} from "./Reconstuctor.js";
 import Action from "./Action.js";
 import HeaderNode from "./HeaderNode.js";
 import InternalNode from "./InternalNode.js";
 import Graph from "./FolderGraph.js";
+import HashTable from "./HashTable.js";
 
-
+let StudentHashTable = new HashTable()
 let AVLTree = reBuildTree()
-let logged_user = returnStudentNode(AVLTree.root, JSON.parse(localStorage.getItem("logged_user")).id);
+createHashTableStudents(AVLTree.root)
+let logged_user = hashreturnStudentNode(StudentHashTable.table, JSON.parse(localStorage.getItem("logged_user")).id);
 let current_folder = logged_user.rootFolder.root
 const hyperlinks = document.getElementsByTagName("a");
 let bitacora = logged_user.bitacora
-
 
 window.gotopath = gotopath
 window.createFolder = createFolder
@@ -20,6 +21,35 @@ window.log_out = log_out
 window.graphnary = graphnary
 window.graphMatrix = graphMatrix
 window.addPermission = addPermission
+window.vistaNario = vistaNario
+window.vistaGrafo = vistaGrafo
+
+function createHashTableStudents(node){
+    if (node) {
+        createHashTableStudents(node.left)
+        node.student.password = CryptoJS.SHA256(node.student.password).toString()
+        StudentHashTable.insert(node.student)
+        createHashTableStudents(node.right);
+    }
+
+}
+
+function vistaNario(){
+    let divNario = document.getElementById('vistaNario')
+    let divGrafo = document.getElementById('vistaGrafo')
+    divGrafo.style.display = 'none'
+    divNario.style.display = 'block'
+
+}
+
+function vistaGrafo(){
+    let divNario = document.getElementById('vistaNario')
+    let divGrafo = document.getElementById('vistaGrafo')
+    divGrafo.style.display = 'block'
+    divNario.style.display = 'none'
+
+}
+
 
 function graphnary() {
     let viz_code = logged_user.rootFolder.graph_nary()
@@ -340,6 +370,7 @@ function loadFiletoPath() {
         bitacora.insertAction(new_action)
         graphBitacora()
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
+        updateGraph()
     };
 
 
@@ -443,6 +474,7 @@ function addPermission() {
             bitacora.insertAction(new_action)
             graphBitacora()
             localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
+            updateGraph()
         } else {
             alert("archivo inexistente, revise la ruta")
         }
@@ -456,6 +488,7 @@ function addPermission() {
             bitacora.insertAction(new_action)
             graphBitacora()
             localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
+            updateGraph()
         } else {
             alert("archivo inexistente, revise la ruta")
         }

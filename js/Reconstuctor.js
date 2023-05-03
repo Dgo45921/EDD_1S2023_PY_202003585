@@ -154,6 +154,25 @@ export function returnStudentNode(root, id){
 }
 
 
+export function hashreturnStudentNode(hashTable, id){
+        for (let i = 0; i <hashTable.length ; i++) {
+            if (hashTable[i]){
+                if (hashTable[i].id === id ){
+                    return  hashTable[i]
+
+                }
+
+            }
+
+        }
+        return null
+
+
+
+
+}
+
+
 function replacer(key, value){
     if (key==="first1") return undefined;
     else if (key==="next1") return undefined;
