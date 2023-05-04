@@ -385,6 +385,7 @@ function load_json(){
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree))
         alert("Datos cargados con éxito")
     }
+    StudentHashTable = new HashTable()
     createHashTableStudents(AVLTree.root)
 }
 

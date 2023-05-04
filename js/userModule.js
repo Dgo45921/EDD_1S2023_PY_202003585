@@ -84,6 +84,9 @@ function graphBitacora() {
 
 }
 function graphGraph() {
+    document.getElementById('chat').style.display = 'none'
+    document.getElementById('containerShared').style.display = 'none'
+    document.getElementById('containerGraph').style.display = 'block'
     let viz_code = logged_user.graph.getVizCode()
     let url = 'https://quickchart.io/graphviz?graph=';
     let tree_image = document.getElementById("graphImage")
