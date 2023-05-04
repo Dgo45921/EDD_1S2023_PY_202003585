@@ -58,7 +58,8 @@ function vistaGrafo(){
     let divGrafo = document.getElementById('vistaGrafo')
     divGrafo.style.display = 'block'
     divNario.style.display = 'none'
-    display_actualFolderGraph()
+    display_actualFolderGraphFolders('/')
+    display_actualFolderGraphFiles('/')
 
 }
 
@@ -211,77 +212,107 @@ function display_actualFolder() {
     updateHyperLinks()
 }
 
-function display_actualFolderGraph() {
+
+function display_actualFolderGraph(path){
+    display_actualFolderGraphFolders(path)
+    display_actualFolderGraphFiles(path)
+}
+function display_actualFolderGraphFolders(path) {
     // code to display folders
-    let actual_folder = document.getElementById("actual_folderGraph")
-    actual_folder.innerHTML = "path: " + current_folderGraph.path
-    let current_file = current_folderGraph.siguiente
+
     let list_files = document.getElementById("file_listGraph")
     list_files.innerHTML = ""
-    while (current_file) {
+    let actual_folder = document.getElementById("actual_folderGraph")
+    actual_folder.innerHTML = "path: " + path
+    let lel = logged_user.graph.findNodeByPath(path)
+    if(lel){
+        let current_folder = lel.siguiente
+
+        while (current_folder) {
 
 
-        let li = document.createElement('li');
-        li.setAttribute('class', 'media my-3');
-        list_files.appendChild(li);
+            let li = document.createElement('li');
+            li.setAttribute('class', 'media my-3');
+            list_files.appendChild(li);
 
-        let img = document.createElement('img');
-        img.setAttribute("height", "30")
-        img.setAttribute("class", "mr-3")
+            let img = document.createElement('img');
+            img.setAttribute("height", "30")
+            img.setAttribute("class", "mr-3")
 
-        img.setAttribute("src", "img/folder.png")
-
-
-        li.appendChild(img)
-
-        let div = document.createElement('media-body');
-        li.appendChild(div)
-        let a = document.createElement("a")
-        a.setAttribute("href", "#")
-        a.setAttribute("abs_pathGraph", current_file.path)
-        a.innerHTML = current_file.path
-        div.appendChild(a)
+            img.setAttribute("src", "img/folder.png")
 
 
-        current_file = current_file.next
+            li.appendChild(img)
+
+            let div = document.createElement('media-body');
+            li.appendChild(div)
+            let a = document.createElement("a")
+            a.setAttribute("href", "#")
+            if (path === '/'){
+                a.setAttribute("abs_pathGraph", '/' + current_folder.path)
+            }
+            else{
+                a.setAttribute("abs_pathGraph", path + '/' + current_folder.path)
+            }
+
+            a.innerHTML = current_folder.path
+            div.appendChild(a)
+
+
+            current_folder = current_folder.siguiente
+        }
+
+
+
+
+        updateHyperLinks()
     }
+}
+
+
+function  display_actualFolderGraphFiles(path){
+
+    let list_files = document.getElementById("file_listGraph")
 
 
     // code to display files
+    let lel = logged_user.graph.findNodeByPath2(path)
 
-    let actual_file = current_folder.matrix.rows.first
-    while (actual_file) {
+    if(lel){
+        let actual_file = lel.matrix.rows.first
+        while (actual_file) {
 
-        let li = document.createElement('li');
-        li.setAttribute('class', 'media my-3');
-        list_files.appendChild(li);
+            let li = document.createElement('li');
+            li.setAttribute('class', 'media my-3');
+            list_files.appendChild(li);
 
-        let img = document.createElement('img');
-        img.setAttribute("height", "30")
-        img.setAttribute("class", "mr-3")
-        if (actual_file.id.endsWith(".txt")) {
-            img.setAttribute("src", "img/text.png")
-        } else if (actual_file.id.endsWith(".pdf")) {
-            img.setAttribute("src", "img/pdf.png")
-        } else if (actual_file.id.endsWith(".png") || actual_file.id.endsWith(".jpg") || actual_file.id.path.endsWith(".jpeg") || actual_file.id.path.endsWith(".gif") || actual_file.id.path.endsWith(".tiff")) {
-            img.setAttribute("src", "img/image.png")
-        } else {
-            img.setAttribute("src", "img/folder.png")
+            let img = document.createElement('img');
+            img.setAttribute("height", "30")
+            img.setAttribute("class", "mr-3")
+            if (actual_file.id.endsWith(".txt")) {
+                img.setAttribute("src", "img/text.png")
+            } else if (actual_file.id.endsWith(".pdf")) {
+                img.setAttribute("src", "img/pdf.png")
+            } else if (actual_file.id.endsWith(".png") || actual_file.id.endsWith(".jpg") || actual_file.id.path.endsWith(".jpeg") || actual_file.id.path.endsWith(".gif") || actual_file.id.path.endsWith(".tiff")) {
+                img.setAttribute("src", "img/image.png")
+            } else {
+                img.setAttribute("src", "img/folder.png")
+            }
+
+            li.appendChild(img)
+
+
+            let div = document.createElement('media-body');
+            li.appendChild(div)
+            let a = document.createElement("a")
+            a.setAttribute("href", "#")
+            a.setAttribute("abs_pathGraph", actual_file.abs_path)
+            a.innerHTML = actual_file.id
+            div.appendChild(a)
+
+
+            actual_file = actual_file.next
         }
-
-        li.appendChild(img)
-
-
-        let div = document.createElement('media-body');
-        li.appendChild(div)
-        let a = document.createElement("a")
-        a.setAttribute("href", "#")
-        a.setAttribute("abs_pathGraph", actual_file.abs_path)
-        a.innerHTML = actual_file.id
-        div.appendChild(a)
-
-
-        actual_file = actual_file.next
     }
 
 
@@ -295,11 +326,10 @@ function display_actualFolderGraph() {
     a.setAttribute("abs_pathGraph", "/")
     a.innerHTML = "Root"
     div.appendChild(a)
-
-
     updateHyperLinks()
-}
 
+
+}
 
 function greetUser() {
     const jsonObject = JSON.parse(localStorage.getItem("logged_user"))
@@ -534,15 +564,27 @@ function updateHyperLinks() {
             console.log('tengo que buscar en el grafo')
             let path = e.target.getAttribute("abs_pathGraph")
             if (path === '/'){
-                let rootF = logged_user.graph.findNodeByPath(path)
-                console.log(rootF)
-                display_actualFolderGraph()
+                display_actualFolderGraph('/')
+
             }
             else{
                 console.log(path)
-                let rootF = logged_user.graph.findNodeByPath(path)
-                console.log(rootF)
-                display_actualFolderGraph()
+                if (path.endsWith(".txt") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".pdf") || path.endsWith(".gif") || path.endsWith(".tiff")) {
+                    let pathArray = path.split("/")
+                    console.log(pathArray)
+
+                }
+                else{
+
+
+                   display_actualFolderGraph(path)
+
+
+
+
+                }
+
+
 
             }
 
@@ -635,7 +677,7 @@ function addPermission() {
 
 }
 
-
+updateGraph()
 greetUser()
 display_actualFolder()
 graphBitacora()

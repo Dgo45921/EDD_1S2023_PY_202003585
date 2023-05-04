@@ -18,6 +18,23 @@ export default class Graph {
         if (path === '/') return this.rootNode
 
         let currentNode = this.rootNode
+        while (currentNode){
+            if(currentNode.path === path) return currentNode
+
+
+            currentNode = currentNode.abajo
+        }
+
+
+
+    }
+
+
+
+    findNodeByPath2(path) {
+        if (path === '/') return this.rootNode
+
+        let currentNode = this.rootNode
         let currentPath = path.split('/')
 
         for (let i = 1; i < currentPath.length; i++) {
