@@ -213,8 +213,8 @@ function display_actualFolder() {
 }
 
 
-function display_actualFolderGraph(path, child){
-    display_actualFolderGraphFolders(path + child)
+function display_actualFolderGraph(original, path, child){
+    display_actualFolderGraphFolders(original)
     display_actualFolderGraphFiles(path, child)
 }
 function display_actualFolderGraphFolders(path) {
@@ -223,7 +223,9 @@ function display_actualFolderGraphFolders(path) {
     let list_files = document.getElementById("file_listGraph")
     list_files.innerHTML = ""
     let actual_folder = document.getElementById("actual_folderGraph")
+
     actual_folder.innerHTML = "path: " + path
+
     let lel = logged_user.graph.findNodeByPath(path)
     if(lel){
         let current_folder = lel.siguiente
@@ -564,7 +566,7 @@ function updateHyperLinks() {
             console.log('tengo que buscar en el grafo')
             let path = e.target.getAttribute("abs_pathGraph")
             if (path === '/'){
-                display_actualFolderGraph('/', '')
+                display_actualFolderGraph(path, '/', '')
 
             }
             else{
@@ -591,7 +593,7 @@ function updateHyperLinks() {
                         ultimaCarpeta = ''
                     }
 
-                    display_actualFolderGraph(rutaSinUltimo, ultimaCarpeta)
+                    display_actualFolderGraph(path, rutaSinUltimo, ultimaCarpeta)
 
 
 
