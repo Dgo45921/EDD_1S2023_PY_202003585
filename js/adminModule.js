@@ -40,13 +40,22 @@ function hashview(){
 if(localStorage.getItem('jsonArbol')){
     AVLTree = reBuildTree()
     createHashTableStudents(AVLTree.root)
-    console.log(StudentHashTable)
-    console.log(StudentHashTable.table.length)
+    localStorage.setItem("HashTable", JSON.stringify(StudentHashTable, replacer))
 
 }
 else{
     AVLTree = new AVL()
 
+
+
+}
+
+function replacer(key, value) {
+    if (key === "first1") return undefined;
+    else if (key === "next1") return undefined;
+    else if (key === "rootFolder") return undefined;
+    else if (key === "graph") return undefined;
+    else return value;
 }
 
 
