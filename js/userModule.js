@@ -564,7 +564,7 @@ function updateHyperLinks() {
             console.log('tengo que buscar en el grafo')
             let path = e.target.getAttribute("abs_pathGraph")
             if (path === '/'){
-                display_actualFolderGraph('/')
+                display_actualFolderGraph('/', '')
 
             }
             else{
@@ -577,7 +577,7 @@ function updateHyperLinks() {
                 else{
 
                     const componentes = path.split('/');
-                    const ultimaCarpeta = componentes.pop();
+                    let ultimaCarpeta = componentes.pop();
                     let rutaSinUltimo = componentes.join('/');
 
 
@@ -587,6 +587,9 @@ function updateHyperLinks() {
                     }
                     console.log('sinultio' + rutaSinUltimo); // 'misfotos/hola'
                     console.log('ultmiacarpeta' + ultimaCarpeta); // 'zzz'
+                    if (!ultimaCarpeta){
+                        ultimaCarpeta = ''
+                    }
 
                     display_actualFolderGraph(rutaSinUltimo, ultimaCarpeta)
 
