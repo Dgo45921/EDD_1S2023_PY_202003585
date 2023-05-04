@@ -10,6 +10,7 @@ let AVLTree = reBuildTree()
 createHashTableStudents(AVLTree.root)
 let logged_user = hashreturnStudentNode(StudentHashTable.table, JSON.parse(localStorage.getItem("logged_user")).id);
 let current_folder = logged_user.rootFolder.root
+let current_folderGraph = logged_user.graph.rootNode
 const hyperlinks = document.getElementsByTagName("a");
 let bitacora = logged_user.bitacora
 
@@ -24,6 +25,14 @@ window.addPermission = addPermission
 window.vistaNario = vistaNario
 window.vistaGrafo = vistaGrafo
 window.graphGraph = graphGraph
+window.findFolderGraph = findFolderGraph
+
+
+function findFolderGraph(){
+    let path = document.getElementById("gotopathGraph").value
+    console.log(logged_user.graph.findNodeByPath(path))
+
+}
 
 
 function createHashTableStudents(node){
@@ -49,6 +58,7 @@ function vistaGrafo(){
     let divGrafo = document.getElementById('vistaGrafo')
     divGrafo.style.display = 'block'
     divNario.style.display = 'none'
+    display_actualFolderGraph()
 
 }
 
@@ -201,6 +211,95 @@ function display_actualFolder() {
     updateHyperLinks()
 }
 
+function display_actualFolderGraph() {
+    // code to display folders
+    let actual_folder = document.getElementById("actual_folderGraph")
+    actual_folder.innerHTML = "path: " + current_folderGraph.path
+    let current_file = current_folderGraph.siguiente
+    let list_files = document.getElementById("file_listGraph")
+    list_files.innerHTML = ""
+    while (current_file) {
+
+
+        let li = document.createElement('li');
+        li.setAttribute('class', 'media my-3');
+        list_files.appendChild(li);
+
+        let img = document.createElement('img');
+        img.setAttribute("height", "30")
+        img.setAttribute("class", "mr-3")
+
+        img.setAttribute("src", "img/folder.png")
+
+
+        li.appendChild(img)
+
+        let div = document.createElement('media-body');
+        li.appendChild(div)
+        let a = document.createElement("a")
+        a.setAttribute("href", "#")
+        a.setAttribute("abs_pathGraph", current_file.path)
+        a.innerHTML = current_file.path
+        div.appendChild(a)
+
+
+        current_file = current_file.next
+    }
+
+
+    // code to display files
+
+    let actual_file = current_folder.matrix.rows.first
+    while (actual_file) {
+
+        let li = document.createElement('li');
+        li.setAttribute('class', 'media my-3');
+        list_files.appendChild(li);
+
+        let img = document.createElement('img');
+        img.setAttribute("height", "30")
+        img.setAttribute("class", "mr-3")
+        if (actual_file.id.endsWith(".txt")) {
+            img.setAttribute("src", "img/text.png")
+        } else if (actual_file.id.endsWith(".pdf")) {
+            img.setAttribute("src", "img/pdf.png")
+        } else if (actual_file.id.endsWith(".png") || actual_file.id.endsWith(".jpg") || actual_file.id.path.endsWith(".jpeg") || actual_file.id.path.endsWith(".gif") || actual_file.id.path.endsWith(".tiff")) {
+            img.setAttribute("src", "img/image.png")
+        } else {
+            img.setAttribute("src", "img/folder.png")
+        }
+
+        li.appendChild(img)
+
+
+        let div = document.createElement('media-body');
+        li.appendChild(div)
+        let a = document.createElement("a")
+        a.setAttribute("href", "#")
+        a.setAttribute("abs_pathGraph", actual_file.abs_path)
+        a.innerHTML = actual_file.id
+        div.appendChild(a)
+
+
+        actual_file = actual_file.next
+    }
+
+
+    let li = document.createElement('li');
+    li.setAttribute('class', 'media my-3');
+    list_files.appendChild(li);
+    let div = document.createElement('media-body');
+    li.appendChild(div)
+    let a = document.createElement("a")
+    a.setAttribute("href", "#")
+    a.setAttribute("abs_pathGraph", "/")
+    a.innerHTML = "Root"
+    div.appendChild(a)
+
+
+    updateHyperLinks()
+}
+
 
 function greetUser() {
     const jsonObject = JSON.parse(localStorage.getItem("logged_user"))
@@ -226,7 +325,7 @@ function gotopath() {
         current_folder = foundFolder
         display_actualFolder()
     }
-    updateHyperLinks()
+
 }
 
 function getDate() {
@@ -254,7 +353,6 @@ function createFolder() {
 
     if (logged_user.rootFolder.insert_folder(name, path)) {
         display_actualFolder()
-        updateHyperLinks()
         let new_action = new Action("Se creó carpeta: " + path + " en el directorio: " + name, getDate(), "folderCreation", "", path, name, "")
         bitacora.insertAction(new_action)
         graphBitacora()
@@ -305,7 +403,7 @@ function deleteFolder() {
             if (path === ""){
                 logged_user.rootFolder.getFolder("/").matrix.rows.delete(filename)
                 display_actualFolder()
-                updateHyperLinks()
+
                 let new_action = new Action("Se eliminó archivo: " + filename, getDate(), "fileDeletion", "", "/", filename, "")
                 bitacora.insertAction(new_action)
                 localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
@@ -314,7 +412,7 @@ function deleteFolder() {
             else {
                 logged_user.rootFolder.getFolder(path).matrix.rows.delete(filename)
                 display_actualFolder()
-                updateHyperLinks()
+
                 let new_action = new Action("Se eliminó archivo: " + filename, getDate(), "fileDeletion", "", path, filename, "")
                 bitacora.insertAction(new_action)
                 localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
@@ -330,7 +428,6 @@ function deleteFolder() {
                 bitacora.insertAction(new_action)
                 localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
                 display_actualFolder()
-                updateHyperLinks()
                 graphBitacora()
                 updateGraph()
             } else {
@@ -388,43 +485,76 @@ function loadFiletoPath() {
 function updateHyperLinks() {
 
     const buttonPressed = e => {
+
         e.preventDefault()
-        let path = e.target.getAttribute("abs_path")
-        if (path === "/") {
-            current_folder = logged_user.rootFolder.root
-            display_actualFolder()
-            return
+        for (let button of hyperlinks) {
+            button.removeEventListener("click", buttonPressed);
+
         }
-
-        if (path.endsWith(".txt") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".pdf") || path.endsWith(".gif") || path.endsWith(".tiff")) {
-            let pathArray = path.split("/")
-            let filename = pathArray.pop()
-            let folderToFind = pathArray.join("/");
-            //console.log(nuevo_interno)
-            if (folderToFind === "") {
-                let foundFolder = logged_user.rootFolder.getFolder("/")
-                let file = foundFolder.matrix.rows.getHeaderNode(filename)
-                fromb64tofile(file.content, file.id.split(".")[1], file.id)
-            } else {
-                let foundFolder = logged_user.rootFolder.getFolder(folderToFind)
-                let file = foundFolder.matrix.rows.getHeaderNode(filename)
-                fromb64tofile(file.content, file.id.split(".")[1], file.id)
-            }
-
-        } else {
-            let foundFolder = logged_user.rootFolder.getFolder(path)
-            if (!foundFolder) {
-                alert("Carpeta no encontrada")
-            } else {
-                current_folder = foundFolder
+        if(e.target.getAttribute("abs_path") && !e.target.getAttribute("abs_pathGraph")){
+            let path = e.target.getAttribute("abs_path")
+            console.log(path)
+            if (path === "/") {
+                current_folder = logged_user.rootFolder.root
                 display_actualFolder()
+                return
             }
+
+            if (path.endsWith(".txt") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".pdf") || path.endsWith(".gif") || path.endsWith(".tiff")) {
+                let pathArray = path.split("/")
+                let filename = pathArray.pop()
+                let folderToFind = pathArray.join("/");
+                //console.log(nuevo_interno)
+                if (folderToFind === "") {
+                    let foundFolder = logged_user.rootFolder.getFolder("/")
+                    let file = foundFolder.matrix.rows.getHeaderNode(filename)
+                    fromb64tofile(file.content, file.id.split(".")[1], file.id)
+                    display_actualFolder()
+                } else {
+                    let foundFolder = logged_user.rootFolder.getFolder(folderToFind)
+                    let file = foundFolder.matrix.rows.getHeaderNode(filename)
+                    fromb64tofile(file.content, file.id.split(".")[1], file.id)
+                    display_actualFolder()
+                }
+
+            } else {
+                let foundFolder = logged_user.rootFolder.getFolder(path)
+                if (!foundFolder) {
+                    alert("Carpeta no encontrada")
+                    display_actualFolder()
+                } else {
+                    current_folder = foundFolder
+                    display_actualFolder()
+                }
+            }
+
+
         }
+        else{
+            console.log('tengo que buscar en el grafo')
+            let path = e.target.getAttribute("abs_pathGraph")
+            if (path === '/'){
+                let rootF = logged_user.graph.findNodeByPath(path)
+                console.log(rootF)
+                display_actualFolderGraph()
+            }
+            else{
+                console.log(path)
+                let rootF = logged_user.graph.findNodeByPath(path)
+                console.log(rootF)
+                display_actualFolderGraph()
+
+            }
+
+        }
+
 
 
     }
 
+
     for (let button of hyperlinks) {
+
         button.addEventListener("click", buttonPressed);
     }
 }
@@ -508,11 +638,5 @@ function addPermission() {
 
 greetUser()
 display_actualFolder()
-updateHyperLinks()
 graphBitacora()
 studentDropList(AVLTree.root)
-console.log(logged_user.graph.getVizCode())
-console.log(logged_user)
-
-
-

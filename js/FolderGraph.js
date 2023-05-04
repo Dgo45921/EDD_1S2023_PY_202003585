@@ -14,6 +14,32 @@ export default class Graph {
         this.rootNode = null
     }
 
+    findNodeByPath(path) {
+        if (path === '/') return this.rootNode
+
+        let currentNode = this.rootNode
+        let currentPath = path.split('/')
+
+        for (let i = 1; i < currentPath.length; i++) {
+            let childNode = currentNode.siguiente
+            let found = false
+
+            while (childNode && !found) {
+                if (childNode.path === currentPath[i]) {
+                    currentNode = childNode
+                    found = true
+                }
+                childNode = childNode.siguiente
+            }
+
+            if (!found) {
+                return null
+            }
+        }
+
+        return currentNode
+    }
+
     searchRow(padre){
         let actual = this.rootNode
         while(actual){
