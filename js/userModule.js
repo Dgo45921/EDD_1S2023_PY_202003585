@@ -59,7 +59,7 @@ function vistaGrafo(){
     divGrafo.style.display = 'block'
     divNario.style.display = 'none'
     display_actualFolderGraphFolders('/')
-    display_actualFolderGraphFiles('/')
+    display_actualFolderGraphFiles('/', '')
 
 }
 
@@ -213,9 +213,9 @@ function display_actualFolder() {
 }
 
 
-function display_actualFolderGraph(path){
-    display_actualFolderGraphFolders(path)
-    display_actualFolderGraphFiles(path)
+function display_actualFolderGraph(path, child){
+    display_actualFolderGraphFolders(path + child)
+    display_actualFolderGraphFiles(path, child)
 }
 function display_actualFolderGraphFolders(path) {
     // code to display folders
@@ -270,13 +270,13 @@ function display_actualFolderGraphFolders(path) {
 }
 
 
-function  display_actualFolderGraphFiles(path){
+function  display_actualFolderGraphFiles(path, child){
 
     let list_files = document.getElementById("file_listGraph")
 
 
     // code to display files
-    let lel = logged_user.graph.findNodeByPath2(path)
+    let lel = logged_user.graph.findNodeByPath2(path, child)
 
     if(lel){
         let actual_file = lel.matrix.rows.first
@@ -576,8 +576,21 @@ function updateHyperLinks() {
                 }
                 else{
 
+                    const componentes = path.split('/');
+                    const ultimaCarpeta = componentes.pop();
+                    let rutaSinUltimo = componentes.join('/');
 
-                   display_actualFolderGraph(path)
+
+
+                    if (rutaSinUltimo === ''){
+                        rutaSinUltimo = '/'
+                    }
+                    console.log('sinultio' + rutaSinUltimo); // 'misfotos/hola'
+                    console.log('ultmiacarpeta' + ultimaCarpeta); // 'zzz'
+
+                    display_actualFolderGraph(rutaSinUltimo, ultimaCarpeta)
+
+
 
 
 
