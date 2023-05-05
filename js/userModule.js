@@ -559,69 +559,110 @@ function updateHyperLinks() {
 
 
         } else {
-            let path = e.target.getAttribute("abs_pathGraph")
-            if (path === '/') {
-                display_actualFolderGraph(path, '/', '')
-
-            } else {
-                console.log(path)
-                if (path.endsWith(".txt") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".pdf") || path.endsWith(".gif") || path.endsWith(".tiff")) {
-                    let pathArray = path.split("/")
-                    let filename = pathArray.pop()
-                    let folderToFind = pathArray.join("/");
-                    // console.log('eeii')
-                    // console.log(filename)
-                    //console.log(folderToFind)
+            if (e.target.getAttribute('owner')){
+                console.log('tengo que buscar en las carpetas del owner zz')
+                let owner = StudentHashTable.getUser(e.target.getAttribute('owner'))
+                let path = e.target.getAttribute("abs_pathGraph")
+                let pathArray = path.split("/")
+                let filename = pathArray.pop()
+                let folderToFind = pathArray.join("/");
+                // console.log('eeii')
+                // console.log(filename)
+                //console.log(folderToFind)
 
 
-                    const componentes = folderToFind.split('/');
-                    let ultimaCarpeta = componentes.pop();
-                    let rutaSinUltimo = componentes.join('/');
+                const componentes = folderToFind.split('/');
+                let ultimaCarpeta = componentes.pop();
+                let rutaSinUltimo = componentes.join('/');
 
 
-                    if (rutaSinUltimo === '') {
-                        rutaSinUltimo = '/'
-                    }
-                    if (!ultimaCarpeta) {
-                        ultimaCarpeta = ''
-                    }
-                    // console.log(ultimaCarpeta)
-                    //console.log(rutaSinUltimo)
+                if (rutaSinUltimo === '') {
+                    rutaSinUltimo = '/'
+                }
+                if (!ultimaCarpeta) {
+                    ultimaCarpeta = ''
+                }
+                // console.log(ultimaCarpeta)
+                //console.log(rutaSinUltimo)
 
-                    let prueba = logged_user.graph.findNodeByPath2(rutaSinUltimo, ultimaCarpeta)
-                    //console.log(prueba)
-
-                    if (rutaSinUltimo !== '/') {
-                        display_actualFolderGraph(folderToFind, rutaSinUltimo, ultimaCarpeta)
-                    } else {
-                        display_actualFolderGraph('/', rutaSinUltimo, ultimaCarpeta)
-
-                    }
+                let prueba = owner.graph.findNodeByPath2(rutaSinUltimo, ultimaCarpeta)
+                //console.log(prueba)
 
 
-                    searchFile(prueba, filename)
+
+
+                searchFile(prueba, filename)
+
+
+            }
+            else{
+                let path = e.target.getAttribute("abs_pathGraph")
+                if (path === '/') {
+                    display_actualFolderGraph(path, '/', '')
+
                 } else {
+                    console.log(path)
+                    if (path.endsWith(".txt") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".pdf") || path.endsWith(".gif") || path.endsWith(".tiff")) {
+                        let pathArray = path.split("/")
+                        let filename = pathArray.pop()
+                        let folderToFind = pathArray.join("/");
+                        // console.log('eeii')
+                        // console.log(filename)
+                        //console.log(folderToFind)
 
-                    const componentes = path.split('/');
-                    let ultimaCarpeta = componentes.pop();
-                    let rutaSinUltimo = componentes.join('/');
+
+                        const componentes = folderToFind.split('/');
+                        let ultimaCarpeta = componentes.pop();
+                        let rutaSinUltimo = componentes.join('/');
 
 
-                    if (rutaSinUltimo === '') {
-                        rutaSinUltimo = '/'
+                        if (rutaSinUltimo === '') {
+                            rutaSinUltimo = '/'
+                        }
+                        if (!ultimaCarpeta) {
+                            ultimaCarpeta = ''
+                        }
+                        // console.log(ultimaCarpeta)
+                        //console.log(rutaSinUltimo)
+
+                        let prueba = logged_user.graph.findNodeByPath2(rutaSinUltimo, ultimaCarpeta)
+                        //console.log(prueba)
+
+                        if (rutaSinUltimo !== '/') {
+                            display_actualFolderGraph(folderToFind, rutaSinUltimo, ultimaCarpeta)
+                        } else {
+                            display_actualFolderGraph('/', rutaSinUltimo, ultimaCarpeta)
+
+                        }
+
+
+                        searchFile(prueba, filename)
+                    } else {
+
+                        const componentes = path.split('/');
+                        let ultimaCarpeta = componentes.pop();
+                        let rutaSinUltimo = componentes.join('/');
+
+
+                        if (rutaSinUltimo === '') {
+                            rutaSinUltimo = '/'
+                        }
+                        if (!ultimaCarpeta) {
+                            ultimaCarpeta = ''
+                        }
+                        // console.log(path)
+
+                        display_actualFolderGraph(path, rutaSinUltimo, ultimaCarpeta)
+
+
                     }
-                    if (!ultimaCarpeta) {
-                        ultimaCarpeta = ''
-                    }
-                    // console.log(path)
-
-                    display_actualFolderGraph(path, rutaSinUltimo, ultimaCarpeta)
 
 
                 }
 
-
             }
+
+
 
         }
 
@@ -692,6 +733,7 @@ function displayContent(base64String, type) {
         visualizer.setAttribute('src', 'data:image/' + type + ';base64,' + base64String)
     }
 
+    updateHyperLinks()
 
 }
 
@@ -722,17 +764,25 @@ function displayPermissions() {
                         while (accessRow) {
 
                             if (accessRow.y === logged_user.id.toString()) {
+                                let a = document.createElement("a")
+                                a.setAttribute("href", "#")
+                                a.setAttribute("abs_pathGraph",  actualMatrixRow.abs_path)
+                                a.setAttribute("owner",  StudentHashTable.table[i].id)
+                                a.innerHTML = actualMatrixRow.id
+
                                 console.log(`el archivo ${actualMatrixRow.id} tiene permiso ${accessRow.permission} con ${accessRow.y}`)
                                 console.log('tener en cuenta este archivo')
+                                const new_row = tbody.insertRow();
+                                const owner = new_row.insertCell(0);
+                                const name = new_row.insertCell(1);
+                                const permission = new_row.insertCell(2);
+                                owner.innerHTML = StudentHashTable.table[i].id
+                                name.appendChild(a)
+                                permission.innerHTML = accessRow.permission
+
 
                             }
-                            const new_row = tbody.insertRow();
-                            const owner = new_row.insertCell(0);
-                            const name = new_row.insertCell(1);
-                            const permission = new_row.insertCell(2);
-                            owner.innerHTML = StudentHashTable.table[i].id
-                            name.innerHTML = actualMatrixRow.id
-                            permission.innerHTML = accessRow.permission
+
 
 
 
@@ -757,18 +807,24 @@ function displayPermissions() {
                         while (accessRow) {
 
                             if (accessRow.y === logged_user.id.toString()) {
+                                let a = document.createElement("a")
+                                a.setAttribute("href", "#")
+                                a.setAttribute("abs_pathGraph",  actualMatrixRow.abs_path)
+                                a.setAttribute("owner",  StudentHashTable.table[i].id)
+                                a.innerHTML = actualMatrixRow.id
+
                                 console.log(`el archivo ${actualMatrixRow.id} tiene permiso ${accessRow.permission} con ${accessRow.y}`)
                                 console.log('tener en cuenta este archivo')
-
+                                const new_row = tbody.insertRow();
+                                const owner = new_row.insertCell(0);
+                                const name = new_row.insertCell(1);
+                                const permission = new_row.insertCell(2);
+                                owner.innerHTML = StudentHashTable.table[i].id
+                                name.appendChild(a)
+                                permission.innerHTML = accessRow.permission
                             }
 
-                            const new_row = tbody.insertRow();
-                            const owner = new_row.insertCell(0);
-                            const name = new_row.insertCell(1);
-                            const permission = new_row.insertCell(2);
-                            owner.innerHTML = StudentHashTable.table[i].id
-                            name.innerHTML = actualMatrixRow.id
-                            permission.innerHTML = accessRow.permission
+
 
 
                             accessRow = accessRow.right
@@ -788,6 +844,7 @@ function displayPermissions() {
         }
 
     }
+    updateHyperLinks()
 
 
 }

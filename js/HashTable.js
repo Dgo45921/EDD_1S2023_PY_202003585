@@ -75,33 +75,14 @@ export default class HashTable{
         return newP
     }
 
-    searchUser(id){
-        let index = this.calculateIndex(id)
-        if(index < this.capacity){
-            try{
-                if(this.table[index] == null){
-
-                    return true
-                }else if(this.table[index] && this.table[index].id === id){
-
-                    return true
-                }else{
-                    let counter = 1
-                    index = this.recalculateIndex(id,counter)
-                    while(this.table[index]){
-                        counter++
-                        index = this.recalculateIndex(id, counter)
-                        if(this.table[index].id === id){
-
-                            return true
-                        }
-                    }
+    getUser(id){
+        for (let i = 0; i <this.table.length ; i++) {
+            if(this.table[i]){
+                if(this.table[i].id === parseInt(id)){
+                    return this.table[i]
                 }
-            }catch(err){
-                console.log(err)
             }
         }
-        return false
     }
 
 
