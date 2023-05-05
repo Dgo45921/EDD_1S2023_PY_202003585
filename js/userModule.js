@@ -179,7 +179,7 @@ function display_actualFolder() {
             img.setAttribute("src", "img/text.png")
         } else if (actual_file.id.endsWith(".pdf")) {
             img.setAttribute("src", "img/pdf.png")
-        } else if (actual_file.id.endsWith(".png") || actual_file.id.endsWith(".jpg") || actual_file.id.path.endsWith(".jpeg") || actual_file.id.path.endsWith(".gif") || actual_file.id.path.endsWith(".tiff")) {
+        } else if (actual_file.id.endsWith(".png") || actual_file.id.endsWith(".jpg") || actual_file.id.endsWith(".jpeg") || actual_file.id.endsWith(".gif") || actual_file.id.endsWith(".tiff")) {
             img.setAttribute("src", "img/image.png")
         } else {
             img.setAttribute("src", "img/folder.png")
@@ -297,7 +297,7 @@ function display_actualFolderGraphFiles(path, child) {
                 img.setAttribute("src", "img/text.png")
             } else if (actual_file.id.endsWith(".pdf")) {
                 img.setAttribute("src", "img/pdf.png")
-            } else if (actual_file.id.endsWith(".png") || actual_file.id.endsWith(".jpg") || actual_file.id.path.endsWith(".jpeg") || actual_file.id.path.endsWith(".gif") || actual_file.id.path.endsWith(".tiff")) {
+            } else if (actual_file.id.endsWith(".png") || actual_file.id.endsWith(".jpg") || actual_file.id.endsWith(".jpeg") || actual_file.id.endsWith(".gif") || actual_file.id.endsWith(".tiff")) {
                 img.setAttribute("src", "img/image.png")
             } else {
                 img.setAttribute("src", "img/folder.png")
