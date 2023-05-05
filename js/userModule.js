@@ -28,14 +28,14 @@ window.graphGraph = graphGraph
 window.findFolderGraph = findFolderGraph
 
 
-function findFolderGraph(){
+function findFolderGraph() {
     let path = document.getElementById("gotopathGraph").value
     console.log(logged_user.graph.findNodeByPath(path))
 
 }
 
 
-function createHashTableStudents(node){
+function createHashTableStudents(node) {
     if (node) {
         createHashTableStudents(node.left)
         node.student.password = CryptoJS.SHA256(node.student.password).toString()
@@ -45,7 +45,7 @@ function createHashTableStudents(node){
 
 }
 
-function vistaNario(){
+function vistaNario() {
     let divNario = document.getElementById('vistaNario')
     let divGrafo = document.getElementById('vistaGrafo')
     divGrafo.style.display = 'none'
@@ -53,7 +53,7 @@ function vistaNario(){
 
 }
 
-function vistaGrafo(){
+function vistaGrafo() {
     let divNario = document.getElementById('vistaNario')
     let divGrafo = document.getElementById('vistaGrafo')
     divGrafo.style.display = 'block'
@@ -83,6 +83,7 @@ function graphBitacora() {
     }
 
 }
+
 function graphGraph() {
     document.getElementById('chat').style.display = 'none'
     document.getElementById('containerShared').style.display = 'none'
@@ -216,10 +217,11 @@ function display_actualFolder() {
 }
 
 
-function display_actualFolderGraph(original, path, child){
+function display_actualFolderGraph(original, path, child) {
     display_actualFolderGraphFolders(original)
     display_actualFolderGraphFiles(path, child)
 }
+
 function display_actualFolderGraphFolders(path) {
     // code to display folders
 
@@ -230,7 +232,7 @@ function display_actualFolderGraphFolders(path) {
     actual_folder.innerHTML = "path: " + path
 
     let lel = logged_user.graph.findNodeByPath(path)
-    if(lel){
+    if (lel) {
         let current_folder = lel.siguiente
 
         while (current_folder) {
@@ -253,10 +255,9 @@ function display_actualFolderGraphFolders(path) {
             li.appendChild(div)
             let a = document.createElement("a")
             a.setAttribute("href", "#")
-            if (path === '/'){
+            if (path === '/') {
                 a.setAttribute("abs_pathGraph", '/' + current_folder.path)
-            }
-            else{
+            } else {
                 a.setAttribute("abs_pathGraph", path + '/' + current_folder.path)
             }
 
@@ -268,14 +269,12 @@ function display_actualFolderGraphFolders(path) {
         }
 
 
-
-
         updateHyperLinks()
     }
 }
 
 
-function  display_actualFolderGraphFiles(path, child){
+function display_actualFolderGraphFiles(path, child) {
 
     let list_files = document.getElementById("file_listGraph")
 
@@ -283,7 +282,7 @@ function  display_actualFolderGraphFiles(path, child){
     // code to display files
     let lel = logged_user.graph.findNodeByPath2(path, child)
 
-    if(lel){
+    if (lel) {
         let actual_file = lel.matrix.rows.first
         while (actual_file) {
 
@@ -395,15 +394,12 @@ function createFolder() {
 
         updateGraph()
 
-    }
-
-
-    else alert("No se pudo agregar la carpeta, revise la ruta")
+    } else alert("No se pudo agregar la carpeta, revise la ruta")
     // console.log(JSON.stringify(bitacora, replacer))
     // localStorage.setItem("bitacora", JSON.stringify(bitacora, replacer))
 }
 
-function updateGraph(){
+function updateGraph() {
     let grafito = new Graph()
     logged_user.rootFolder.generateGraph(logged_user.rootFolder.root, grafito)
     logged_user.graph = grafito
@@ -431,32 +427,30 @@ function deleteFolder() {
     if (response) {
         if (path.endsWith(".txt") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".pdf") || path.endsWith(".gif") || path.endsWith(".tiff")) {
             if (response) {
-            let pathArray = path.split("/")
-            let filename = pathArray.pop()
-            path = pathArray.join("/");
-            //console.log("tengo que eliminar el archivo: ", filename, " perteneciente a la carpeta: ", path)
-            if (path === ""){
-                logged_user.rootFolder.getFolder("/").matrix.rows.delete(filename)
-                display_actualFolder()
+                let pathArray = path.split("/")
+                let filename = pathArray.pop()
+                path = pathArray.join("/");
+                //console.log("tengo que eliminar el archivo: ", filename, " perteneciente a la carpeta: ", path)
+                if (path === "") {
+                    logged_user.rootFolder.getFolder("/").matrix.rows.delete(filename)
+                    display_actualFolder()
 
-                let new_action = new Action("Se eliminó archivo: " + filename, getDate(), "fileDeletion", "", "/", filename, "")
-                bitacora.insertAction(new_action)
-                localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
-                updateGraph()
+                    let new_action = new Action("Se eliminó archivo: " + filename, getDate(), "fileDeletion", "", "/", filename, "")
+                    bitacora.insertAction(new_action)
+                    localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
+                    updateGraph()
+                } else {
+                    logged_user.rootFolder.getFolder(path).matrix.rows.delete(filename)
+                    display_actualFolder()
+
+                    let new_action = new Action("Se eliminó archivo: " + filename, getDate(), "fileDeletion", "", path, filename, "")
+                    bitacora.insertAction(new_action)
+                    localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
+                    updateGraph()
+                }
             }
-            else {
-                logged_user.rootFolder.getFolder(path).matrix.rows.delete(filename)
-                display_actualFolder()
 
-                let new_action = new Action("Se eliminó archivo: " + filename, getDate(), "fileDeletion", "", path, filename, "")
-                bitacora.insertAction(new_action)
-                localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
-                updateGraph()
-            }
-        }
-
-    }
-        else {
+        } else {
 
             if (logged_user.rootFolder.delete(path)) {
                 let new_action = new Action("Se eliminó carpeta: " + path, getDate(), "folderDeletion", "", path, path, "")
@@ -526,7 +520,7 @@ function updateHyperLinks() {
             button.removeEventListener("click", buttonPressed);
 
         }
-        if(e.target.getAttribute("abs_path") && !e.target.getAttribute("abs_pathGraph")){
+        if (e.target.getAttribute("abs_path") && !e.target.getAttribute("abs_pathGraph")) {
             let path = e.target.getAttribute("abs_path")
             console.log(path)
             if (path === "/") {
@@ -564,53 +558,74 @@ function updateHyperLinks() {
             }
 
 
-        }
-        else{
-            console.log('tengo que buscar en el grafo')
+        } else {
             let path = e.target.getAttribute("abs_pathGraph")
-            if (path === '/'){
+            if (path === '/') {
                 display_actualFolderGraph(path, '/', '')
 
-            }
-            else{
+            } else {
                 console.log(path)
                 if (path.endsWith(".txt") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".pdf") || path.endsWith(".gif") || path.endsWith(".tiff")) {
                     let pathArray = path.split("/")
-                    console.log(pathArray)
+                    let filename = pathArray.pop()
+                    let folderToFind = pathArray.join("/");
+                   // console.log('eeii')
+                   // console.log(filename)
+                    //console.log(folderToFind)
 
-                }
-                else{
+
+
+                    const componentes = folderToFind.split('/');
+                    let ultimaCarpeta = componentes.pop();
+                    let rutaSinUltimo = componentes.join('/');
+
+
+                    if (rutaSinUltimo === '') {
+                        rutaSinUltimo = '/'
+                    }
+                    if (!ultimaCarpeta) {
+                        ultimaCarpeta = ''
+                    }
+                   // console.log(ultimaCarpeta)
+                    //console.log(rutaSinUltimo)
+
+                    let prueba = logged_user.graph.findNodeByPath2(rutaSinUltimo, ultimaCarpeta)
+                    //console.log(prueba)
+
+                    if (rutaSinUltimo !== '/'){
+                        display_actualFolderGraph(folderToFind, rutaSinUltimo, ultimaCarpeta)
+                    }
+                    else{
+                        display_actualFolderGraph('/', rutaSinUltimo, ultimaCarpeta)
+
+                    }
+
+
+                    searchFile(prueba, filename)
+                } else {
 
                     const componentes = path.split('/');
                     let ultimaCarpeta = componentes.pop();
                     let rutaSinUltimo = componentes.join('/');
 
 
-
-                    if (rutaSinUltimo === ''){
+                    if (rutaSinUltimo === '') {
                         rutaSinUltimo = '/'
                     }
-                    console.log('sinultio' + rutaSinUltimo); // 'misfotos/hola'
-                    console.log('ultmiacarpeta' + ultimaCarpeta); // 'zzz'
-                    if (!ultimaCarpeta){
+                    if (!ultimaCarpeta) {
                         ultimaCarpeta = ''
                     }
+                    console.log(path)
 
                     display_actualFolderGraph(path, rutaSinUltimo, ultimaCarpeta)
-
-
-
-
 
 
                 }
 
 
-
             }
 
         }
-
 
 
     }
@@ -646,6 +661,41 @@ function graphMatrix() {
     } else {
         alert("No hay suficientes archivos para hacer el reporte")
     }
+
+
+}
+
+function searchFile(folderNode, filename){
+
+    let actual = folderNode.matrix.rows.first
+    while(actual){
+        if(actual.id === filename){
+
+
+            displayContent(actual.content, actual.id.split('.')[1])
+            break
+        }
+
+        actual = actual.next
+    }
+
+
+}
+
+function displayContent(base64String, type){
+
+    let visualizer = document.getElementById('visualizer')
+    if (type === 'txt'){
+        visualizer.setAttribute('src', 'data:text/plain' + ';base64,' + base64String)
+
+    }
+    else if(type === 'pdf'){
+        visualizer.setAttribute('src', 'data:application/' + type + ';base64,' + base64String)
+    }
+    else{
+        visualizer.setAttribute('src', 'data:image/' + type + ';base64,' + base64String)
+    }
+
 
 
 }
