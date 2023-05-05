@@ -7,6 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Bootstrap CSS -->
+  <link href="./css/user.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script type="module" src="js/userModule.js" > </script>
@@ -215,7 +216,7 @@
 
         <button type="button" class="btn btn-warning mb-3" onclick="graphGraph()" >Reporte Grafo </button>
         <button type="button" class="btn btn-info mb-3" onclick="displayPermissions()" >Compartidos conmigo</button>
-        <button type="button" class="btn btn-success mb-3" >Mensajeria </button>
+        <button type="button" class="btn btn-success mb-3" onclick="showChat()" >Mensajeria </button>
 
       </div>
       <div class="col-md-4">
@@ -269,8 +270,53 @@
 
   </div>
   <div id="chat" style="display: none">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title">Contactos</h5>
+            </div>
+            <div class="card-body">
+              <select class="form-select mb-3" aria-label="Seleccionar contacto">
+                <option selected>Seleccionar contacto</option>
+                <option value="1">Amigo 1</option>
+                <option value="2">Amigo 2</option>
+                <option value="3">Amigo 3</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title">Chat</h5>
+            </div>
+            <div class="card-body">
+              <div class="chat-box">
+                <div class="message sent">
+                  <p>Hola, ¿cómo estás? <br> 10:00 AM</p>
 
-          <p>Chat</p>
+
+                </div>
+                <div class="message received">
+                  <p>Hola, estoy bien, ¿y tú? <br>10:05 AM </p>
+                </div>
+                <div class="message sent">
+                  <p>Estoy bien también, gracias por preguntar <br> 10:10 AM</p>
+                </div>
+
+              </div>
+              <form class="input-group mt-3">
+                <input type="text" class="form-control" placeholder="Escribir mensaje...">
+                <button class="btn btn-primary" type="button">Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 
   </div>

@@ -27,6 +27,7 @@ window.vistaGrafo = vistaGrafo
 window.graphGraph = graphGraph
 window.findFolderGraph = findFolderGraph
 window.displayPermissions = displayPermissions
+window.showChat = showChat
 
 function findFolderGraph() {
     let path = document.getElementById("gotopathGraph").value
@@ -92,6 +93,13 @@ function graphGraph() {
     let tree_image = document.getElementById("graphImage")
     tree_image.setAttribute("src", url + viz_code)
     //console.log(viz_code)
+}
+
+function showChat() {
+    document.getElementById('chat').style.display = 'block'
+    document.getElementById('containerShared').style.display = 'none'
+    document.getElementById('containerGraph').style.display = 'none'
+
 }
 
 
