@@ -259,10 +259,6 @@ function Hashshow_studentspermissions() {
 
 
             if(StudentHashTable.table[i]){
-                if (StudentHashTable.table[i].name === 'Diego' || StudentHashTable.table[i].name === 'Zatanna Zatara' ){
-                    console.log('zzz')
-                    console.log(StudentHashTable.table[i].graph)
-                }
                 let currentGraph = StudentHashTable.table[i].graph
                 let actualRow = currentGraph.rootNode
                 while(actualRow){
@@ -298,13 +294,6 @@ function Hashshow_studentspermissions() {
                             actualMatrixRow = actualMatrixRow.next
                         }
                     }
-
-
-
-
-
-
-
 
 
                     // gets the matrixes inside

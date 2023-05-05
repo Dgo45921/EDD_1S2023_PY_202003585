@@ -37,8 +37,9 @@ loginButton.addEventListener("click", function() {
 function findUser(identifier, password){
     for (let i = 0; i <StudentHashTable.table.length ; i++) {
         if (StudentHashTable.table[i]){
+            console.log(password)
             if (StudentHashTable.table[i].id === identifier && StudentHashTable.table[i].password === password){
-                localStorage.setItem("logged_user", JSON.stringify(StudentHashTable.table[i]))
+                localStorage.setItem("logged_user", JSON.stringify(StudentHashTable.table[i], replacer))
                 return true
             }
 
@@ -48,6 +49,14 @@ function findUser(identifier, password){
     }
     return false
 
+}
+
+function replacer(key, value) {
+    if (key === "first1") return undefined;
+    else if (key === "next1") return undefined;
+    else if (key === "rootFolder") return undefined;
+    else if (key === "graph") return undefined;
+    else return value;
 }
 
 
@@ -68,7 +77,7 @@ function login(){
         location.href = 'moduloAdmin.html';
     }
     else{
-        if (findUser(parseInt(username), CryptoJS.SHA256(password).toString()))
+        if (findUser(parseInt(username), CryptoJS.SHA256(password.toString()).toString()))
             location.href = 'moduloUser.html';
 
         else{

@@ -26,7 +26,7 @@ window.vistaNario = vistaNario
 window.vistaGrafo = vistaGrafo
 window.graphGraph = graphGraph
 window.findFolderGraph = findFolderGraph
-
+window.displayPermissions = displayPermissions
 
 function findFolderGraph() {
     let path = document.getElementById("gotopathGraph").value
@@ -38,7 +38,6 @@ function findFolderGraph() {
 function createHashTableStudents(node) {
     if (node) {
         createHashTableStudents(node.left)
-        node.student.password = CryptoJS.SHA256(node.student.password).toString()
         StudentHashTable.insert(node.student)
         createHashTableStudents(node.right);
     }
@@ -501,7 +500,7 @@ function loadFiletoPath() {
         graphBitacora()
 
         let new_action = new Action("Se agregó archivo: " + name + " en el directorio: " + path, getDate(), "fileAdition", b64, name, path, "")
-        console.log(new_action)
+        // console.log(new_action)
         bitacora.insertAction(new_action)
         graphBitacora()
         localStorage.setItem("jsonArbol", JSON.stringify(AVLTree, replacer))
@@ -522,7 +521,8 @@ function updateHyperLinks() {
         }
         if (e.target.getAttribute("abs_path") && !e.target.getAttribute("abs_pathGraph")) {
             let path = e.target.getAttribute("abs_path")
-            console.log(path)
+            //
+            // console.log(path)
             if (path === "/") {
                 current_folder = logged_user.rootFolder.root
                 display_actualFolder()
@@ -569,10 +569,9 @@ function updateHyperLinks() {
                     let pathArray = path.split("/")
                     let filename = pathArray.pop()
                     let folderToFind = pathArray.join("/");
-                   // console.log('eeii')
-                   // console.log(filename)
+                    // console.log('eeii')
+                    // console.log(filename)
                     //console.log(folderToFind)
-
 
 
                     const componentes = folderToFind.split('/');
@@ -586,16 +585,15 @@ function updateHyperLinks() {
                     if (!ultimaCarpeta) {
                         ultimaCarpeta = ''
                     }
-                   // console.log(ultimaCarpeta)
+                    // console.log(ultimaCarpeta)
                     //console.log(rutaSinUltimo)
 
                     let prueba = logged_user.graph.findNodeByPath2(rutaSinUltimo, ultimaCarpeta)
                     //console.log(prueba)
 
-                    if (rutaSinUltimo !== '/'){
+                    if (rutaSinUltimo !== '/') {
                         display_actualFolderGraph(folderToFind, rutaSinUltimo, ultimaCarpeta)
-                    }
-                    else{
+                    } else {
                         display_actualFolderGraph('/', rutaSinUltimo, ultimaCarpeta)
 
                     }
@@ -615,7 +613,7 @@ function updateHyperLinks() {
                     if (!ultimaCarpeta) {
                         ultimaCarpeta = ''
                     }
-                    console.log(path)
+                    // console.log(path)
 
                     display_actualFolderGraph(path, rutaSinUltimo, ultimaCarpeta)
 
@@ -665,11 +663,11 @@ function graphMatrix() {
 
 }
 
-function searchFile(folderNode, filename){
+function searchFile(folderNode, filename) {
 
     let actual = folderNode.matrix.rows.first
-    while(actual){
-        if(actual.id === filename){
+    while (actual) {
+        if (actual.id === filename) {
 
 
             displayContent(actual.content, actual.id.split('.')[1])
@@ -682,20 +680,114 @@ function searchFile(folderNode, filename){
 
 }
 
-function displayContent(base64String, type){
+function displayContent(base64String, type) {
 
     let visualizer = document.getElementById('visualizer')
-    if (type === 'txt'){
+    if (type === 'txt') {
         visualizer.setAttribute('src', 'data:text/plain' + ';base64,' + base64String)
 
-    }
-    else if(type === 'pdf'){
+    } else if (type === 'pdf') {
         visualizer.setAttribute('src', 'data:application/' + type + ';base64,' + base64String)
-    }
-    else{
+    } else {
         visualizer.setAttribute('src', 'data:image/' + type + ';base64,' + base64String)
     }
 
+
+}
+
+function displayPermissions() {
+    let tbody = document.getElementById("permissionTableBody")
+    document.getElementById('chat').style.display = 'none'
+    document.getElementById('containerShared').style.display = 'block'
+    document.getElementById('containerGraph').style.display = 'none'
+
+    for (let i = 0; i < StudentHashTable.table.length; i++) {
+        if (i === 17) {
+            console.log(5)
+        }
+
+
+        if (StudentHashTable.table[i]) {
+            let currentGraph = StudentHashTable.table[i].graph
+            let actualRow = currentGraph.rootNode
+            while (actualRow) {
+                // get matrixes of root node in graph
+                if (actualRow.path === '/') {
+
+
+                    let actualMatrixRow = actualRow.matrix.rows.first
+                    while (actualMatrixRow) {
+
+                        let accessRow = actualMatrixRow.access
+                        while (accessRow) {
+
+                            if (accessRow.y === logged_user.id.toString()) {
+                                console.log(`el archivo ${actualMatrixRow.id} tiene permiso ${accessRow.permission} con ${accessRow.y}`)
+                                console.log('tener en cuenta este archivo')
+
+                            }
+                            const new_row = tbody.insertRow();
+                            const owner = new_row.insertCell(0);
+                            const name = new_row.insertCell(1);
+                            const permission = new_row.insertCell(2);
+                            owner.innerHTML = StudentHashTable.table[i].id
+                            name.innerHTML = actualMatrixRow.id
+                            permission.innerHTML = accessRow.permission
+
+
+
+                            accessRow = accessRow.right
+                        }
+
+
+                        actualMatrixRow = actualMatrixRow.next
+                    }
+                }
+
+
+                // gets the matrixes inside
+                let actualColumn = actualRow.siguiente
+                while (actualColumn) {
+
+
+                    let actualMatrixRow = actualColumn.matrix.rows.first
+                    while (actualMatrixRow) {
+
+                        let accessRow = actualMatrixRow.access
+                        while (accessRow) {
+
+                            if (accessRow.y === logged_user.id.toString()) {
+                                console.log(`el archivo ${actualMatrixRow.id} tiene permiso ${accessRow.permission} con ${accessRow.y}`)
+                                console.log('tener en cuenta este archivo')
+
+                            }
+
+                            const new_row = tbody.insertRow();
+                            const owner = new_row.insertCell(0);
+                            const name = new_row.insertCell(1);
+                            const permission = new_row.insertCell(2);
+                            owner.innerHTML = StudentHashTable.table[i].id
+                            name.innerHTML = actualMatrixRow.id
+                            permission.innerHTML = accessRow.permission
+
+
+                            accessRow = accessRow.right
+                        }
+
+
+                        actualMatrixRow = actualMatrixRow.next
+                    }
+
+
+                    actualColumn = actualColumn.siguiente
+                }
+
+
+                actualRow = actualRow.abajo
+            }
+        }
+
+    }
 
 
 }
