@@ -636,12 +636,7 @@ function updateHyperLinks() {
                         let prueba = logged_user.graph.findNodeByPath2(rutaSinUltimo, ultimaCarpeta)
                         //console.log(prueba)
 
-                        if (rutaSinUltimo !== '/') {
-                            display_actualFolderGraph(folderToFind, rutaSinUltimo, ultimaCarpeta)
-                        } else {
-                            display_actualFolderGraph('/', rutaSinUltimo, ultimaCarpeta)
 
-                        }
 
 
                         searchFile(prueba, filename)
