@@ -15,17 +15,6 @@ const hyperlinks = document.getElementsByTagName("a");
 let bitacora = logged_user.bitacora
 let blockChain
 
-if (localStorage.getItem('blockChain')){
-    console.log('reconstruir esa chit')
-    blockChain = cargarListaDesdeJSON()
-    console.log(blockChain)
-    console.log(blockChain.reporte())
-
-
-}
-else{
-    blockChain = new Bloque()
-}
 
 
 
@@ -44,6 +33,18 @@ window.findFolderGraph = findFolderGraph
 window.displayPermissions = displayPermissions
 window.showChat = showChat
 window.sendMessage = sendMessage
+
+if (localStorage.getItem('blockChain')){
+
+    blockChain = cargarListaDesdeJSON()
+    console.log(blockChain)
+
+
+
+}
+else{
+    blockChain = new Bloque()
+}
 
 function findFolderGraph() {
     let path = document.getElementById("gotopathGraph").value
@@ -397,11 +398,11 @@ function getDate() {
 
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
-    if (hh < 10) mm = '0' + hh;
-    if (minutes < 10) mm = '0' + minutes;
-    if (seconds < 10) mm = '0' + seconds;
+    if (hh < 10) hh = '0' + hh;
+    if (minutes < 10) minutes = '0' + minutes;
+    if (seconds < 10) seconds = '0' + seconds;
 
-    return dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + minutes + ':' + seconds
+    return dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + minutes + ':' + seconds;
 }
 
 

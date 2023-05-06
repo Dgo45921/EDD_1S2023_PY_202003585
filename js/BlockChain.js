@@ -59,102 +59,17 @@ export class Bloque{
         return cadenaFinal
     }
 
-     reporte(){
-        let cadena = ''
-        bloque_actual = this.inicio
-        if(bloque_actual){
-            cadena = "Index: " + bloque_actual.valor['index']
-            cadena += "\nTimeStamp: " + bloque_actual.valor['timestamp']
-            cadena += "\nEmisor: " + bloque_actual.valor['transmitter']
-            cadena += "\nReceptor: " + bloque_actual.valor['receiver']
-            cadena += "\nMensaje: " + bloque_actual.valor['message']
-            cadena += "\nPreviousHash: " + bloque_actual.valor['previoushash']
-            cadena += "\nHash: " + bloque_actual.valor['hash']
-        }
-
-
-        return cadena
-    }
-}
-
-const bloque = new Bloque()
-let bloque_actual
-
-function fechaActual(){
-    let cadena = ''
-    const fechaActual = new Date();
-    cadena += fechaActual.getDate() < 10 ? ("0"+fechaActual.getDate()+"-") : (fechaActual.getDate()+"-")
-    cadena += fechaActual.getMonth() < 10 ? ("0"+(fechaActual.getMonth()+1)+"-") : (fechaActual.getMonth()+"-")
-    cadena += fechaActual.getFullYear() + "::"
-    cadena += fechaActual.getHours() < 10 ? ("0"+fechaActual.getHours()+":") : (fechaActual.getHours()+":")
-    cadena += fechaActual.getMinutes() < 10 ? ("0"+fechaActual.getMinutes()+":") : (fechaActual.getMinutes()+":")
-    cadena += fechaActual.getSeconds() < 10 ? ("0"+fechaActual.getSeconds()) : (fechaActual.getSeconds())
-    return cadena
 
 }
 
-function enviarMensaje(){
-    let emisor_mensaje =  document.getElementById("emisor").value
-    let receptor_mensaje = document.getElementById("receptor").value
-    let mensaje_final = document.getElementById("mensaje").value
-    bloque.insertarBloque(fechaActual(),emisor_mensaje,receptor_mensaje,mensaje_final)
-    console.log("Mensaje Enviado")
-}
-
-
-function reporte(){
-    let cadena = ''
-    bloque_actual = bloque.inicio
-    if(bloque_actual != null){
-        cadena = "Index: " + bloque_actual.valor['index']
-        cadena += "\nTimeStamp: " + bloque_actual.valor['timestamp']
-        cadena += "\nEmisor: " + bloque_actual.valor['transmitter']
-        cadena += "\nReceptor: " + bloque_actual.valor['receiver']
-        cadena += "\nMensaje: " + bloque_actual.valor['message']
-        cadena += "\nPreviousHash: " + bloque_actual.valor['previoushash']
-        cadena += "\nHash: " + bloque_actual.valor['hash']
-    }
-    return cadena
-}
-
-
-function reporte_siguente(){
-    if(bloque_actual.siguiente != null){
-        bloque_actual = bloque_actual.siguiente
-        let cadena = "Index: " + bloque_actual.valor['index']
-        cadena += "\nTimeStamp: " + bloque_actual.valor['timestamp']
-        cadena += "\nEmisor: " + bloque_actual.valor['transmitter']
-        cadena += "\nReceptor: " + bloque_actual.valor['receiver']
-        cadena += "\nMensaje: " + bloque_actual.valor['message']
-        cadena += "\nPreviousHash: " + bloque_actual.valor['previoushash']
-        cadena += "\nHash: " + bloque_actual.valor['hash']
-        document.getElementById("reporte-bloques").value = cadena
-        mostrar_Mensaje_descriptado()
-    }
-}
-
-function reporte_anterior(){
-    if(bloque_actual.anterior != null){
-        bloque_actual = bloque_actual.anterior
-        let cadena = "Index: " + bloque_actual.valor['index']
-        cadena += "\nTimeStamp: " + bloque_actual.valor['timestamp']
-        cadena += "\nEmisor: " + bloque_actual.valor['transmitter']
-        cadena += "\nReceptor: " + bloque_actual.valor['receiver']
-        cadena += "\nMensaje: " + bloque_actual.valor['message']
-        cadena += "\nPreviousHash: " + bloque_actual.valor['previoushash']
-        cadena += "\nHash: " + bloque_actual.valor['hash']
-        document.getElementById("reporte-bloques").value = cadena
-        mostrar_Mensaje_descriptado()
-    }
-}
 
 async function mostrar_Mensaje_descriptado(){
     /** if carnet ==  bloque_actual.valor['receiver'] y  bloque_actual.valor['trasmitter'] == emisor
      * mostrar mensaje
      * bloque_actual = abloque_actual.siguiente
      */
-    let cadena =  await desencriptacion(bloque_actual.valor['message'])
-    document.getElementById("reporte-mensajes").value = cadena
+    // let cadena =  await desencriptacion(bloque_actual.valor['message'])
+    // document.getElementById("reporte-mensajes").value = cadena
 }
 
 /**

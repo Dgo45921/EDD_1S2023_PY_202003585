@@ -1,13 +1,15 @@
-import {reBuildTree} from "./Reconstuctor.js";
+import {cargarListaDesdeJSON, reBuildTree} from "./Reconstuctor.js";
 import Student from "./Student.js";
 import AVL from "./AVL.js";
 import HashTable from "./HashTable.js";
-
-
+import {Bloque} from "./BlockChain.js";
+import {desencriptacion} from "./Encrypter.js";
 
 
 let AVLTree;
 let StudentHashTable = new HashTable()
+let blockChain
+let blockChainaux
 
 window.graphtree= graphtree;
 window.show_students=show_students;
@@ -17,6 +19,99 @@ window.avlView = avlView
 window.hashview = hashview
 window.Hashshow_students = Hashshow_students
 window.Hashshow_studentspermissions = Hashshow_studentspermissions
+window.reporte_siguente = reporte_siguente
+window.reporte_anterior = reporte_anterior
+
+if (localStorage.getItem('blockChain')){
+
+    blockChainaux = cargarListaDesdeJSON()
+    blockChain = blockChainaux.inicio
+
+
+
+
+}
+else{
+    blockChain = new Bloque()
+}
+
+async function mostrar_Mensaje_descriptado(bloque_actual){
+    return await desencriptacion(bloque_actual.valor['message'])
+}
+
+
+
+function imageBlockChain(){
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let cadena = `digraph G {
+    rankdir=TB;
+    node [shape=record];
+    edge [dir =both];`
+    let actual = blockChainaux.inicio
+    while(actual){
+        cadena += ` node${actual.valor['index']} [label="Timestamp: ${actual.valor['timestamp']} \\n Emisor: ${actual.valor['transmitter']  } \\n Receptor: ${actual.valor['receiver']  } \\n previoushash: ${actual.valor['previoushash']  } "];`
+        actual = actual.siguiente
+    }
+    actual = blockChainaux.inicio
+    while(actual.siguiente){
+        cadena += ` node${actual.valor['index']} -> node${actual.siguiente.valor['index']}`
+        actual = actual.siguiente
+    }
+
+
+    cadena += '}'
+    let img =  document.getElementById('blockChainImage')
+    img.setAttribute('src', url + cadena)
+}
+
+
+function reporte(){
+    let cadena = ''
+    let bloque_actual = blockChain
+    if(bloque_actual){
+        cadena = "Index: " + bloque_actual.valor['index']
+        cadena += "\nTimeStamp: " + bloque_actual.valor['timestamp']
+        cadena += "\nEmisor: " + bloque_actual.valor['transmitter']
+        cadena += "\nReceptor: " + bloque_actual.valor['receiver']
+        cadena += "\nMensaje: " + bloque_actual.valor['message']
+        cadena += "\nPreviousHash: " + bloque_actual.valor['previoushash']
+        cadena += "\nHash: " + bloque_actual.valor['hash']
+    }
+    document.getElementById('areaBlockchain').value = cadena
+}
+
+function reporte_siguente(){
+    if(blockChain.siguiente){
+        let bloque_actual = blockChain.siguiente
+        let cadena = "Index: " + bloque_actual.valor['index']
+        cadena += "\nTimeStamp: " + bloque_actual.valor['timestamp']
+        cadena += "\nEmisor: " + bloque_actual.valor['transmitter']
+        cadena += "\nReceptor: " + bloque_actual.valor['receiver']
+        cadena += "\nMensaje: " + bloque_actual.valor['message']
+        cadena += "\nPreviousHash: " + bloque_actual.valor['previoushash']
+        cadena += "\nHash: " + bloque_actual.valor['hash']
+        document.getElementById('areaBlockchain').value = cadena
+        blockChain = blockChain.siguiente
+        mostrar_Mensaje_descriptado(blockChain)
+    }
+}
+
+function reporte_anterior(){
+    if(blockChain.anterior){
+        let bloque_actual = blockChain.anterior
+        let cadena = "Index: " + bloque_actual.valor['index']
+        cadena += "\nTimeStamp: " + bloque_actual.valor['timestamp']
+        cadena += "\nEmisor: " + bloque_actual.valor['transmitter']
+        cadena += "\nReceptor: " + bloque_actual.valor['receiver']
+        cadena += "\nMensaje: " + bloque_actual.valor['message']
+        cadena += "\nPreviousHash: " + bloque_actual.valor['previoushash']
+        cadena += "\nHash: " + bloque_actual.valor['hash']
+        document.getElementById('areaBlockchain').value = cadena
+        blockChain = blockChain.anterior
+        mostrar_Mensaje_descriptado(blockChain)
+    }
+}
+
 
 function avlView(){
     let divAVL = document.getElementById('vistaAVL')
@@ -30,6 +125,8 @@ function hashview(){
     let divHash = document.getElementById('vistaHASH')
     divHash.style.display = 'block'
     divAVL.style.display = 'none'
+    reporte()
+    imageBlockChain()
 }
 
 
