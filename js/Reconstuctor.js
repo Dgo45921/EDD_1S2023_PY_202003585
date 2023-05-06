@@ -8,6 +8,9 @@ import Action from "./Action.js";
 import HeaderNode from "./HeaderNode.js";
 import InternalNode from "./InternalNode.js";
 import Graph from "./FolderGraph.js";
+import {desencriptacion} from "./Encrypter.js";
+import {Bloque, nodoBloque} from "./BlockChain.js";
+
 
 
 export function reBuildTree(){
@@ -171,6 +174,45 @@ export function hashreturnStudentNode(hashTable, id){
 
 
 }
+
+export function cargarListaDesdeJSON(){
+    const data = JSON.parse(localStorage.getItem('blockChain'));
+    const lista = new Bloque();
+
+    if(data.inicio){
+        lista.inicio = new nodoBloque(
+            data.inicio.valor.index,
+            data.inicio.valor.timestamp,
+            data.inicio.valor.transmitter,
+            data.inicio.valor.receiver,
+            data.inicio.valor.message,
+            data.inicio.valor.previoushash,
+            data.inicio.valor.hash
+        );
+        let aux = lista.inicio;
+
+        let siguiente = data.inicio.siguiente;
+        while(siguiente){
+            aux.siguiente = new nodoBloque(
+                siguiente.valor.index,
+                siguiente.valor.timestamp,
+                siguiente.valor.transmitter,
+                siguiente.valor.receiver,
+                siguiente.valor.message,
+                siguiente.valor.previoushash,
+                siguiente.valor.hash
+            );
+            aux.siguiente.anterior = aux;
+            aux = aux.siguiente;
+            siguiente = siguiente.siguiente;
+        }
+    }
+
+    lista.bloques_creados = data.bloques_creados;
+    return lista;
+}
+
+
 
 
 function replacer(key, value){

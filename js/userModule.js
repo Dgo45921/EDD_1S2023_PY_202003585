@@ -1,18 +1,33 @@
-import {reBuildTree, hashreturnStudentNode} from "./Reconstuctor.js";
+import {reBuildTree, hashreturnStudentNode, cargarListaDesdeJSON} from "./Reconstuctor.js";
 import Action from "./Action.js";
 import HeaderNode from "./HeaderNode.js";
 import InternalNode from "./InternalNode.js";
 import Graph from "./FolderGraph.js";
 import HashTable from "./HashTable.js";
+import {Bloque} from "./BlockChain.js";
 
 let StudentHashTable = new HashTable()
 let AVLTree = reBuildTree()
 createHashTableStudents(AVLTree.root)
 let logged_user = hashreturnStudentNode(StudentHashTable.table, JSON.parse(localStorage.getItem("logged_user")).id);
 let current_folder = logged_user.rootFolder.root
-let current_folderGraph = logged_user.graph.rootNode
 const hyperlinks = document.getElementsByTagName("a");
 let bitacora = logged_user.bitacora
+let blockChain
+
+if (localStorage.getItem('blockChain')){
+    console.log('reconstruir esa chit')
+    blockChain = cargarListaDesdeJSON()
+    console.log(blockChain)
+    console.log(blockChain.reporte())
+
+
+}
+else{
+    blockChain = new Bloque()
+}
+
+
 
 window.gotopath = gotopath
 window.createFolder = createFolder
@@ -28,6 +43,7 @@ window.graphGraph = graphGraph
 window.findFolderGraph = findFolderGraph
 window.displayPermissions = displayPermissions
 window.showChat = showChat
+window.sendMessage = sendMessage
 
 function findFolderGraph() {
     let path = document.getElementById("gotopathGraph").value
@@ -60,6 +76,7 @@ function vistaGrafo() {
     divNario.style.display = 'none'
     display_actualFolderGraphFolders('/')
     display_actualFolderGraphFiles('/', '')
+    studentDropList2()
 
 }
 
@@ -421,6 +438,7 @@ function replacer(key, value) {
     else return value;
 }
 
+
 function clearPermissionTable(){
     const old_tbody = document.getElementById("permissionTableBody")
     const new_tbody = document.createElement('tbody');
@@ -697,6 +715,42 @@ function studentDropList(node) {
         list.appendChild(option)
         studentDropList(node.right);
     }
+}
+
+function studentDropList2() {
+    // obtaining body of student table
+    let list = document.getElementById("Ids")
+    for (let i = 0; i <StudentHashTable.table.length ; i++) {
+        if(StudentHashTable.table[i]){
+            let option = document.createElement("option");
+            option.text = StudentHashTable.table[i].id
+            list.appendChild(option)
+
+        }
+    }
+
+}
+
+function replacerBlockChain(key, value) {
+    if (key === "anterior") return undefined;
+    else return value;
+}
+
+function sendMessage(){
+    let carnet = document.getElementById("Ids").value
+    let message = document.getElementById('messageBox')
+    console.log(carnet)
+    console.log(message.value)
+    blockChain.insertarBloque(getDate(), logged_user.id, carnet, message)
+        .then(() => {
+            message.value = '';
+            console.log(blockChain);
+            localStorage.setItem("blockChain", JSON.stringify(blockChain, replacerBlockChain));
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
 }
 
 function graphMatrix() {

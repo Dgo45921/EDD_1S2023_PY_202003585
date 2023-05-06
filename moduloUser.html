@@ -278,12 +278,11 @@
               <h5 class="card-title">Contactos</h5>
             </div>
             <div class="card-body">
-              <select class="form-select mb-3" aria-label="Seleccionar contacto">
-                <option selected>Seleccionar contacto</option>
-                <option value="1">Amigo 1</option>
-                <option value="2">Amigo 2</option>
-                <option value="3">Amigo 3</option>
+              <select class="form-select mb-3" aria-label="Seleccionar contacto" id="Ids">
+
               </select>
+              <button type="button" class="btn btn-primary mb-3" >Ir a chat </button>
+
             </div>
           </div>
         </div>
@@ -308,8 +307,8 @@
 
               </div>
               <form class="input-group mt-3">
-                <input type="text" class="form-control" placeholder="Escribir mensaje...">
-                <button class="btn btn-primary" type="button">Enviar</button>
+                <input type="text" class="form-control" placeholder="Escribir mensaje..." id="messageBox">
+                <button class="btn btn-primary" type="button" onclick="sendMessage()">Enviar</button>
               </form>
             </div>
           </div>
