@@ -421,6 +421,13 @@ function replacer(key, value) {
     else return value;
 }
 
+function clearPermissionTable(){
+    const old_tbody = document.getElementById("permissionTableBody")
+    const new_tbody = document.createElement('tbody');
+    new_tbody.setAttribute("id", "permissionTableBody")
+    old_tbody.parentNode.replaceChild(new_tbody, old_tbody)
+}
+
 function deleteFolder() {
     const response = confirm("¿Está seguro de eliminar ese archivo/carpeta?");
     let path = document.getElementById("delete_path").value
@@ -741,6 +748,7 @@ function displayContent(base64String, type) {
 }
 
 function displayPermissions() {
+    clearPermissionTable()
     let tbody = document.getElementById("permissionTableBody")
     document.getElementById('chat').style.display = 'none'
     document.getElementById('containerShared').style.display = 'block'
