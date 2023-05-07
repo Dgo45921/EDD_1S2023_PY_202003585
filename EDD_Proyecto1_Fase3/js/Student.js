@@ -1,0 +1,14 @@
+import NaryTree from "./NaryTree.js";
+import CircularList from "./CircularList.js";
+import Graph from "./FolderGraph.js";
+export default class Student {
+    constructor(id, name, password) {
+        this.id = id
+        this.name = name
+        this.password = password
+        this.graph = new Graph()
+        this.rootFolder = new NaryTree()
+        this.bitacora = new CircularList()
+    }
+
+}

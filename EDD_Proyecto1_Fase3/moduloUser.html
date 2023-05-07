@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <title>Módulo de usuario</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link href="./css/user.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script type="module" src="js/userModule.js" > </script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+  <span class="navbar-brand mb-0 h1" id="message_user">Dashboard user</span>
+  <button class="btn btn-danger ml-auto" onclick="log_out()">Cerrar sesión</button>
+</nav>
+
+
+<div id = 'vistaNario'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-success my-3 mx-3" onclick="vistaNario()" style="height: 50px; width: 180px">Vista N-ario</button>
+        <button type="button" class="btn btn-info my-3 mx-3" onclick="vistaGrafo()" style="height: 50px; width: 180px">Vista Grafo</button>
+
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="new_folder_path">Nombre de tu nueva carpeta</label>
+          <input type="text" class="form-control" id="new_folder_path" placeholder="Ejemplo: carpeta3">
+          <label for="new_folder_name">Ruta de tu nueva carpeta</label>
+          <input type="text" class="form-control" id="new_folder_name" placeholder="Ejemplo: carpeta3">
+        </div>
+        <button type="button" class="btn btn-primary mb-3" onclick="createFolder()" >Crear Carpeta</button>
+        <div class="form-group">
+          <label for="delete_path">Ruta de carpeta o archivo a borrar</label>
+          <input type="text" class="form-control" id="delete_path" placeholder="Ejemplo: /carpeta2">
+        </div>
+        <button type="button" class="btn btn-danger mb-3" onclick="deleteFolder()">Eliminar</button>
+        <p>Ruta donde cargar archivo<p>
+        <div class="input-group-append">
+          <input type="text" class="form-control" id="new_file_path"  placeholder="Ej:/carpeta1">
+          <button class="btn btn-primary btn-file" type="button" onclick="loadFiletoPath()" >Cargar</button>
+        </div>
+
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" accept=".png, .jpeg, .jpg, .pdf, .txt, .gif, .tiff" id="fileHolder">
+            <label class="custom-file-label" for="fileHolder">File</label>
+          </div>
+
+
+        </div>
+
+        <p>Otorgar permisos</p>
+        <div class="form-group my-1">
+
+
+
+
+          <label for="permissionToFile">Ruta del archivo a dar permiso</label>
+          <input type="text" class="form-control" id="permissionToFile" placeholder="Ej:/carpeta1">
+
+          <label for="id_set">Carnet a dar permiso</label><select id="id_set" class="form-control mt-3 btn-block">
+        </select>
+
+          <label for="permission_set">Tipo de permiso</label><select id="permission_set" class="form-control mt-3 btn-block">
+          <option selected>r</option>
+          <option>w</option>
+          <option>r-w</option>
+        </select>
+          <div class="form-group">
+            <button type="button" class="btn btn-success mb-3" onclick="addPermission()" style="margin-top: 15px">Otorgar permisos</button>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <div class="col-md-8">
+        <div class="form-group">
+          <label for="gotopath">Ruta carpeta</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="gotopath" placeholder="Ej:/carpeta1">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-primary" onclick="gotopath()">Ir</button>
+            </div>
+          </div>
+        </div>
+        <div class="text-left" style="border-style: solid; border-width: thin; margin-bottom: 10px; padding: 10px">
+          <h4 id="actual_folder">Nombre Carpeta</h4>
+          <ul class="list-unstyled" id="file_list">
+            <li class="media my-3" id="fileContainer">
+              <img class="mr-3" src="img/image.png" alt="Folder Icon" height="30">
+              <div class="media-body">
+                <a href="#">Imagen.png</a>
+              </div>
+            </li>
+            <li class="media my-3">
+              <img class="mr-3" src="img/text.png" alt="Folder Icon" height="30">
+              <div class="media-body">
+                <a href="#">adios.txt</a>
+              </div>
+            </li>
+            <li class="media my-3">
+              <img class="mr-3" src="img/pdf.png" alt="Folder Icon" height="30">
+              <div class="media-body">
+                <a href="#">Hola.pdf</a>
+              </div>
+            </li>
+            <li class="media my-3">
+              <img class="mr-3" src="img/folder.png" alt="Folder Icon" height="25">
+              <div class="media-body">
+                <a href="#">Folder 5</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-info mb-3" onclick="graphnary()">Reporte Carpetas</button>
+        <button type="button" class="btn btn-success mb-3"  onclick="graphMatrix()">Reporte Archivos</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <p>Bitácora</p>
+        <img id="imagenbita" src="" class="img-fluid">
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <p>Imagen árbol</p>
+        <img id="NaryGraph" src="" class="img-fluid">
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <p>Imagen permisos</p>
+        <img id="permissionMatrix" src="" class="img-fluid">
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<div id = 'vistaGrafo' style="display: none;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-success my-3 mx-3" onclick="vistaNario()" style="height: 50px; width: 180px">Vista N-ario</button>
+        <button type="button" class="btn btn-info my-3 mx-3" onclick="vistaGrafo()" style="height: 50px; width: 180px">Vista Grafo</button>
+
+      </div>
+    </div>
+    <div class="row mt-5">
+
+
+
+      <div class="col-md-8">
+        <div class="form-group">
+          <label for="gotopath">Ruta carpeta</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="gotopathGraph" placeholder="Ej:/carpeta1">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-primary" onclick="findFolderGraph()">Ir</button>
+            </div>
+          </div>
+        </div>
+        <div class="text-left" style="border-style: solid; border-width: thin; margin-bottom: 10px; padding: 10px">
+          <h4 id="actual_folderGraph">Nombre Carpeta</h4>
+          <ul class="list-unstyled" id="file_listGraph">
+            <li class="media my-3" id="fileContainerGraph">
+              <img class="mr-3" src="img/image.png" alt="Folder Icon" height="30">
+              <div class="media-body">
+                <a href="#">Imagen.png</a>
+              </div>
+            </li>
+            <li class="media my-3">
+              <img class="mr-3" src="img/text.png" alt="Folder Icon" height="30">
+              <div class="media-body">
+                <a href="#">adios.txt</a>
+              </div>
+            </li>
+            <li class="media my-3">
+              <img class="mr-3" src="img/pdf.png" alt="Folder Icon" height="30">
+              <div class="media-body">
+                <a href="#">Hola.pdf</a>
+              </div>
+            </li>
+            <li class="media my-3">
+              <img class="mr-3" src="img/folder.png" alt="Folder Icon" height="25">
+              <div class="media-body">
+                <a href="#">Folder 5</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <button type="button" class="btn btn-warning mb-3" onclick="graphGraph()" >Reporte Grafo </button>
+        <button type="button" class="btn btn-info mb-3" onclick="displayPermissions()" >Compartidos conmigo</button>
+        <button type="button" class="btn btn-success mb-3" onclick="showChat()" >Mensajeria </button>
+
+      </div>
+      <div class="col-md-4">
+        <p>Visualizador de archivos</p>
+        <iframe id="visualizer" src="about:blank" style="width:600px; height:500px; border-style: solid; border-width: thin;"></iframe>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div id="containerGraph" style="display: none">
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col-md-12 text-center">
+          <p>Imagen Grafo</p>
+          <img id="graphImage" src="" class="img-fluid">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="containerShared" style="display: none">
+
+    <div class="container">
+    <div class="row mt-2">
+      <div class="col-md-12 text-center">
+        <p>Compartidos conmigo</p>
+
+
+        <table class="table" id="permissionTable">
+          <thead class="thead-dark">
+          <tr>
+            <th>Propietario</th>
+            <th>Nombre</th>
+            <th>Permisos</th>
+
+          </tr>
+          </thead>
+          <tbody id="permissionTableBody">
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+  </div>
+  <div id="chat" style="display: none">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title">Contactos</h5>
+            </div>
+            <div class="card-body">
+              <select class="form-select mb-3" aria-label="Seleccionar contacto" id="Ids">
+
+              </select>
+              <button type="button" class="btn btn-primary mb-3" onclick="verChat()" >Ir a chat </button>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title">Chat</h5>
+            </div>
+            <div class="card-body">
+              <div class="chat-box" id="chatBox">
+
+
+              </div>
+              <form class="input-group mt-3">
+                <input type="text" class="form-control" placeholder="Escribir mensaje..." id="messageBox">
+                <button class="btn btn-primary" type="button" onclick="sendMessage()">Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+
+<!-- JavaScript de Bootstrap -->
+
+
+<script
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"
+></script>
+
+
+</body>
+
+</html>
