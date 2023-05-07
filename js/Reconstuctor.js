@@ -36,6 +36,9 @@ function recreateTree(json) {
 }
 
 function recreateStudent(jsonStudent){
+    if (jsonStudent.id === '20' || jsonStudent.id ===20){
+        console.log('z')
+    }
     let grafito = new Graph()
     let new_student = new Student(jsonStudent.id, jsonStudent.name, jsonStudent.password)
     new_student.bitacora = recreateBitacora(jsonStudent.bitacora.first2)
@@ -62,60 +65,49 @@ function recreateBitacora(head){
 }
 
 
-function recreateNary(bitacora){
+function recreateNary(bitacora) {
     let nary = new NaryTree()
     let actual = bitacora.first1
     if (actual === null) return nary
 
-    //console.log(actual)
-    if (actual.action.type === "folderCreation"){
-        nary.insert_folder(actual.action.path, actual.action.name)
-    }
-
-    if (actual.action.type === "folderDeletion"){
-        nary.delete(actual.action.path)
-    }
-
-
-    while (actual.next1 !== bitacora.first1){
-        actual = actual.next1
-        //console.log(actual)
+    do {
         if (actual.action.type === "folderCreation"){
             nary.insert_folder(actual.action.path, actual.action.name)
         }
-        else if (actual.action.type === "folderDeletion"){
+
+        if (actual.action.type === "folderDeletion"){
             nary.delete(actual.action.path)
         }
-        else if (actual.action.type === "fileAdition"){
+
+        if (actual.action.type === "fileAdition"){
             let headerNew = new HeaderNode(actual.action.name)
             let path = actual.action.path
-            headerNew.content =actual.action.content
+            headerNew.content = actual.action.content
             if (path === "/"){
                 headerNew.abs_path = "/"  + headerNew.id
             }
-            else{
+            else {
                 headerNew.abs_path = path  + "/" + headerNew.id
             }
 
             nary.getFolder(path).matrix.rows.insert(headerNew)
         }
 
-        else if (actual.action.type === "permission"){
-            //console.log(actual)
+        if (actual.action.type === "permission"){
             let nuevo_interno = new InternalNode(actual.action.name, actual.action.path, actual.action.content)
             nary.getFolder(actual.action.path2).matrix.insert(nuevo_interno)
         }
-        else if (actual.action.type === "fileDeletion"){
-            // console.log(actual)
+
+        if (actual.action.type === "fileDeletion"){
             nary.getFolder(actual.action.name).matrix.rows.delete(actual.action.path)
-
         }
-    }
 
-
+        actual = actual.next1
+    } while (actual !== bitacora.first1)
 
     return nary
 }
+
 
 
 function recreateFolderList(jsonLinkedList){

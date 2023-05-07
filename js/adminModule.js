@@ -346,7 +346,7 @@ function Hashshow_studentspermissions() {
         alert('No hay alumnos en la tabla hash')
     }
     else{
-        cleanHashTable()
+        cleanPermissionTable()
         let tbody = document.getElementById("permissionTableBody")
 
         for (let i = 0; i <StudentHashTable.table.length ; i++) {

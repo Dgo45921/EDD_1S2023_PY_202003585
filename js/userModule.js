@@ -629,6 +629,7 @@ function updateHyperLinks() {
                 searchFile(prueba, filename)
 
 
+
             }
             else{
                 let path = e.target.getAttribute("abs_pathGraph")
@@ -834,7 +835,7 @@ function displayPermissions() {
                             if (accessRow.y === logged_user.id.toString()) {
                                 let a = document.createElement("a")
                                 a.setAttribute("href", "#")
-                                a.setAttribute("abs_pathGraph",  actualMatrixRow.abs_path)
+                                a.setAttribute("abs_pathGraph", '/' +  actualMatrixRow.id)
                                 a.setAttribute("owner",  StudentHashTable.table[i].id)
                                 a.innerHTML = actualMatrixRow.id
 
