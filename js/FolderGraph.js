@@ -142,7 +142,7 @@ export default class Graph {
             if(parentNode.path !== "/"){ padre = profundidad[profundidad.length-1] }
             else { padre = "/" }
             while(childNode){
-                vizCode += "\"" + padre + "\"" + " -- " + "\"" + childNode.path+ "\"" + " [label=\"" + weight + "\"] "
+                vizCode += "\"" + padre + "\"" + " -- " + "\"" + childNode.path+ "\"" + " [label=\"" + weight + "\", minlen=" + 3 + "] "
                 childNode = childNode.siguiente
             }
             parentNode = parentNode.abajo
