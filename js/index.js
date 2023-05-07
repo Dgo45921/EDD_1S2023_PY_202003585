@@ -37,7 +37,6 @@ loginButton.addEventListener("click", function() {
 function findUser(identifier, password){
     for (let i = 0; i <StudentHashTable.table.length ; i++) {
         if (StudentHashTable.table[i]){
-            console.log(password)
             if (StudentHashTable.table[i].id === identifier && StudentHashTable.table[i].password === password){
                 localStorage.setItem("logged_user", JSON.stringify(StudentHashTable.table[i], replacer))
                 return true

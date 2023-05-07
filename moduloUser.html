@@ -281,7 +281,7 @@
               <select class="form-select mb-3" aria-label="Seleccionar contacto" id="Ids">
 
               </select>
-              <button type="button" class="btn btn-primary mb-3" >Ir a chat </button>
+              <button type="button" class="btn btn-primary mb-3" onclick="verChat()" >Ir a chat </button>
 
             </div>
           </div>
@@ -292,18 +292,8 @@
               <h5 class="card-title">Chat</h5>
             </div>
             <div class="card-body">
-              <div class="chat-box">
-                <div class="message sent">
-                  <p>Tú: Hola, ¿cómo estás? <br> 10:00 AM</p>
+              <div class="chat-box" id="chatBox">
 
-
-                </div>
-                <div class="message received">
-                  <p>user: Hola, estoy bien, ¿y tú? <br>10:05 AM </p>
-                </div>
-                <div class="message sent">
-                  <p>Tú: Estoy bien también, gracias por preguntar <br> 10:10 AM</p>
-                </div>
 
               </div>
               <form class="input-group mt-3">

@@ -5,7 +5,22 @@ for(let i = 0; i < clave.length; i++){
     view[i] = clave.charCodeAt(i)
 }
 
-const iv = crypto.getRandomValues(new Uint8Array(16))
+
+let iv = ""
+
+if(!localStorage.getItem("iv")){
+
+    iv = crypto.getRandomValues(new Uint8Array(16))
+    localStorage.setItem('iv', JSON.stringify(Array.from(iv)));
+
+
+}else{
+
+    const ivArray = JSON.parse(localStorage.getItem('iv'));
+    iv = new Uint8Array(ivArray);
+
+}
+
 const algoritmo = {name: 'AES-GCM', iv: iv}
 
 async function encriptacion(mensaje){
@@ -27,7 +42,11 @@ async function desencriptacion(mensaje){
     const mensajeDescifrado = await crypto.subtle.decrypt(algoritmo, claveCrypto, mensajeCifrado)
 
     const decoder = new TextDecoder()
-    return decoder.decode(mensajeDescifrado)
+    const mensajeOriginal = decoder.decode(mensajeDescifrado)
+
+    return mensajeOriginal
 }
+
+
 
 export {encriptacion, desencriptacion}

@@ -5,6 +5,7 @@ import InternalNode from "./InternalNode.js";
 import Graph from "./FolderGraph.js";
 import HashTable from "./HashTable.js";
 import {Bloque} from "./BlockChain.js";
+import {desencriptacion} from "./Encrypter.js";
 
 let StudentHashTable = new HashTable()
 let AVLTree = reBuildTree()
@@ -14,7 +15,6 @@ let current_folder = logged_user.rootFolder.root
 const hyperlinks = document.getElementsByTagName("a");
 let bitacora = logged_user.bitacora
 let blockChain
-
 
 
 
@@ -33,6 +33,7 @@ window.findFolderGraph = findFolderGraph
 window.displayPermissions = displayPermissions
 window.showChat = showChat
 window.sendMessage = sendMessage
+window.verChat = verChat
 
 if (localStorage.getItem('blockChain')){
 
@@ -742,7 +743,7 @@ function sendMessage(){
     let message = document.getElementById('messageBox')
     console.log(carnet)
     console.log(message.value)
-    blockChain.insertarBloque(getDate(), logged_user.id, carnet, message)
+    blockChain.insertarBloque(getDate(), logged_user.id, carnet, message.value)
         .then(() => {
             message.value = '';
             console.log(blockChain);
@@ -751,6 +752,7 @@ function sendMessage(){
         .catch((error) => {
             console.error(error);
         });
+    verChat()
 
 }
 
@@ -962,6 +964,53 @@ function addPermission() {
     }
 
 }
+
+async function verChat(){
+    let chatbox=document.getElementById('chatBox')
+    chatbox.innerHTML = ''
+    try{
+        let carnet = document.getElementById("Ids").value
+        let actual = blockChain.inicio
+        while(actual){
+            if(actual.valor['transmitter'] === parseInt(logged_user.id) && actual.valor['receiver'] === (carnet)){
+                console.log('emitio el user logueado y recibio el de la droplist')
+                let respuesta = await desencriptacion(actual.valor['message']);
+                console.log(respuesta);
+
+                const messageDiv = document.createElement("div");
+                messageDiv.classList.add("message", "sent");
+                messageDiv.innerHTML = `
+                         <p>${'Tú:' + respuesta}<br> ${actual.valor['timestamp']}</p>
+                    
+                          
+`;
+                chatbox.appendChild(messageDiv)
+            }
+
+            if(actual.valor['receiver'] === logged_user.id.toString() && actual.valor['transmitter'] === parseInt(carnet) ){
+                console.log('emitio el user de la droplist y recibio el logueado')
+
+
+
+                let respuesta = await desencriptacion(actual.valor['message']);
+                console.log(respuesta);
+                const messageDiv = document.createElement("div");
+                messageDiv.classList.add("message", "received");
+                messageDiv.innerHTML = `
+                         <p>${carnet + ':' + respuesta} <br> ${actual.valor['timestamp']}</p>
+                     
+`;
+                chatbox.appendChild(messageDiv)
+            }
+
+
+            actual = actual.siguiente
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 updateGraph()
 greetUser()

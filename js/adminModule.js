@@ -35,9 +35,6 @@ else{
     blockChain = new Bloque()
 }
 
-async function mostrar_Mensaje_descriptado(bloque_actual){
-    return await desencriptacion(bloque_actual.valor['message'])
-}
 
 
 
@@ -92,7 +89,7 @@ function reporte_siguente(){
         cadena += "\nHash: " + bloque_actual.valor['hash']
         document.getElementById('areaBlockchain').value = cadena
         blockChain = blockChain.siguiente
-        mostrar_Mensaje_descriptado(blockChain)
+
     }
 }
 
@@ -108,7 +105,7 @@ function reporte_anterior(){
         cadena += "\nHash: " + bloque_actual.valor['hash']
         document.getElementById('areaBlockchain').value = cadena
         blockChain = blockChain.anterior
-        mostrar_Mensaje_descriptado(blockChain)
+
     }
 }
 
@@ -472,6 +469,8 @@ function load_json(){
         alert("Datos cargados con éxito")
     }
     StudentHashTable = new HashTable()
+    blockChain = new Bloque()
+    blockChainaux = new Bloque()
     createHashTableStudents(AVLTree.root)
 }
 
