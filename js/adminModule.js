@@ -22,6 +22,21 @@ window.Hashshow_studentspermissions = Hashshow_studentspermissions
 window.reporte_siguente = reporte_siguente
 window.reporte_anterior = reporte_anterior
 
+// checking if avl tree already exists
+if(localStorage.getItem('jsonArbol')){
+    AVLTree = reBuildTree()
+    createHashTableStudents(AVLTree.root)
+    localStorage.setItem("HashTable", JSON.stringify(StudentHashTable, replacer))
+
+}
+else{
+    AVLTree = new AVL()
+
+
+
+}
+
+
 if (localStorage.getItem('blockChain')){
 
     blockChainaux = cargarListaDesdeJSON()
@@ -34,6 +49,17 @@ if (localStorage.getItem('blockChain')){
 else{
     blockChain = new Bloque()
 }
+
+function createHashTableStudents(node){
+    if (node) {
+        createHashTableStudents(node.left)
+        node.student.password = CryptoJS.SHA256(node.student.password).toString()
+        StudentHashTable.insert(node.student)
+        createHashTableStudents(node.right);
+    }
+
+}
+
 
 
 
@@ -133,19 +159,7 @@ function hashview(){
 
 
 
-// checking if avl tree already exists
-if(localStorage.getItem('jsonArbol')){
-    AVLTree = reBuildTree()
-    createHashTableStudents(AVLTree.root)
-    localStorage.setItem("HashTable", JSON.stringify(StudentHashTable, replacer))
 
-}
-else{
-    AVLTree = new AVL()
-
-
-
-}
 
 function replacer(key, value) {
     if (key === "first1") return undefined;
@@ -156,15 +170,6 @@ function replacer(key, value) {
 }
 
 
-function createHashTableStudents(node){
-    if (node) {
-        createHashTableStudents(node.left)
-        node.student.password = CryptoJS.SHA256(node.student.password).toString()
-        StudentHashTable.insert(node.student)
-        createHashTableStudents(node.right);
-    }
-
-}
 
 function cleanTable(){
     // cleaning table

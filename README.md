@@ -234,9 +234,11 @@ Para poder correr esta app hace falta lo siguiente:
 - Grafo dirigido: Este se encarga de guardar las carpetas junto con sus matrices
   
   <img title="" src="img/md/grafito.png" alt="" width="655">
+
 - Tabla hash: Este se encarga ahora de almacenar a los alumnos
   
   <img title="" src="img/md/Tabla_hash.png" alt="" width="655">
+
 - BlockChain: Es la responsable de guardar los mensajes que se envian los alumnos entre si, cada mensaje está encriptado.
   
   <img title="" src="img/md/blockchain.png" alt="" width="655">
@@ -302,3 +304,17 @@ Cabe recalcar que los archivos que se comunican con todas las clases son:
   - insertAction(action): inserta una acción a la lista enlazada cirtular
   
   - getVizCode(): retorna el código .dot para representar a la bitácora de acciones del usuario actual.
+
+- **FolderGraph**
+  
+  - findNodeByPath(path):  Retorna el nodo contenido en una fila del grafo para asi poder visualizar sus carpetas
+  
+  - findNodeByPath2(padre, child): Retorna una carpeta basandose en una fila del grafo
+  
+  - searchRow(padre): Verifica si una fila no está duplicada
+  
+  - insertRow(texto, matrix): Ingresa una fila al grafo, y si se trata de la carpeta raiz inserta su matriz
+  
+  - insertColumn(padre, hijo, matrix): Inserta una carpeta en una columna
+  
+  - getVizCode(): Retorna una cadena para graficar el grafo.

@@ -35,6 +35,16 @@ window.showChat = showChat
 window.sendMessage = sendMessage
 window.verChat = verChat
 
+function createHashTableStudents(node) {
+    if (node) {
+        createHashTableStudents(node.left)
+        StudentHashTable.insert(node.student)
+        createHashTableStudents(node.right);
+    }
+
+}
+
+
 if (localStorage.getItem('blockChain')){
 
     blockChain = cargarListaDesdeJSON()
@@ -54,14 +64,6 @@ function findFolderGraph() {
 }
 
 
-function createHashTableStudents(node) {
-    if (node) {
-        createHashTableStudents(node.left)
-        StudentHashTable.insert(node.student)
-        createHashTableStudents(node.right);
-    }
-
-}
 
 function vistaNario() {
     let divNario = document.getElementById('vistaNario')
