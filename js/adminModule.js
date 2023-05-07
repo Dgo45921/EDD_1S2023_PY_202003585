@@ -44,16 +44,18 @@ function imageBlockChain(){
     rankdir=TB;
     node [shape=record];
     edge [dir =both];`
-    let actual = blockChainaux.inicio
-    while(actual){
-        cadena += ` node${actual.valor['index']} [label="Timestamp: ${actual.valor['timestamp']} \\n Emisor: ${actual.valor['transmitter']  } \\n Receptor: ${actual.valor['receiver']  } \\n previoushash: ${actual.valor['previoushash']  } "];`
-        actual = actual.siguiente
-    }
-    actual = blockChainaux.inicio
-    while(actual.siguiente){
-        cadena += ` node${actual.valor['index']} -> node${actual.siguiente.valor['index']}`
-        actual = actual.siguiente
-    }
+   if (blockChain.inicio){
+       let actual = blockChainaux.inicio
+       while(actual){
+           cadena += ` node${actual.valor['index']} [label="Timestamp: ${actual.valor['timestamp']} \\n Emisor: ${actual.valor['transmitter']  } \\n Receptor: ${actual.valor['receiver']  } \\n previoushash: ${actual.valor['previoushash']  } "];`
+           actual = actual.siguiente
+       }
+       actual = blockChainaux.inicio
+       while(actual.siguiente){
+           cadena += ` node${actual.valor['index']} -> node${actual.siguiente.valor['index']}`
+           actual = actual.siguiente
+       }
+   }
 
 
     cadena += '}'
