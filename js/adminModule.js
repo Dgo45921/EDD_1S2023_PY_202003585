@@ -66,6 +66,7 @@ function reporte(){
     let cadena = ''
     let bloque_actual = blockChain
     if(bloque_actual.valor){
+
         cadena = "Index: " + bloque_actual.valor['index']
         cadena += "\nTimeStamp: " + bloque_actual.valor['timestamp']
         cadena += "\nEmisor: " + bloque_actual.valor['transmitter']
