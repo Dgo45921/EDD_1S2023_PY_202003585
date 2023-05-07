@@ -93,6 +93,14 @@ Luego de cargados los usuarios usted puede presionar el botón de árbol de estu
 
 <img title="" src="img/md/arbolTabla.png" alt="">
 
+###### Vista Hash
+
+Ahora la app cuenta con una vista alterna al arbol AVL, en la cual toda la informacion se guardara en una tabla hash. Usted como administrador tiene acceso a la lista de usuarios con sus respectivas contraseñas encriptadas, y también puede ver que archivos tienen permisos en todo el sistema 
+
+<img title="" src="img/md/vistaHASHAdmin.png" alt="">
+
+<img title="" src="img/md/vistaHashAdmin2.png" alt="">
+
 ### Módulo de usuario
 
 <img title="" src="img/md/dashboardUser.png" alt="">
@@ -136,6 +144,20 @@ Cuando usted inicie sesión por primera vez eso será lo que usted verá. Cada u
 <img title="" src="img/md/archivos.png" alt="">
 
 <img title="" src="img/md/reportes.png" alt="">
+
+### Vista Grafo
+
+Usted ahora tiene otro sistema de carpetas que consiste en un grafo dirigido, ahora cuenta con un visualizador de archivos
+
+<img title="" src="img/md/visualizer.png" alt="">
+
+Así como también puede visualizar el grafo que representa su estructura de carpetas. Puede ver tambien los archivos a los cuales usted tiene acceso por permisos de otros usuarios
+
+<img title="" src="img/md/permission.png" alt="">
+
+Se agrego tambien un chat entre usuarios para que pueda comunicarse con los demas
+
+<img title="" src="img/md/chat.png" alt="">
 
 ---
 
@@ -208,6 +230,16 @@ Para poder correr esta app hace falta lo siguiente:
 - Lista simplemente enlazada circular: Representa cada una de las acciones que el usuario logueada ha hecho.
   
   <img title="" src="img/md/bitacora.svg" alt="" width="655">
+
+- Grafo dirigido: Este se encarga de guardar las carpetas junto con sus matrices
+  
+  <img title="" src="img/md/grafito.png" alt="" width="655">
+- Tabla hash: Este se encarga ahora de almacenar a los alumnos
+  
+  <img title="" src="img/md/Tabla_hash.png" alt="" width="655">
+- BlockChain: Es la responsable de guardar los mensajes que se envian los alumnos entre si, cada mensaje está encriptado.
+  
+  <img title="" src="img/md/blockchain.png" alt="" width="655">
 
 **Nota Para la persistencia de la información se hizo uso de localstorage**
 

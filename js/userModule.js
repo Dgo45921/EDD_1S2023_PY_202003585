@@ -753,7 +753,7 @@ function sendMessage(){
         .catch((error) => {
             console.error(error);
         });
-    verChat()
+    verChat().then(r => console.log(''))
 
 }
 
